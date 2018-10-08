@@ -1,3 +1,14 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+@import 'styles/Colors.scss';
+@import 'styles/Constants.scss';
+
+.link {
+  color: $col-primary;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+// Old CSS (from create-react-app) - change it
 .App {
   text-align: center;
 }
@@ -8,7 +19,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: $col-fancy-black;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

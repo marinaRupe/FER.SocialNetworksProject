@@ -84,3 +84,7 @@ node/.DS_Store
 
 # react
 react/build
+dist-react/
+
+# CSS files
+*.css
