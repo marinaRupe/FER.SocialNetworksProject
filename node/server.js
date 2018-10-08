@@ -1,10 +1,10 @@
 const createError = require('http-errors');
 const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const expressConfig = require('./configuration/express.config');
+const mongoConfig = require('./configuration/mongo.config');
 const routesConfig = require('./configuration/routes.config');
 
 const app = express();
@@ -18,13 +18,15 @@ app.use(cookieParser());
 
 routesConfig.configure(app);
 
+mongoConfig.configureDatabase(app);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
