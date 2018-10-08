@@ -54,7 +54,32 @@ const register = async (req, res) => {
   res.json(new UserLoginViewModel(user));
 };
 
+const changePassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  const { user } = res.locals;
+
+  if (!user.validatePassword(oldPassword)) {
+    throw new errors.BadRequestError({
+      info: {
+        oldPassword: 'Invalid password.',
+      },
+    });
+  }
+
+  if (newPassword.length < settings.MIN_PASSWORD_LENGTH) {
+    throw new errors.BadRequestError({
+      info: {
+        newPassword: `Password must be at least ${settings.MIN_PASSWORD_LENGTH} charachters long.`,
+      },
+    });
+  }
+
+  const newUser = await UserService.changePassword(user, newPassword);
+  return res.json(new UserLoginViewModel(newUser));
+};
+
 module.exports = {
   login,
   register,
+  changePassword
 };

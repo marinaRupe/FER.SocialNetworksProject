@@ -1,6 +1,6 @@
 const express = require('express');
 const asyncWrap = require('express-async-wrap');
-const authenticate = require('../../middleware/authentication');
+const authenticate = require('../../middleware/authentication.middleware');
 const UserController = require('../../controllers/user.controller');
 
 const router = express.Router();

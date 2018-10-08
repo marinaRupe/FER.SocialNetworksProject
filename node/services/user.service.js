@@ -62,7 +62,6 @@ module.exports = {
   findByToken,
   findAll,
   add,
-  addAdmin,
   existsEmail,
   changePassword,
   updateUser,
