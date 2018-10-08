@@ -5,10 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node node/server.js",
-    "rstart": "npm start --prefix react",
-    "build": "npm run build --prefix react",
-    "nstart": "nodemon node/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "rstart": "npm run rlint && npm start --prefix react",
+    "build": "npm run rlint && npm run build --prefix react",
+    "nstart": "npm run nlint && nodemon node/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint node react --ext .js,.jsx",
+    "rlint": "./node_modules/.bin/eslint react --ext .js,.jsx",
+    "nlint": "./node_modules/.bin/eslint node"
   },
   "repository": {
     "type": "git",
@@ -29,7 +32,6 @@
     "express": "~4.16.0",
     "express-async-wrap": "^1.0.0",
     "http-errors": "~1.6.2",
-    "jade": "~1.11.0",
     "moment": "^2.22.2",
     "mongoose": "^5.3.2",
     "morgan": "~1.9.0",
@@ -46,6 +48,9 @@
   },
   "devDependencies": {
     "create-react-app": "^2.0.3",
+    "eslint": "^5.6.0",
+    "eslint-plugin-jest": "^21.24.1",
+    "eslint-plugin-react": "^7.11.1",
     "nodemon": "^1.18.4",
     "redux-devtools": "^3.4.1"
   }
