@@ -16,4 +16,6 @@ export const APP = {
     LOGIN: '/login',
     REGISTER: '/register',
   },
+  SERVER_ERROR: '/error/500',
+  NOT_FOUND_ERROR: '/error/404',
 };
