@@ -1,5 +1,4 @@
 const getText = async (req, res) => {
-  console.log('test');
   res.send('test text');
 };
 
