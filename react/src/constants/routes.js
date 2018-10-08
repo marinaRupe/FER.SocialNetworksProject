@@ -7,7 +7,10 @@ export const API = {
     LOGIN: `${API_URL}/user/login`,
     REGISTER: `${API_URL}/user/register`,
     CHANGE_PASSWORD: `${API_URL}/user/changePassword`,
-  }
+  },
+  TEST: {
+    TEXT: `${API_URL}/test/text`,
+  },
 };
 
 export const APP = {

@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import { API } from '../../constants/routes';
 import logo from '../../logo.svg';
 
 class Home extends Component {
+  state = {
+    testText: ''
+  };
+
+  async componentDidMount() {
+    const response = await axios.get(API.TEST.TEXT);
+    this.setState({ testText: response.data });
+  }
+
   render() {
     return (
       <div className="App">
@@ -18,6 +29,7 @@ class Home extends Component {
           >
             Learn React
           </a>
+          {this.state.testText}
         </header>
       </div>
     );
