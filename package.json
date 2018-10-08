@@ -22,6 +22,7 @@
   "homepage": "https://github.com/marinaRupe/FER.SocialNetworksProject#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "dotenv": "^6.0.0",
