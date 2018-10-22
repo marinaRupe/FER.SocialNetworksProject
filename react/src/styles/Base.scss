@@ -2,42 +2,33 @@
 @import 'styles/Colors.scss';
 @import 'styles/Constants.scss';
 
+body {
+  background-color: $col-fancy-black;
+  color: $col-normalText--light;
+}
+
+a {
+  text-decoration: none;
+}
+
 .link {
   color: $col-primary;
   text-decoration: underline;
   cursor: pointer;
 }
 
-// Old CSS (from create-react-app) - change it
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: $col-fancy-black;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.btn-primary {
+  padding: $val-spacing-xs $val-spacing-s;
+  background-color: $col-primary;
+  color: $col-normalText--dark;
+  border-radius: $val-btnBorderRadius;
+  text-decoration: none;
+  font-size: $val-fontSizeRegular;
+  font-weight: $val-fontWeightBold;
+  cursor: pointer;
+  a {
+    color: $col-normalText--dark;
+    font-size: $val-fontSizeRegular;
+    font-weight: $val-fontWeightBold;
   }
 }

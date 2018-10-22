@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { API } from '../../constants/routes';
-import logo from '../../logo.svg';
+import { Link } from 'react-router-dom';
+import { API, APP } from '../../constants/routes';
 
 class Home extends Component {
   state = {
@@ -15,22 +15,12 @@ class Home extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {this.state.testText}
-        </header>
+      <div className="home-page">
+        <button className='btn-primary'>
+          <Link to={APP.MOVIE.POPULAR_MOVIES}>
+            Most popular movies
+          </Link>
+        </button>
       </div>
     );
   }

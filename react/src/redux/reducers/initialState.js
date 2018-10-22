@@ -8,6 +8,7 @@ const initialState = {
     page: 1,
     totalPages: 1,
     totalResults: 0,
+    currentMovie: null
   },
 };
 

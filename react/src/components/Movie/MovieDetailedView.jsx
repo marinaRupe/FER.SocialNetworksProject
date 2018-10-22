@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { API, APP } from '../../constants/routes';
 
-class MovieListItem extends Component {
+class MovieDetailedView extends Component {
   generatePosterUrl = url => {
     return API.MOVIE.POSTER_URL(url);
   }
@@ -12,21 +12,21 @@ class MovieListItem extends Component {
 
     return (
       <div
-        className='movie__list-item'
+        className='movie__detailed'
       >
         <Link to={APP.MOVIE.DETAILS(movie.id)}>
           <img
             src={this.generatePosterUrl(movie.poster_path)} alt=''
-            className='movie__list-item__image--size-m'
+            className='movie__detailed__image--size-l'
             onClick={this.openMovieDetails}
           />
         </Link>
-        <div className='movie__list-item__details'>
+        <div className='movie__detailed__details'>
           <Link to={APP.MOVIE.DETAILS(movie.id)}>
-            <div className='movie__list-item__title'>{movie.title}</div>
+            <div className='movie__detailed__title'>{movie.title}</div>
           </Link>
           <Link to={APP.MOVIE.DETAILS(movie.id)}>
-            <div className='movie__list-item__description'>{movie.overview}</div>
+            <div className='movie__detailed__description'>{movie.overview}</div>
           </Link>
         </div>
       </div>
@@ -34,4 +34,4 @@ class MovieListItem extends Component {
   }
 }
 
-export default MovieListItem;
+export default MovieDetailedView;

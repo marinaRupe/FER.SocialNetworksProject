@@ -28,4 +28,45 @@
       }
     }
   }
+  &__detailed {
+    &__details {
+      display: flex;
+      flex-direction: column;
+      padding: $val-spacing-xxs;
+    }
+    &__title {
+      font-size: $val-fontSizeBig;
+      color: $col-movie-title;
+      padding: $val-spacing-xs;
+    }
+    &__description {
+      font-size: $val-fontSizeRegular;
+      color: $col-movie-description;
+      padding: $val-spacing-xs;
+    }
+    &__image {
+      &--size {
+        &-l {
+          max-height: 500px;
+          max-width: 500px;
+        }
+      }
+    }
+  }
+  &__details {
+    display: flex;
+    flex-direction: column;
+    padding: $val-spacing-xxs;
+  }
+  &__reviews {
+    &__title {
+      padding: $val-spacing-xs;
+      color: $col-title--big;
+      font-size: $val-fontSizeBig;
+      font-weight: $val-fontWeightBold;
+    }
+    &__content {
+      display: flex;
+    }
+  }
 }

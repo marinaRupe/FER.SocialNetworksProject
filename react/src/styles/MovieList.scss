@@ -6,6 +6,8 @@
   flex-direction: column;
   padding: $val-spacing-xs;
   &__title {
+    padding: $val-spacing-xs;
+    color: $col-title--big;
     font-size: $val-fontSizeXBig;
     font-weight: $val-fontWeightBold;
   }

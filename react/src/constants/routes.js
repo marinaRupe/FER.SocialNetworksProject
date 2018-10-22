@@ -24,6 +24,7 @@ export const APP = {
     REGISTER: '/register',
   },
   MOVIE: {
+    DETAILS: (movieId = ':movieId') => `/movie/${movieId}/details`,
     POPULAR_MOVIES: '/movies/most-popular',
   },
   SERVER_ERROR: '/error/500',

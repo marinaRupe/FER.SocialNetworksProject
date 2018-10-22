@@ -12,7 +12,6 @@ const movieActions = {
       try {
         const resp = await axios.get(API.MOVIE.FETCH_MOST_POPUAR_MOVIES(page));
         if (resp.status === 200) {
-          console.log(resp.data);
           await dispatch(actions.fetchMostPopularMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
         }
       } catch (error) {

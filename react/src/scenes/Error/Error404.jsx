@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Error404 extends Component {
   render() {
     return (
-      <div>
-        404 Page
+      <div className='page-404'>
+        404 - Page Not Found :(
       </div>
     );
   }
