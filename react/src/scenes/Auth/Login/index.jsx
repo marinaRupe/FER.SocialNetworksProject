@@ -10,7 +10,9 @@ class Login extends Component {
   }
 
   handleClickOnLoginButton = () => {
-    window.FB.login(checkLoginState());
+    window.FB.login(() => {
+      checkLoginState();
+    });
   };
 
   render() {
@@ -24,14 +26,17 @@ class Login extends Component {
         <div>
           <div
             className='fb-login-button'
-            data-max-rows="1"
-            data-size="large"
-            data-button-type="continue_with"
-            data-show-faces="false"
-            data-auto-logout-link="false"
-            data-use-continue-as="false"
+            data-max-rows='1'
+            data-size='large'
+            data-button-type='login_with'
+            data-show-faces='true'
+            data-auto-logout-link='true'
+            data-use-continue-as='false'
             onClick={this.handleClickOnLoginButton}
           >
+            <button className='btn-primary'>
+              Login with Facebook
+            </button>
           </div>
         </div>
       </div>

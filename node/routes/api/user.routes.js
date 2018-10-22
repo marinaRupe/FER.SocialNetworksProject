@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.put('/changePassword', authenticate, asyncWrap(UserController.changePassword));
 
-router.post('/login', asyncWrap(UserController.login));
+router.post('/login', asyncWrap(UserController.loginByFacebook));
 
 router.post('/register', asyncWrap(UserController.register));
 

@@ -37,7 +37,8 @@ export const facebookJSSDKSetup = () => {
 
 export const checkLoginState = () => {
   window.FB.getLoginStatus(response => {
-    this.statusChangeCallback(response);
+    statusChangeCallback(response);
+    window.location.reload(true);
   });
 };
 
@@ -46,14 +47,23 @@ const statusChangeCallback = response => {
   console.log(response);
 
   if (response.status === 'connected') {
-    console.log('Welcome!  Fetching your information.... ');
-    window.FB.api('/me', response => {
-      console.log('Successful login for: ' + response.name);
-    });
+    fetchUserData();
     setToken(response.authResponse.accessToken, response.authResponse.expiresIn);
   } else if (response.status === 'not_authorized') {
     history.push(APP.AUTH.LOGIN);
   } else {
     history.push(APP.AUTH.LOGIN);
   }
+};
+
+const fetchUserData = () => {
+  console.log('Fetching user data...');
+  window.FB.api('/me', {
+      fields: 'name,first_name,last_name,birthday,age_range,email,gender,relationship_status'
+    },
+    response => {
+      console.log('Successful login for: ' + response.name);
+      console.log(response);
+    }
+  );
 };

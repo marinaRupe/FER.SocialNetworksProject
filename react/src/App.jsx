@@ -8,6 +8,7 @@ import MostPopularMovies from './scenes/MovieLists/MostPopularMovies';
 import MovieDetails from './scenes/MovieDetails';
 import Error404 from './scenes/Error/Error404';
 import Error500 from './scenes/Error/Error500';
+import Profile from './scenes/Profile';
 import { APP } from './constants/routes';
 import { getToken } from './utils/auth.utils';
 import history from './history';
@@ -38,10 +39,16 @@ class App extends Component {
             />
             <PrivateRoute
               authed={this.authed()}
+              path={APP.PROFILE}
+              component={Profile}
+            />
+
+            <PrivateRoute
+              authed={this.authed()}
               path={APP.ROOT}
               component={Home}
             />
-            
+
             <Route path='*' component={Error404} />
           </Switch>
         </div>

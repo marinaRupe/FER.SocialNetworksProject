@@ -17,6 +17,11 @@ class Home extends Component {
     return (
       <div className="home-page">
         <button className='btn-primary'>
+          <Link to={APP.PROFILE}>
+            Profile
+          </Link>
+        </button>
+        <button className='btn-primary'>
           <Link to={APP.MOVIE.POPULAR_MOVIES}>
             Most popular movies
           </Link>

@@ -4,6 +4,12 @@ const settings = require('../constants/constraints.constants');
 const UserLoginViewModel = require('../dataTransferObjects/viewModels/userLogin.viewModel');
 const userValidator = require('../validators/user.validator');
 
+const loginByFacebook = async (req, res) => {
+  const { userID, accessToken } = req.body;
+
+  
+};
+
 const login = async (req, res) => {
   const { email, password } = req.body;
 
