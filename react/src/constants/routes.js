@@ -11,6 +11,10 @@ export const API = {
   TEST: {
     TEXT: `${API_URL}/test/text`,
   },
+  MOVIE: {
+    FETCH_MOST_POPUAR_MOVIES: (page) => `${API_URL}/movie/most-popular/${page}`,
+    POSTER_URL: (imageUrl, size='w500') => `http://image.tmdb.org/t/p/${size}${imageUrl}`
+  }
 };
 
 export const APP = {
@@ -18,6 +22,9 @@ export const APP = {
   AUTH: {
     LOGIN: '/login',
     REGISTER: '/register',
+  },
+  MOVIE: {
+    POPULAR_MOVIES: '/movies/most-popular',
   },
   SERVER_ERROR: '/error/500',
   NOT_FOUND_ERROR: '/error/404',

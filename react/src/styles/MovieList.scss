@@ -1,0 +1,12 @@
+@import 'styles/Colors.scss';
+@import 'styles/Constants.scss';
+
+.movie-list {
+  display: flex;
+  flex-direction: column;
+  padding: $val-spacing-xs;
+  &__title {
+    font-size: $val-fontSizeXBig;
+    font-weight: $val-fontWeightBold;
+  }
+}

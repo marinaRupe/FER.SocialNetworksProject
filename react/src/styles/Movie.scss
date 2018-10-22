@@ -1,0 +1,31 @@
+@import 'styles/Colors.scss';
+@import 'styles/Constants.scss';
+
+.movie {
+  &__list-item {
+    display: flex;
+    flex-direction: row;
+    padding: $val-spacing-xxs;
+    &__details {
+      display: flex;
+      flex-direction: column;
+      padding: $val-spacing-xxs;
+    }
+    &__title {
+      font-size: $val-fontSizeBig;
+      color: $col-movie-title;
+    }
+    &__description {
+      font-size: $val-fontSizeRegular;
+      color: $col-movie-description;
+    }
+    &__image {
+      &--size {
+        &-m {
+          max-height: 100px;
+          max-width: 100px;
+        }
+      }
+    }
+  }
+}
