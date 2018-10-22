@@ -15,6 +15,14 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.FETCH_ACTIVE_MOVIE:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        activeMovie: { ...state.list.find(m => m.id.toString() === action.data) }
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }

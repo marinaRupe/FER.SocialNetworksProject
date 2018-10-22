@@ -14,7 +14,12 @@ export const API = {
   MOVIE: {
     FETCH_MOST_POPUAR_MOVIES: (page) => `${API_URL}/movie/most-popular/${page}`,
     POSTER_URL: (imageUrl, size='w500') => `http://image.tmdb.org/t/p/${size}${imageUrl}`
-  }
+  },
+  REVIEWS: {
+    MOVIE: {
+      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`
+    }
+  },
 };
 
 export const APP = {

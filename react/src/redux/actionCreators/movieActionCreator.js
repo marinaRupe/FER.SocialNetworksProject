@@ -5,6 +5,19 @@ import { API, APP } from '../../constants/routes';
 import * as actions from '../actions/movieActions';
 
 const movieActions = {
+  fetchActiveMovie(movieId) {
+    return async (dispatch) => {
+      try {
+        await dispatch(actions.fetchActiveMovie({ status: ACTION_STATUS.SUCCESS, data: movieId }));
+      } catch (error) {
+        if (error.status === 400) {
+          history.push(APP.NOT_FOUND_ERROR);
+        } else {
+          history.push(APP.SERVER_ERROR);
+        }
+      }
+    };
+  },
   fetchMostPopularMovies() {
     const page = 1;
 
