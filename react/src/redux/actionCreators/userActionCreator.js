@@ -9,7 +9,7 @@ const userActions = {
   login(user) {
     return async (dispatch) => {
       try {
-        const resp = await axios.post(API.AUTH.LOGIN, user);
+        const resp = await axios.post(API.AUTH.LOGIN, { user });
         if (resp.status === 200) {
           await dispatch(actions.login({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
           history.push(APP.ROOT);

@@ -6,12 +6,18 @@ import { facebookJSSDKSetup, checkLoginState, getToken } from '../../../utils/au
 
 class Login extends Component {
   componentDidMount() {
-    facebookJSSDKSetup();
+    const { dispatch } = this.props;
+    facebookJSSDKSetup(dispatch);
   }
 
   handleClickOnLoginButton = () => {
-    window.FB.login(() => {
-      checkLoginState();
+    const { dispatch } = this.props;
+    window.FB.login(() =>
+    {
+      checkLoginState(dispatch);
+    },
+    {
+      scope: 'email,user_gender,user_likes,user_location,user_birthday,user_age_range'
     });
   };
 

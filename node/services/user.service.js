@@ -42,7 +42,27 @@ const add = async (email, password, firstName, lastName) => {
   return user;
 };
 
+const createUser = async (
+  userID, email, token, firstName, lastName, picture, birthday, gender) => {
+  const user = new User({
+    userID,
+    email,
+    firstName,
+    lastName,
+    token,
+    picture,
+    birthday,
+    gender
+  });
+
+  await user.save();
+
+  return user;
+};
+
 const existsEmail = async email => (await User.countDocuments({ email })) > 0;
+
+const existsUserId = async userID => (await User.countDocuments({ userID })) > 0;
 
 const changePassword = async (user, newPassword) => {
   user.setPassword(newPassword);
@@ -51,19 +71,22 @@ const changePassword = async (user, newPassword) => {
   return User.findByIdAndUpdate(user._id, user, { new: true });
 };
 
-const updateUser = async (user, id) => User.findByIdAndUpdate(
+
+const updateUser = async (user, id) => await User.findByIdAndUpdate(
   id, user, { new: true },
 ).exec();
 
-const deleteUser = async email => User.deleteOne({ email });
+const deleteUser = async email => await User.deleteOne({ email });
 
 module.exports = {
   findByEmail,
   findByToken,
   findAll,
   add,
+  createUser,
   existsEmail,
   changePassword,
   updateUser,
   deleteUser,
+  existsUserId,
 };

@@ -4,10 +4,35 @@ const settings = require('../constants/constraints.constants');
 const UserLoginViewModel = require('../dataTransferObjects/viewModels/userLogin.viewModel');
 const userValidator = require('../validators/user.validator');
 
-const loginByFacebook = async (req, res) => {
-  const { userID, accessToken } = req.body;
+const loginWithFacebook = async (req, res) => {
+  const { user } = req.body;
+  const {
+    userID,
+    email,
+    token,
+    firstName,
+    lastName,
+    picture,
+    birthday,
+    gender
+  } = user;
 
-  
+  console.log(user);
+
+  if (!email.match(settings.EMAIL_REGEX)) {
+    throw new errors.BadRequestError({
+      info: {
+        email: 'Email is invalid.',
+      },
+    });
+  }
+
+  if (!await UserService.existsUserId(userID)) {
+    await UserService.createUser(
+      userID, email, token, firstName, lastName, picture, birthday, gender);
+  }
+
+  res.json(new UserLoginViewModel(user));
 };
 
 const login = async (req, res) => {
@@ -60,32 +85,8 @@ const register = async (req, res) => {
   res.json(new UserLoginViewModel(user));
 };
 
-const changePassword = async (req, res) => {
-  const { oldPassword, newPassword } = req.body;
-  const { user } = res.locals;
-
-  if (!user.validatePassword(oldPassword)) {
-    throw new errors.BadRequestError({
-      info: {
-        oldPassword: 'Invalid password.',
-      },
-    });
-  }
-
-  if (newPassword.length < settings.MIN_PASSWORD_LENGTH) {
-    throw new errors.BadRequestError({
-      info: {
-        newPassword: `Password must be at least ${settings.MIN_PASSWORD_LENGTH} charachters long.`,
-      },
-    });
-  }
-
-  const newUser = await UserService.changePassword(user, newPassword);
-  return res.json(new UserLoginViewModel(newUser));
-};
-
 module.exports = {
   login,
   register,
-  changePassword
+  loginWithFacebook
 };

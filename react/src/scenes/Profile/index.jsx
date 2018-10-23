@@ -12,17 +12,35 @@ class Profile extends Component {
     const { dispatch } = this.props;
     window.FB.logout(response => {
       dispatch(userActions.logout());
-   });
+    });
+  }
+
+  renderProfileData = () => {
+    const { currentUser } = this.props;
+
+    if (currentUser) {
+      return (
+        <div className='profile__user-info'>
+          {currentUser.picture &&
+            <img src={currentUser.picture} alt='' />
+          }
+          <div>First name: {currentUser.firstName}</div>
+          <div>Last name: {currentUser.lastName}</div>
+          <div>Email: {currentUser.email}</div>
+          <div>Birthday: {currentUser.birthday || '-'}</div>
+          <div>Gender: {currentUser.gender || '-'}</div>
+        </div>
+      );
+    }
+
+    return <div />;
   }
 
   render() {
     return (
       <div className='profile'>
         <div className='profile__title'>Profile</div>
-        <div className='profile__user-info'>
-          <div>First name: </div>
-          <div>Last name: </div>
-        </div>
+        {this.renderProfileData()}
         <div>
           <button
             onClick={this.logout}
@@ -36,4 +54,10 @@ class Profile extends Component {
   }
 }
 
-export default connect()(Profile);
+const mapStateToProps = state => {
+  return {
+    currentUser: state.users.currentUser,
+  };
+};
+
+export default connect(mapStateToProps)(Profile);
