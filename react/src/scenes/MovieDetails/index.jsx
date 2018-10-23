@@ -33,7 +33,7 @@ class MovieDetails extends Component {
 
     if (!movie) return;
 
-    if (movie.id === prevProps.movie.id) return;
+    if (prevProps.movie && (movie.id === prevProps.movie.id)) return;
 
     dispatch(movieReviewActions.fetchReviewsForMovie(movie.title));
   }
@@ -58,27 +58,38 @@ class MovieDetails extends Component {
 
   renderMovieReviews = () => {
     const { movie, reviews } = this.props;
+    const movieYear = movie.release_date.split('-')[0];
 
-    const reviewsList = reviews.map((review, index) => (
-      <div
-        className='movie__reviews__item'
-        key={index}
-      >
-        <div className='movie__reviews__item__title'>
-          {review.headline}
-        </div>
-        <div>
-          <a
-            href={review.link.url}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='link'
+    const reviewsList = reviews.map((review, index) => {
+      const year = review.opening_date.split('-')[0];
+      if (year === movieYear) {
+        return (
+          <div
+            className='movie__reviews__item'
+            key={index}
           >
-            {review.link.suggested_link_text}
-          </a>
-        </div>
-      </div>
-    ));
+            <div className='movie__reviews__item__title'>
+              {review.headline}
+            </div>
+            <div>{review.summary_short}</div>
+            <br />
+            <div>{review.byline}</div>
+            <div>Publication date: {review.publication_date}</div>
+            <div>MPAA Rating: {review.mpaa_rating}</div>
+            <div>
+              <a
+                href={review.link.url}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='link'
+              >
+                {review.link.suggested_link_text}
+              </a>
+            </div>
+          </div>
+        );
+      }
+    });
 
     if (movie) {
       return(

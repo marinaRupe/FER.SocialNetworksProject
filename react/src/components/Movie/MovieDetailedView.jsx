@@ -28,6 +28,10 @@ class MovieDetailedView extends Component {
           <Link to={APP.MOVIE.DETAILS(movie.id)}>
             <div className='movie__detailed__description'>{movie.overview}</div>
           </Link>
+          <div>Release date: {movie.release_date}</div>
+          <div>Average vote: {movie.vote_average}</div>
+          <div>Number of votes: {movie.vote_count}</div>
+          <div>Popularity: {movie.popularity}</div>
         </div>
       </div>
     );
