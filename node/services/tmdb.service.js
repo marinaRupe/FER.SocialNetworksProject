@@ -15,6 +15,19 @@ const getMostPopularMovies = async (page = 1) => {
   return response;
 };
 
+const getMostRatedMovies = async (page = 1) => {
+  const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
+    params: {
+      'api_key': process.env.TMDB_API_KEY,
+      'sort_by': 'vote_average.desc',
+      page
+    }
+  });
+
+  return response;
+};
+
 module.exports = {
-  getMostPopularMovies
+  getMostPopularMovies,
+  getMostRatedMovies,
 };

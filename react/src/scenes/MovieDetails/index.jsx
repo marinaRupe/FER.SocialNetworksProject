@@ -60,6 +60,7 @@ class MovieDetails extends Component {
     const { movie, reviews } = this.props;
     const movieYear = movie.release_date.split('-')[0];
 
+    // eslint-disable-next-line
     const reviewsList = reviews.map((review, index) => {
       const year = review.opening_date.split('-')[0];
       if (year === movieYear) {

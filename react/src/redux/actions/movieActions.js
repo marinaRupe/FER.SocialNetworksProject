@@ -8,6 +8,14 @@ export const fetchMostPopularMovies = ({ status, data }) => {
   };
 };
 
+export const fetchMostRatedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_MOST_RATED_MOVIES,
+  };
+};
+
 export const fetchActiveMovie = ({ status, data }) => {
   return {
     data,
