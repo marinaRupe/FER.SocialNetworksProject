@@ -1,0 +1,18 @@
+@import 'styles/Colors.scss';
+@import 'styles/Constants.scss';
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  padding: $val-spacing-l;
+  height: 100vh;
+  &__title {
+    color: $col-title--big;
+    font-size: $val-fontSizeXBig;
+    padding: $val-spacing-s $val-spacing-xs;
+  }
+  &__user-info {
+    padding: $val-spacing-s $val-spacing-xs;
+    padding-bottom: $val-spacing-m;
+  }
+}

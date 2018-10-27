@@ -13,8 +13,13 @@ export const API = {
   },
   MOVIE: {
     FETCH_MOST_POPUAR_MOVIES: (page) => `${API_URL}/movie/most-popular/${page}`,
-    POSTER_URL: (imageUrl, size='w500') => `http://image.tmdb.org/t/p/${size}${imageUrl}`
-  }
+    FETCH_MOST_RATED_MOVIES: (page) => `${API_URL}/movie/most-rated/${page}`,
+  },
+  REVIEWS: {
+    MOVIE: {
+      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`
+    }
+  },
 };
 
 export const APP = {
@@ -27,6 +32,7 @@ export const APP = {
     DETAILS: (movieId = ':movieId') => `/movie/${movieId}/details`,
     POPULAR_MOVIES: '/movies/most-popular',
   },
+  PROFILE: '/profile',
   SERVER_ERROR: '/error/500',
   NOT_FOUND_ERROR: '/error/404',
 };

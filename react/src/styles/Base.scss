@@ -19,6 +19,7 @@ a {
 
 .btn-primary {
   padding: $val-spacing-xs $val-spacing-s;
+  margin: $val-spacing-xxs;
   background-color: $col-primary;
   color: $col-normalText--dark;
   border-radius: $val-btnBorderRadius;

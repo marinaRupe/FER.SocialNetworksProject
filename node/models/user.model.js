@@ -12,11 +12,14 @@ const userSchema = new Schema({
     match: [settings.EMAIL_REGEX, 'Email is invalid.'],
     trim: true,
   },
-  password: {
+  userID: {
     type: String,
-    required: [true, 'Password is required.'],
+    required: [true, 'User ID is required.'],
   },
-  token: String,
+  token: {
+    type: String,
+    required: [true, 'Accedd token is required.'],
+  },
   firstName: {
     type: String,
     required: [true, 'First name is required.'],
@@ -24,7 +27,10 @@ const userSchema = new Schema({
   lastName: {
     type: String,
     required: [true, 'Last name is required.'],
-  }
+  },
+  picture: String,
+  birthday: Date,
+  gender: String
 });
 
 userSchema.methods.setPassword = function setPassword(newPassword) {

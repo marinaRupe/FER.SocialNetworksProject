@@ -6,4 +6,6 @@ const router = express.Router();
 
 router.get('/most-popular/:page', asyncWrap(MovieController.getMostPopularMovies));
 
+router.get('/most-rated/:page', asyncWrap(MovieController.getMostRatedMovies));
+
 module.exports = router;

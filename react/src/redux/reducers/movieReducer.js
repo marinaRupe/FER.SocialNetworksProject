@@ -15,6 +15,25 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.FETCH_MOST_RATED_MOVIES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        list: action.data.results,
+        page: action.data.page,
+        totalPages: action.data.total_pages,
+        totalResults: action.data.total_results,
+      };
+    }
+    return { ...state };
+  case types.FETCH_ACTIVE_MOVIE:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        activeMovie: { ...state.list.find(m => m.imdbID.toString() === action.data) }
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }
