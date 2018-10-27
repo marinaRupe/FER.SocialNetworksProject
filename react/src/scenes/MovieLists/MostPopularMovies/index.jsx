@@ -27,12 +27,21 @@ class MostPopularMovies extends Component {
   }
 
   renderMovieList = () => {
+    const { isLoading } = this.state;
     const { movies } = this.props;
+
+    if (isLoading) {
+      return (
+        <div className="movie-list">
+          Loading...
+        </div>
+      );
+    }
 
     if (movies.length > 0) {
       return (
         <div className="movie-list">
-          {movies.map(m => <MovieListItem key={m.id} movie={m} />)}
+          {movies.map(m => <MovieListItem key={m.imdbID} movie={m} />)}
         </div>
       );
     }

@@ -30,7 +30,7 @@ export default function movieReducer(state = initialState.movies, action) {
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {
         ...state,
-        activeMovie: { ...state.list.find(m => m.id.toString() === action.data) }
+        activeMovie: { ...state.list.find(m => m.imdbID.toString() === action.data) }
       };
     }
     return { ...state };

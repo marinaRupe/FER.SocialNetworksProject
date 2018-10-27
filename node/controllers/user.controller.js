@@ -17,8 +17,6 @@ const loginWithFacebook = async (req, res) => {
     gender
   } = user;
 
-  console.log(user);
-
   if (!email.match(settings.EMAIL_REGEX)) {
     throw new errors.BadRequestError({
       info: {
