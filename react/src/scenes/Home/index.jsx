@@ -26,6 +26,11 @@ class Home extends Component {
             Most popular movies
           </Link>
         </button>
+        <button className='btn-primary'>
+          <Link to={APP.MOVIE.MOST_RATED_MOVIES}>
+            Most rated movies
+          </Link>
+        </button>
       </div>
     );
   }

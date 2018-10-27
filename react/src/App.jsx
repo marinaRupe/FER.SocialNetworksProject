@@ -5,6 +5,7 @@ import PrivateRoute from './scenes/Auth/PrivateRoute';
 import Login from './scenes/Auth/Login';
 import Register from './scenes/Auth/Register';
 import MostPopularMovies from './scenes/MovieLists/MostPopularMovies';
+import MostRatedMovies from './scenes/MovieLists/MostRatedMovies';
 import MovieDetails from './scenes/MovieDetails';
 import Error404 from './scenes/Error/Error404';
 import Error500 from './scenes/Error/Error500';
@@ -31,6 +32,11 @@ class App extends Component {
               authed={this.authed()}
               path={APP.MOVIE.POPULAR_MOVIES}
               component={MostPopularMovies}
+            />
+            <PrivateRoute
+              authed={this.authed()}
+              path={APP.MOVIE.MOST_RATED_MOVIES}
+              component={MostRatedMovies}
             />
             <PrivateRoute
               authed={this.authed()}

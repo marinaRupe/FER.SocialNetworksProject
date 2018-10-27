@@ -36,7 +36,13 @@ const getMostRatedMovies = async (req, res) => {
     throw new errors.BadRequestError('Bad request.');
   }
 
-  res.send(response.data);
+  const movies = await tmdbService.getDetailedMovies(response.data.results);
+
+  const data = { ...response.data, results: movies };
+
+  res.send(data);
+
+  await tmdbService.saveMovieList(movies);
 };
 
 module.exports = {
