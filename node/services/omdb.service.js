@@ -6,9 +6,10 @@ const mapMovieList = movieList => {
   for (const movie of movieList) {
     const newMovie = {
       title: movie.Title,
-      released: movie.Released,
+      releaseDate: movie.Released,
+      year: movie.Year,
       plot: movie.Plot,
-      genre: movie.Genre.split(',').map(genre => genre.trim().toLowerCase()),
+      genres: movie.Genre.split(',').map(genre => genre.trim().toLowerCase()),
       imdbID: movie.imdbID,
       actors: movie.Actors.split(',').map(actor => actor.trim().toLowerCase()),
       poster: movie.poster,

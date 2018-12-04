@@ -91,15 +91,17 @@ const mapMovie = movie => {
     imdbID: movie.imdb_id,
     tmdbID: movie.id,
     title: movie.title,
-    released: movie.release_date,
+    year: new Date(movie.release_date).getFullYear(),
+    releaseDate: movie.release_date,
     plot: movie.overview,
-    genre: movie.genres.map(genre => genre.name.trim().toLowerCase()),
+    genres: movie.genres.map(genre => genre.name.trim().toLowerCase()),
     actors: [],
     poster: `http://image.tmdb.org/t/p/${defaultPosterSize}${movie.poster_path}`,
     director: undefined,
     runtime: movie.runtime,
     languages: movie.spoken_languages.map(lang => lang.iso_639_1),
     website: movie.homepage,
+    tmdbPopularity: movie.popularity,
   };
 
   return newMovie;

@@ -2,6 +2,57 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
+const castSchema = new Schema({
+  cast_id: {
+    type: Number,
+  },
+  credit_id: {
+    type: String,
+  },
+  id: {
+    type: Number,
+  },
+  characterName: {
+    type: String,
+  },
+  name: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  order: {
+    type: Number,
+  },
+  profileImage: {
+    type: String,
+  },
+});
+
+const crewSchema = new Schema({
+  credit_id: {
+    type: String,
+  },
+  id: {
+    type: Number,
+  },
+  name: {
+    type: String,
+  },
+  gender: {
+    type: String,
+  },
+  profileImage: {
+    type: String,
+  },
+  department: {
+    type: String,
+  },
+  job: {
+    type: String,
+  }
+});
+
 const movieSchema = new Schema({
   imdbID: {
     type: String,
@@ -14,7 +65,11 @@ const movieSchema = new Schema({
     required: [true, 'Title is required.'],
     trim: true,
   },
-  released: {
+  year: {
+    type: Number,
+    required: [true, 'Year is required.'],
+  },
+  releaseDate: {
     type: Date,
     required: [true, 'Release date is required.'],
   },
@@ -22,16 +77,29 @@ const movieSchema = new Schema({
     type: String,
     required: [true, 'Plot is required.'],
   },
-  genre: {
+  genres: {
     type: [String],
-    required: [true, 'Genre is required.'],
+    required: [true, 'Genres are required.'],
   },
-  actors: [String],
-  poster: String,
-  director: String,
-  runtime: String,
-  languages: [String],
+
+  poster: String,   // poster URL
+  images: [String], // image URLs
+  videos: [String], // video URLS
   website: String,
+
+  cast: [castSchema],
+  crew: [crewSchema],
+
+  runtime: String,
+  budget: Number,
+  revenue: Number,
+  productionCompanies: [String],
+  productionCountries: [String],
+
+  languages: [String],
+  translations: [String],
+
+  tmdbPopularity: Number,
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

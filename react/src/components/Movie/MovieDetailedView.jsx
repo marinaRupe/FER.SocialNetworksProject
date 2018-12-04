@@ -25,7 +25,7 @@ class MovieDetailedView extends Component {
             <div className='movie__detailed__description'>{movie.plot}</div>
           </Link>
 
-          <div>Release date: {movie.released}</div>
+          <div>Release date: {movie.releaseDate}</div>
 
           <div>
             Actors:&nbsp;
@@ -44,7 +44,7 @@ class MovieDetailedView extends Component {
           <div>
             Genres: 
             <ul>
-              {movie.genre.map((g, index) =>
+              {movie.genres.map((g, index) =>
                 <li key={index}>{g}</li>
               )}
             </ul>

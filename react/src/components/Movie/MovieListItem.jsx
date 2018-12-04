@@ -27,7 +27,7 @@ class MovieListItem extends Component {
           <div>
             Genres:&nbsp;
             <span>
-              {movie.genre.reduce((acc, curr) => (`${acc}, ${curr}`))}
+              {movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))}
             </span>
           </div>
         </div>
