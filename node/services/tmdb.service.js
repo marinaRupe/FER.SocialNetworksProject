@@ -102,6 +102,8 @@ const mapMovie = movie => {
     languages: movie.spoken_languages.map(lang => lang.iso_639_1),
     website: movie.homepage,
     tmdbPopularity: movie.popularity,
+    tmdbVoteAverage: movie.vote_average,
+    tmdbVoteCount: movie.vote_count,
   };
 
   return newMovie;

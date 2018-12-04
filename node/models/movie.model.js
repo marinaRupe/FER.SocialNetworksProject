@@ -53,17 +53,32 @@ const crewSchema = new Schema({
   }
 });
 
+const videoSchema = new Schema({
+  name: String,
+  key: String,
+  url: String,  // `https://www.youtube.com/watch?v=${key}`
+});
+
 const movieSchema = new Schema({
   imdbID: {
     type: String,
     required: [true, 'IMDb ID is required.'],
     trim: true,
   },
+  facebookID: {
+    type: String,
+  },
+  twitterID: {
+    type: String,
+  },
   tmdbID: String,
   title: {
     type: String,
     required: [true, 'Title is required.'],
     trim: true,
+  },
+  alternativeTitles: {
+    type: [String],
   },
   year: {
     type: Number,
@@ -81,10 +96,13 @@ const movieSchema = new Schema({
     type: [String],
     required: [true, 'Genres are required.'],
   },
+  keywords: {
+    type: [String],
+  },
 
   poster: String,   // poster URL
   images: [String], // image URLs
-  videos: [String], // video URLS
+  videos: [videoSchema], // filter Youtube videos
   website: String,
 
   cast: [castSchema],
@@ -100,6 +118,8 @@ const movieSchema = new Schema({
   translations: [String],
 
   tmdbPopularity: Number,
+  tmdbVoteAverage: Number,
+  tmdbVoteCount: Number,
 });
 
 module.exports = mongoose.model('Movie', movieSchema);
