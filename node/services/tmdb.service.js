@@ -30,7 +30,7 @@ const getDetailedMovies = async movieList => {
   for (const movie of movieList) {
     if (await MovieService.existsMovieWithTmdbID(movie.id)) {
       const movieWithDetails = await MovieService.getMovieWithTmdbID(movie.id);
-      movies.push(movieWithDetails);
+      movies.push(movieWithDetails.toObject());
     } else {
       const movieWithDetailsResponse = await getMovieDetails(movie.id);
     
