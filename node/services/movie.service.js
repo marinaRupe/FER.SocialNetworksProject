@@ -26,7 +26,7 @@ const saveMovieList = async movies => {
         console.info(`The movie with imdb ID ${movie.imdbID} is saved (tmdbID: ${movie.tmdbID})!`);
       } catch (err) {
         console.info(`The movie with imdb ID ${movie.imdbID} is NOT saved (tmdbID: ${movie.tmdbID})!`);
-        console.error(err.message);
+        console.info(err.message);
       }
     }
   }

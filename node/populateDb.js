@@ -44,9 +44,7 @@ async function fetchMovies() {
   const totalPages = response.total_pages;
 
   const movies = await tmdbService.getDetailedMovies(response.results);
-  console.log(movies.map(m => m.imdbID));
   const expandedMovies = await omdbService.expandMovieList(movies);
-  console.log(expandedMovies.map(m => m.imdbID));
 
   await MovieService.saveMovieList(expandedMovies);
 

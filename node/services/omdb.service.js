@@ -77,7 +77,7 @@ const expandMovie = async movie => {
 
     return newMovie;
   } catch (err) {
-    console.error(err.message);
+    console.info(err.message);
     return movie;
   }
 };
