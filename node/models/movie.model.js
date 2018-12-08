@@ -120,6 +120,10 @@ const movieSchema = new Schema({
   tmdbPopularity: Number,
   tmdbVoteAverage: Number,
   tmdbVoteCount: Number,
+
+  imdbRating: String,
+  metascore: String,
+  rottenTomatoesRating: String,
 });
 
 module.exports = mongoose.model('Movie', movieSchema);
