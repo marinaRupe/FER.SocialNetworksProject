@@ -65,13 +65,13 @@ const movieSchema = new Schema({
     required: [true, 'IMDb ID is required.'],
     trim: true,
   },
+  tmdbID: String,
   facebookID: {
     type: String,
   },
   twitterID: {
     type: String,
   },
-  tmdbID: String,
   title: {
     type: String,
     required: [true, 'Title is required.'],
@@ -100,8 +100,7 @@ const movieSchema = new Schema({
     type: [String],
   },
 
-  poster: String,   // poster URL
-  images: [String], // image URLs
+  poster: String,        // poster URL
   videos: [videoSchema], // filter Youtube videos
   website: String,
 
