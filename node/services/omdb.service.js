@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const OMDB_URL = `http://www.omdbapi.com/`;
+const OMDB_URL = 'http://www.omdbapi.com/';
 
 const getMovieDetails = imdbMovieId => {
   const response = axios.get(`${OMDB_URL}?apikey=${process.env.OMDB_API_KEY}&i=${imdbMovieId}`);
@@ -35,7 +35,7 @@ const mapMovieList = movieList => {
 };
 
 const expandMovieList = async movieList => {
-  console.log('Expanding ' + movieList.length + ' movies...')
+  console.log('Expanding ' + movieList.length + ' movies...');
   return await Promise.all(movieList.map(expandMovie));
 };
 
