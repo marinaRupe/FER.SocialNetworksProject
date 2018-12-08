@@ -16,10 +16,22 @@ const saveMovie = async movie => {
   newMovie.save();
 };
 
+const saveMovieList = async movies => {
+  console.info('Saving movies...');
+
+  for (const movie of movies) {
+    if (!(await existsMovieWithImdbID(movie.imdbID))) {
+      await saveMovie(movie);
+      console.info(`The movie with imdb ID ${movie.imdbID} is saved!`);
+    }
+  }
+};
+
 module.exports = {
   existsMovieWithImdbID,
   existsMovieWithTmdbID,
   getMovieWithImdbID,
   getMovieWithTmdbID,
   saveMovie,
+  saveMovieList,
 };

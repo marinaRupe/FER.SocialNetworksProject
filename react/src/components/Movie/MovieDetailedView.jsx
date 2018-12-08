@@ -25,15 +25,29 @@ class MovieDetailedView extends Component {
             <div className='movie__detailed__description'>{movie.plot}</div>
           </Link>
 
-          <div>Release date: {movie.released}</div>
+          <div>Release date: {movie.releaseDate}</div>
 
           <div>
-            Actors:&nbsp;
+            Cast:&nbsp;
             {
-              movie.actors && movie.actors.length > 0 ?
+              movie.cast && movie.cast.length > 0 ?
                 <ul>
-                  {movie.actors.map((actor, index) =>
-                    <li key={index}>{actor}</li>
+                  {movie.cast.map((castMember) =>
+                    <li key={castMember.id}>{castMember.name} (as {castMember.characterName})</li>
+                  )}
+                </ul>
+                :
+                <span>Unknown</span>
+            }
+          </div>
+
+          <div>
+            Crew:&nbsp;
+            {
+              movie.crew && movie.crew.length > 0 ?
+                <ul>
+                  {movie.crew.map((crewMember) =>
+                    <li key={crewMember.id}>{crewMember.name}</li>
                   )}
                 </ul>
                 :
@@ -44,7 +58,7 @@ class MovieDetailedView extends Component {
           <div>
             Genres: 
             <ul>
-              {movie.genre.map((g, index) =>
+              {movie.genres.map((g, index) =>
                 <li key={index}>{g}</li>
               )}
             </ul>
@@ -59,7 +73,7 @@ class MovieDetailedView extends Component {
             </ul>
           </div>
 
-          <div>Runtime: {movie.runtime} min</div>
+          <div>Runtime: {movie.runtime}</div>
           {
             movie.website &&
             <div>Website:&nbsp;
