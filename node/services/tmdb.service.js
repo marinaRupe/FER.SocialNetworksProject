@@ -46,7 +46,7 @@ const getDetailedMovies = async movieList => {
   return movies;
 };
 
-const getMostPopularMovies = async (page = 1) => {
+const getMostPopularMovies = (page = 1) => {
   console.info('Fetching most popular movies...');
   const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
     params: {
@@ -59,7 +59,7 @@ const getMostPopularMovies = async (page = 1) => {
   return response;
 };
 
-const getMostRatedMovies = async (page = 1) => {
+const getMostRatedMovies = (page = 1) => {
   const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -94,7 +94,7 @@ const mapMovieList = movieList => {
   return movies;
 };
 
-const getMovieExternalIds = async tmdbMovieId => {
+const getMovieExternalIds = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_EXTERNAL_IDS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -104,7 +104,7 @@ const getMovieExternalIds = async tmdbMovieId => {
   return response;
 };
 
-const getMovieAlternativeTitles = async tmdbMovieId => {
+const getMovieAlternativeTitles = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_ALTERNATIVE_TITLES(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -114,7 +114,7 @@ const getMovieAlternativeTitles = async tmdbMovieId => {
   return response;
 };
 
-const getMovieKeywords = async tmdbMovieId => {
+const getMovieKeywords = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_KEYWORDS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -124,7 +124,7 @@ const getMovieKeywords = async tmdbMovieId => {
   return response;
 };
 
-const getMovieVideos = async tmdbMovieId => {
+const getMovieVideos = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_VIDEOS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -134,7 +134,7 @@ const getMovieVideos = async tmdbMovieId => {
   return response;
 };
 
-const getMovieTranslations = async tmdbMovieId => {
+const getMovieTranslations = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_TRANSLATIONS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -144,7 +144,7 @@ const getMovieTranslations = async tmdbMovieId => {
   return response;
 };
 
-const getMovieCredits = async tmdbMovieId => {
+const getMovieCredits = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_CREDITS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
@@ -154,7 +154,7 @@ const getMovieCredits = async tmdbMovieId => {
   return response;
 };
 
-const fetchMovies = async (page = 1) => {
+const fetchMovies = (page = 1) => {
   console.info('Fetching movies...');
   const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
     params: {
@@ -235,7 +235,7 @@ const mapMovie = async movie => {
     tmdbVoteAverage: movie.vote_average || null,
     tmdbVoteCount: movie.vote_count || null,
 
-    adult: movie.adult || null,
+    adult: movie.adult,
   };
 
   return newMovie;
