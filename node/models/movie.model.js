@@ -123,6 +123,10 @@ const movieSchema = new Schema({
   imdbRating: String,
   metascore: String,
   rottenTomatoesRating: String,
+  awards: String,
+
+  adult: Boolean,
+  rating: String, // e.g. PG
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

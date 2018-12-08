@@ -35,28 +35,38 @@ const mapMovieList = movieList => {
 const expandMovieList = async movieList => await Promise.all(movieList.map(expandMovie));
 
 const expandMovie = async movie => {
-  const omdbMovie = await getMovieDetails(movie.imdbID);
+  const omdbMovie = (await getMovieDetails(movie.imdbID)).data || {};
 
-  const newGenres = omdbMovie.Genre.split(',')
+  const newGenres = (omdbMovie.Genre ? omdbMovie.Genre.split(',') : [])
     .map(genre => genre.trim().toLowerCase())
     .filter(genre => !movie.genres.includes(genre));
 
-  const ratingsObject = {
+  const ratingsObject = omdbMovie.Ratings ? {
     imdbRating: (omdbMovie.Ratings.find(rating => rating.Source === 'Internet Movie Database') || {}).Value,
     metascore: (omdbMovie.Ratings.find(rating => rating.Source === 'Metacritic') || {}).Value,
     rottenTomatoesRating: (omdbMovie.Ratings.find(rating => rating.Source === 'Rotten Tomatoes') || {}).Value,
-  }
+  } : {};
   ratingsObject.imdbRating = ratingsObject.imdbRating ? ratingsObject.imdbRating.split('/')[0] : null;
   ratingsObject.metascore = ratingsObject.metascore ? ratingsObject.metascore.split('/')[0] : null;
   ratingsObject.rottenTomatoesRating = ratingsObject.rottenTomatoesRating || null;
 
   const newMovie = {
     ...movie,
-    plot: movie.plot || omdbMovie.Plot,
+
+    plot: movie.plot || omdbMovie.Plot || null,
     genres: [...movie.genres, ...newGenres],
+
+    poster: movie.poster || omdbMovie.Poster || null,
+    website: movie.website || omdbMovie.Website || null,
+
+    runtime: movie.runtime || omdbMovie.Runtime || null,
+
     imdbRating: omdbMovie.imdbRating || ratingsObject.imdbRating,
     metascore: omdbMovie.Metascore || ratingsObject.metascore,
     rottenTomatoesRating: ratingsObject.rottenTomatoesRating,
+    awards: omdbMovie.Awards || null,
+
+    rating: omdbMovie.Ratings || null,
   }
 
   return newMovie;
