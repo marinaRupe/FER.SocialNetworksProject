@@ -40,7 +40,7 @@ async function fetchMovies() {
 
   console.log(`Page number: ${1}`);
   const response = (await tmdbService.fetchMovies(1)).data;
-  const totalPages = 1; //response.total_pages;
+  const totalPages = response.total_pages;
 
   const movies = await tmdbService.getDetailedMovies(response.results);
   const expandedMovies = await omdbService.expandMovieList(movies);
