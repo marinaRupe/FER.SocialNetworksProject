@@ -9,7 +9,7 @@ const castSchema = new Schema({
   credit_id: {
     type: String,
   },
-  id: {
+  personId: {
     type: Number,
   },
   characterName: {
@@ -33,7 +33,7 @@ const crewSchema = new Schema({
   credit_id: {
     type: String,
   },
-  id: {
+  personId: {
     type: Number,
   },
   name: {

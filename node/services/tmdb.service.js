@@ -9,6 +9,7 @@ const MOVIE_ALTERNATIVE_TITLES = tmdbMovieId => `/movie/${tmdbMovieId}/alternati
 const MOVIE_KEYWORDS = tmdbMovieId => `/movie/${tmdbMovieId}/keywords`;
 const MOVIE_VIDEOS = tmdbMovieId => `/movie/${tmdbMovieId}/videos`;
 const MOVIE_TRANSLATIONS = tmdbMovieId => `/movie/${tmdbMovieId}/translations`;
+const MOVIE_CREDITS = tmdbMovieId => `/movie/${tmdbMovieId}/credits`;
 
 const TMDB_IMAGES_URL = 'http://image.tmdb.org/t/p/';
 const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/watch';
@@ -143,6 +144,16 @@ const getMovieTranslations = async tmdbMovieId => {
   return response;
 };
 
+const getMovieCredits = async tmdbMovieId => {
+  const response = axios.get(`${MOVIE_API_URL}${MOVIE_CREDITS(tmdbMovieId)}`, {
+    params: {
+      'api_key': process.env.TMDB_API_KEY,
+    }
+  });
+
+  return response;
+};
+
 const mapMovie = async movie => {
   const defaultPosterSize = 'w500';
   const movieTmdbId = movie.id;
@@ -152,6 +163,9 @@ const mapMovie = async movie => {
   const keywords = (await getMovieKeywords(movieTmdbId)).data;
   const videos = (await getMovieVideos(movieTmdbId)).data;
   const translations = (await getMovieTranslations(movieTmdbId)).data;
+  const credits = (await getMovieCredits(movieTmdbId)).data;
+
+  const genders = ['unknown', 'female', 'male'];
 
   const newMovie = {
     imdbID: movie.imdb_id,
@@ -174,8 +188,26 @@ const mapMovie = async movie => {
     })),
     website: movie.homepage,
 
-    cast: [],
-    crew: [],
+    cast: credits.cast.map(c => ({
+      cast_id: c.cast_id,
+      credit_id: c.credit_id,
+      personId: c.id,
+      name: c.name,
+      characterName: c.character,
+      gender: genders[c.gender],
+      order: c.order,
+      profileImage: c.profile_path ? `${TMDB_IMAGES_URL}${defaultPosterSize}${c.profile_path}` : null,
+    })),
+
+    crew: credits.crew.map(c => ({
+      credit_id: c.credit_id,
+      personId: c.id,
+      name: c.name,
+      gender: genders[c.gender],
+      profileImage: c.profile_path ? `${TMDB_IMAGES_URL}${defaultPosterSize}${c.profile_path}` : null,
+      department: c.department,
+      job: c.job,
+    })),
 
     runtime: `${movie.runtime} min`,
     budget: movie.budget,
