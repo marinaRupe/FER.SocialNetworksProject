@@ -154,6 +154,19 @@ const getMovieCredits = async tmdbMovieId => {
   return response;
 };
 
+const fetchMovies = async (page = 1) => {
+  console.info('Fetching movies...');
+  const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
+    params: {
+      'api_key': process.env.TMDB_API_KEY,
+      'sort_by': 'popularity.desc',
+      page
+    }
+  });
+
+  return response;
+};
+
 const mapMovie = async movie => {
   const defaultPosterSize = 'w500';
   const movieTmdbId = movie.id;
@@ -235,4 +248,5 @@ module.exports = {
   getMostRatedMovies,
   mapMovieList,
   saveMovieList,
+  fetchMovies,
 };
