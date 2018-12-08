@@ -2,7 +2,9 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const MovieService = require('./services/movie.service');
 const tmdbService = require('./services/tmdb.service');
+const omdbService = require('./services/omdb.service');
 const expressConfig = require('./configuration/express.config');
 const mongoConfig = require('./configuration/mongo.config');
 
@@ -35,16 +37,25 @@ app.use((err, req, res) => {
 
 async function fetchMovies() {
   console.log('Started fetching movies...');
-  const response = (await tmdbService.fetchMovies(1)).data;
-  const movies = await tmdbService.getDetailedMovies(response.results);
-  await tmdbService.saveMovieList(movies);
 
-  const totalPages = response.total_pages;
+  console.log(`Page number: ${1}`);
+  const response = (await tmdbService.fetchMovies(1)).data;
+  const totalPages = 1; //response.total_pages;
+
+  const movies = await tmdbService.getDetailedMovies(response.results);
+  const expandedMovies = await omdbService.expandMovieList(movies);
+
+  await MovieService.saveMovieList(expandedMovies);
 
   for (let page = 2; page <= totalPages; page++) {
+    console.log(`Page number: ${page}`);
     const response = (await tmdbService.fetchMovies(page)).data;
+
     const movies = await tmdbService.getDetailedMovies(response.results);
-    await tmdbService.saveMovieList(movies);
+    console.log('Expanding movies...');
+    const expandedMovies = await omdbService.expandMovieList(movies);
+
+    await MovieService.saveMovieList(expandedMovies);
   }
 
   console.log('Finished fetching movies!');

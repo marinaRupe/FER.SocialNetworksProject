@@ -1,3 +1,4 @@
+const axios = require('axios');
 const OMDB_URL = `http://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}`;
 
 const getMovieDetails = async imdbMovieId => {
@@ -67,10 +68,10 @@ const expandMovie = async movie => {
     awards: omdbMovie.Awards || null,
 
     rating: omdbMovie.Ratings || null,
-  }
+  };
 
   return newMovie;
-}
+};
 
 module.exports = {
   mapMovieList,

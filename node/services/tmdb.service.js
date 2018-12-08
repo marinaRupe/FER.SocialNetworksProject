@@ -199,7 +199,7 @@ const mapMovie = async movie => {
       key: v.key,
       url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`
     })),
-    website: movie.homepage,
+    website: movie.homepage || null,
 
     cast: (credits.cast || []).map(c => ({
       cast_id: c.cast_id,
