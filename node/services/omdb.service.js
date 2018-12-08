@@ -1,4 +1,4 @@
-const OMDB_URL = `http://www.omdbapi.com/?apikey=${process.env.}`;
+const OMDB_URL = `http://www.omdbapi.com/?apikey=${process.env.OMDB_API_KEY}`;
 
 const getMovieDetails = async imdbMovieId => {
   const response = axios.get(`${OMDB_URL}&i=${imdbMovieId}`);
