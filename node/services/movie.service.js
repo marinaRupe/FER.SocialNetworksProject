@@ -13,7 +13,11 @@ const saveMovie = async movie => {
     ...movie,
   });
 
-  newMovie.save();
+  await newMovie.save();
+};
+
+const updateMovie = async movie => {
+  await Movie.findByIdAndUpdate(movie._id, { $set: movie });
 };
 
 const saveMovieList = async movies => {
@@ -21,8 +25,21 @@ const saveMovieList = async movies => {
 
   for (const movie of movies) {
     if (!(await existsMovieWithImdbID(movie.imdbID))) {
-      await saveMovie(movie);
-      console.info(`The movie with imdb ID ${movie.imdbID} is saved!`);
+      try {
+        await saveMovie(movie);
+        console.info(`The movie with imdb ID ${movie.imdbID} is saved (tmdbID: ${movie.tmdbID})!`);
+      } catch (err) {
+        console.info(`The movie with imdb ID ${movie.imdbID} is NOT saved (tmdbID: ${movie.tmdbID})!`);
+        console.info(err.message);
+      }
+    } else {
+      try {
+        await updateMovie(movie);
+        console.info(`The movie with imdb ID ${movie.imdbID} is updated (tmdbID: ${movie.tmdbID})!`);
+      } catch (err) {
+        console.info(`The movie with imdb ID ${movie.imdbID} is NOT updated (tmdbID: ${movie.tmdbID})!`);
+        console.info(err.message);
+      }
     }
   }
 };
