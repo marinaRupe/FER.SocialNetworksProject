@@ -52,7 +52,6 @@ async function fetchMovies() {
     const response = (await tmdbService.fetchMovies(page)).data;
 
     const movies = await tmdbService.getDetailedMovies(response.results);
-    console.log('Expanding movies...');
     const expandedMovies = await omdbService.expandMovieList(movies);
 
     await MovieService.saveMovieList(expandedMovies);
