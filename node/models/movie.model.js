@@ -126,7 +126,7 @@ const movieSchema = new Schema({
   awards: String,
 
   adult: Boolean,
-  rating: String, // e.g. PG
+  rated: String, // e.g. PG
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

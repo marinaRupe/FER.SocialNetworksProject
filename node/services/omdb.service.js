@@ -72,7 +72,7 @@ const expandMovie = async movie => {
       rottenTomatoesRating: ratingsObject.rottenTomatoesRating,
       awards: omdbMovie.Awards || null,
 
-      rating: omdbMovie.Ratings || null,
+      rated: omdbMovie.Rated || null,
     };
 
     return newMovie;

@@ -58,6 +58,7 @@ async function fetchMovies() {
   }
 
   console.log('Finished fetching movies!');
+  process.exit(0);
 }
 
 fetchMovies();
