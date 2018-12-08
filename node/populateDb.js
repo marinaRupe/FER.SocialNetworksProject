@@ -33,20 +33,21 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
-expressConfig.listen(app);
-
 async function fetchMovies() {
+  console.log('Started fetching movies...');
   const response = (await tmdbService.fetchMovies(1)).data;
   const movies = await tmdbService.getDetailedMovies(response.results);
   await tmdbService.saveMovieList(movies);
 
-  const totalPages = 5;//response.total_pages;
+  const totalPages = response.total_pages;
 
   for (let page = 2; page <= totalPages; page++) {
     const response = (await tmdbService.fetchMovies(page)).data;
     const movies = await tmdbService.getDetailedMovies(response.results);
     await tmdbService.saveMovieList(movies);
   }
+
+  console.log('Finished fetching movies!');
 }
 
 fetchMovies();
