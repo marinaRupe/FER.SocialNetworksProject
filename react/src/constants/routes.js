@@ -8,9 +8,6 @@ export const API = {
     REGISTER: `${API_URL}/user/register`,
     CHANGE_PASSWORD: `${API_URL}/user/changePassword`,
   },
-  TEST: {
-    TEXT: `${API_URL}/test/text`,
-  },
   MOVIE: {
     FETCH_MOST_POPUAR_MOVIES: (page) => `${API_URL}/movie/most-popular/${page}`,
     FETCH_MOST_RATED_MOVIES: (page) => `${API_URL}/movie/most-rated/${page}`,
