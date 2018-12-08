@@ -36,19 +36,22 @@ app.use((err, req, res) => {
 });
 
 async function fetchMovies() {
-  console.log('Started fetching movies...');
+  console.info('Started fetching movies...');
+  const startPage = 1;
 
-  console.log(`Page number: ${1}`);
-  const response = (await tmdbService.fetchMovies(1)).data;
+  console.info(`Page number: ${startPage}`);
+  const response = (await tmdbService.fetchMovies(startPage)).data;
   const totalPages = response.total_pages;
 
   const movies = await tmdbService.getDetailedMovies(response.results);
+  console.log(movies.map(m => m.imdbID));
   const expandedMovies = await omdbService.expandMovieList(movies);
+  console.log(expandedMovies.map(m => m.imdbID));
 
   await MovieService.saveMovieList(expandedMovies);
 
-  for (let page = 2; page <= totalPages; page++) {
-    console.log(`Page number: ${page}`);
+  for (let page = startPage + 1; page <= totalPages; page++) {
+    console.info(`\nPage number: ${page}/${totalPages}`);
     const response = (await tmdbService.fetchMovies(page)).data;
 
     const movies = await tmdbService.getDetailedMovies(response.results);
@@ -57,7 +60,7 @@ async function fetchMovies() {
     await MovieService.saveMovieList(expandedMovies);
   }
 
-  console.log('Finished fetching movies!');
+  console.info('Finished fetching movies!');
   process.exit(0);
 }
 
