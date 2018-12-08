@@ -3,7 +3,6 @@ const path = require('path');
 const expressConfig = require('../configuration/express.config');
 const apiConstants = require('../constants/api.constants');
 const userRouter = require('../routes/api/user.routes');
-const testRouter = require('../routes/api/test.routes');
 const movieReviewRouter = require('../routes/api/movieReview.routes');
 const movieRouter = require('../routes/api/movie.routes');
 
@@ -20,7 +19,6 @@ const useDevelopmentRoutes = app => {
 
 const configure = app => {
   app.use(`${apiConstants.API_PATH}/user`, userRouter);
-  app.use(`${apiConstants.API_PATH}/test`, testRouter);
   app.use(`${apiConstants.API_PATH}/movie-review`, movieReviewRouter);
   app.use(`${apiConstants.API_PATH}/movie`, movieRouter);
 
