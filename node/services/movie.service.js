@@ -8,6 +8,13 @@ const getMovieWithImdbID = async imdbID => (await Movie.findOne({ imdbID }).exec
 
 const getMovieWithTmdbID = async tmdbID => (await Movie.findOne({ tmdbID }).exec());
 
+const getMoviesByPopularity = async page => (await Movie.find()
+  .skip((page - 1) * 40)
+  .limit(40)
+  .sort({ 'tmdbPopularity' : 'desc' })
+  .exec()
+);
+
 const saveMovie = async movie => {
   const newMovie = new Movie({
     ...movie,
@@ -51,4 +58,5 @@ module.exports = {
   getMovieWithTmdbID,
   saveMovie,
   saveMovieList,
+  getMoviesByPopularity,
 };

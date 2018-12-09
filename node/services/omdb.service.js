@@ -4,7 +4,6 @@ const OMDB_URL = 'http://www.omdbapi.com/';
 
 const getMovieDetails = imdbMovieId => {
   const response = axios.get(`${OMDB_URL}?apikey=${process.env.OMDB_API_KEY}&i=${imdbMovieId}`);
-
   return response;
 };
 
@@ -45,16 +44,26 @@ const expandMovie = async movie => {
       Fields will remain undefined.`);
     return movie;
   }
+  if (movie.imdbRating) {
+    console.info(`Skipping expanding for imdb ID ${movie.imdbID}`);
+    return movie;
+  }
 
   let omdbMovie = null;
   try {
-    omdbMovie = (await getMovieDetails(movie.imdbID)).data || {};
+    const response = (await getMovieDetails(movie.imdbID)).data;
+
+    if (response.Response && response.Response === 'False') {
+      throw new Error(response.Error);
+    }
+
+    omdbMovie = response;
   } catch (err) {
-    console.info(`Error while expanding movie with IMDB ID ${movie.imdbID} with OMDB data.
-      Fields will remain undefined.`);
     console.info(err.message);
   }
   if (omdbMovie === null) {
+    console.info(`Error while expanding movie with IMDB ID ${movie.imdbID} with OMDB data.
+      Fields will remain undefined.`);
     return movie;
   }
 

@@ -97,7 +97,7 @@ const mapMovieList = movieList => {
 const getMovieExternalIds = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_EXTERNAL_IDS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY2,
     }
   });
 
@@ -117,7 +117,7 @@ const getMovieAlternativeTitles = tmdbMovieId => {
 const getMovieKeywords = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_KEYWORDS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY2,
     }
   });
 
@@ -137,7 +137,7 @@ const getMovieVideos = tmdbMovieId => {
 const getMovieTranslations = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_TRANSLATIONS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY2,
     }
   });
 
