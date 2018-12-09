@@ -88,3 +88,5 @@ dist-react/
 
 # CSS files
 *.css
+
+logs.txt

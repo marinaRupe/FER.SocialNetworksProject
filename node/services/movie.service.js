@@ -8,12 +8,23 @@ const getMovieWithImdbID = async imdbID => (await Movie.findOne({ imdbID }).exec
 
 const getMovieWithTmdbID = async tmdbID => (await Movie.findOne({ tmdbID }).exec());
 
+const getMoviesByPopularity = async page => (await Movie.find()
+  .skip((page - 1) * 40)
+  .limit(40)
+  .sort({ 'tmdbPopularity' : 'desc' })
+  .exec()
+);
+
 const saveMovie = async movie => {
   const newMovie = new Movie({
     ...movie,
   });
 
-  newMovie.save();
+  await newMovie.save();
+};
+
+const updateMovie = async movie => {
+  await Movie.findByIdAndUpdate(movie._id, { $set: movie });
 };
 
 const saveMovieList = async movies => {
@@ -21,8 +32,21 @@ const saveMovieList = async movies => {
 
   for (const movie of movies) {
     if (!(await existsMovieWithImdbID(movie.imdbID))) {
-      await saveMovie(movie);
-      console.info(`The movie with imdb ID ${movie.imdbID} is saved!`);
+      try {
+        await saveMovie(movie);
+        console.info(`The movie with imdb ID ${movie.imdbID} is saved (tmdbID: ${movie.tmdbID})!`);
+      } catch (err) {
+        console.info(`The movie with imdb ID ${movie.imdbID} is NOT saved (tmdbID: ${movie.tmdbID})!`);
+        console.info(err.message);
+      }
+    } else {
+      try {
+        await updateMovie(movie);
+        console.info(`The movie with imdb ID ${movie.imdbID} is updated (tmdbID: ${movie.tmdbID})!`);
+      } catch (err) {
+        console.info(`The movie with imdb ID ${movie.imdbID} is NOT updated (tmdbID: ${movie.tmdbID})!`);
+        console.info(err.message);
+      }
     }
   }
 };
@@ -34,4 +58,5 @@ module.exports = {
   getMovieWithTmdbID,
   saveMovie,
   saveMovieList,
+  getMoviesByPopularity,
 };

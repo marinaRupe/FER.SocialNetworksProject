@@ -30,7 +30,7 @@ const getDetailedMovies = async movieList => {
   for (const movie of movieList) {
     if (await MovieService.existsMovieWithTmdbID(movie.id)) {
       const movieWithDetails = await MovieService.getMovieWithTmdbID(movie.id);
-      movies.push(movieWithDetails);
+      movies.push(movieWithDetails.toObject());
     } else {
       const movieWithDetailsResponse = await getMovieDetails(movie.id);
     
@@ -97,7 +97,7 @@ const mapMovieList = movieList => {
 const getMovieExternalIds = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_EXTERNAL_IDS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY2,
     }
   });
 
@@ -117,7 +117,7 @@ const getMovieAlternativeTitles = tmdbMovieId => {
 const getMovieKeywords = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_KEYWORDS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY2,
     }
   });
 
@@ -137,7 +137,7 @@ const getMovieVideos = tmdbMovieId => {
 const getMovieTranslations = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_TRANSLATIONS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY2,
     }
   });
 
