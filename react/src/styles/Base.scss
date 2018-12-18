@@ -2,6 +2,8 @@
 @import 'styles/Colors.scss';
 @import 'styles/Constants.scss';
 
+
+/* Override */
 body {
   background-color: $col-backgroung-black;
   color: $col-normalText--light;
@@ -10,6 +12,17 @@ body {
 a {
   text-decoration: none;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.page-link {
+  color: $col-normalText--light !important;
+}
+
+/* Custom */
 
 .link {
   color: $col-primary;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import movieActions from '../../../redux/actionCreators/movieActionCreator';
 import MovieListItem from '../../../components/Movie/MovieListItem';
+import PaginationComponent from '../../../components/PaginationComponent';
 
 class MostPopularMovies extends Component {
   constructor(props) {
@@ -20,6 +21,20 @@ class MostPopularMovies extends Component {
     });
 
     dispatch(movieActions.fetchMostPopularMovies());
+
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  fetchMovies = page => {
+    const { dispatch } = this.props;
+
+    this.setState({
+      isLoading: true,
+    });
+
+    dispatch(movieActions.fetchMostPopularMovies(page));
 
     this.setState({
       isLoading: false,
@@ -54,10 +69,17 @@ class MostPopularMovies extends Component {
   }
 
   render() {
+    const { page, totalPages } = this.props;
+
     return (
       <div>
         <div className="movie-list__title">Most popular movies</div>
         {this.renderMovieList()}
+        <PaginationComponent
+          current={page}
+          total={totalPages}
+          action={this.fetchMovies}
+        />
       </div>
     );
   }
@@ -66,6 +88,8 @@ class MostPopularMovies extends Component {
 const mapStateToProps = state => {
   return {
     movies: state.movies.list,
+    page: state.movies.page,
+    totalPages: state.movies.totalPages,
   };
 };
 

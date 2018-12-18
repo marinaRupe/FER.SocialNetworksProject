@@ -116,11 +116,17 @@ const movieSchema = new Schema({
   languages: [String],
   translations: [String],
 
-  tmdbPopularity: Number,
+  tmdbPopularity: {
+    type: Number,
+    index: true,
+  },
   tmdbVoteAverage: Number,
   tmdbVoteCount: Number,
 
-  imdbRating: String,
+  imdbRating: {
+    type: String,
+    index: true,
+  },
   metascore: String,
   rottenTomatoesRating: String,
   awards: String,
