@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { facebookJSSDKSetup } from '../../utils/auth.utils';
 import userActions from '../../redux/actionCreators/userActionCreator';
+import { buttonTypes } from '../../enums/buttonTypes.enum';
+import Button from '../../components/Button';
 
 class Profile extends Component {
   componentDidMount() {
@@ -42,12 +44,11 @@ class Profile extends Component {
         <div className='profile__title'>Profile</div>
         {this.renderProfileData()}
         <div>
-          <button
-            onClick={this.logout}
-            className='btn-primary'
-          >
-            Logout
-          </button>
+          <Button
+            action={this.logout}
+            text='Logout'
+            type={buttonTypes.secondary}
+          />
         </div>
       </div>
     );

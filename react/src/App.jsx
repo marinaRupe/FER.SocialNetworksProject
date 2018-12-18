@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import Home from './scenes/Home';
+import NavigationBar from './components/NavigationBar';
 import PrivateRoute from './scenes/Auth/PrivateRoute';
 import Login from './scenes/Auth/Login';
 import Register from './scenes/Auth/Register';
@@ -22,6 +23,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
+          <NavigationBar />
           <Switch>
             <Route exact path={APP.AUTH.LOGIN} component={Login} />
             <Route exact path={APP.AUTH.REGISTER} component={Register} />
