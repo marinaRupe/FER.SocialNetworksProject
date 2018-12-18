@@ -29,6 +29,11 @@ export const APP = {
     DETAILS: (movieId = ':movieId') => `/movie/${movieId}/details`,
     POPULAR_MOVIES: '/movies/most-popular',
     MOST_RATED_MOVIES: '/movies/most-rated',
+    PERSONAL: {
+      USER_RATED_MOVIES: '/movies/rated',
+      USER_WATCHED_MOVIES: '/movies/watched',
+      USER_SAVED_MOVIES: '/movies/saved',
+    }
   },
   PROFILE: '/profile',
   SERVER_ERROR: '/error/500',

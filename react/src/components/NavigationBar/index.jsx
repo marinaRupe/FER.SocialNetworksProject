@@ -79,9 +79,9 @@ class NavigationBar extends React.Component {
                     <div className='d-none d-md-inline'>Your movie lists</div>
                   </DropdownToggle>
                   <DropdownMenu className='dropdown-default'right>
-                    <DropdownItem href='#!'>Watched movies</DropdownItem>
-                    <DropdownItem href='#!'>Rated movies</DropdownItem>
-                    <DropdownItem href='#!'>To-watch list</DropdownItem>
+                    <DropdownItem href={APP.MOVIE.PERSONAL.USER_WATCHED_MOVIES}>Watched movies</DropdownItem>
+                    <DropdownItem href={APP.MOVIE.PERSONAL.USER_RATED_MOVIES}>Rated movies</DropdownItem>
+                    <DropdownItem href={APP.MOVIE.PERSONAL.USER_SAVED_MOVIES}>Saved movies</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
               </NavItem>
