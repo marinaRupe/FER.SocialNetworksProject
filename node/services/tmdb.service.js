@@ -107,7 +107,7 @@ const getMovieExternalIds = tmdbMovieId => {
 const getMovieAlternativeTitles = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_ALTERNATIVE_TITLES(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY3,
     }
   });
 
@@ -127,7 +127,7 @@ const getMovieKeywords = tmdbMovieId => {
 const getMovieVideos = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_VIDEOS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY3,
     }
   });
 
@@ -147,7 +147,7 @@ const getMovieTranslations = tmdbMovieId => {
 const getMovieCredits = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_CREDITS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
+      'api_key': process.env.TMDB_API_KEY3,
     }
   });
 
@@ -159,7 +159,8 @@ const fetchMovies = (page = 1) => {
   const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
-      'sort_by': 'popularity.desc',
+      'sort_by': 'release_date.desc',
+      'release_date.lte': '2017-09-10',
       page
     }
   });
@@ -170,6 +171,11 @@ const fetchMovies = (page = 1) => {
 const mapMovie = async movie => {
   const defaultPosterSize = 'w500';
   const movieTmdbId = movie.id;
+
+  if (!movie.imdb_id) {
+    console.info('No IMDb ID for movie with TMDB ID = ' + movie.id);
+    return movie;
+  }
   
   const externalIds = (await getMovieExternalIds(movieTmdbId)).data || {};
   const alternativeTitles = (await getMovieAlternativeTitles(movieTmdbId)).data || {};
@@ -247,6 +253,7 @@ module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
   mapMovieList,
+  mapMovie,
   saveMovieList,
   fetchMovies,
 };

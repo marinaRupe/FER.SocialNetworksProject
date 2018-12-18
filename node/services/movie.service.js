@@ -15,6 +15,21 @@ const getMoviesByPopularity = async page => (await Movie.find()
   .exec()
 );
 
+const getMoviesByReleaseDate = async page => (await Movie.find()
+  .skip((page - 1) * 40)
+  .limit(40)
+  .sort({ 'releaseDate' : 'desc' })
+  .exec()
+);
+
+const getMoviesWithNoOmdbData = async page => (await Movie.find({ 'awards': null })
+  .skip((page - 1) * 40)
+  .limit(40)
+  .exec()
+);
+
+const getMoviesCount = async (filter = {}) => (await Movie.countDocuments(filter));
+
 const saveMovie = async movie => {
   const newMovie = new Movie({
     ...movie,
@@ -58,5 +73,9 @@ module.exports = {
   getMovieWithTmdbID,
   saveMovie,
   saveMovieList,
+  updateMovie,
   getMoviesByPopularity,
+  getMoviesByReleaseDate,
+  getMoviesWithNoOmdbData,
+  getMoviesCount,
 };
