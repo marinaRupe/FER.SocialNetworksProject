@@ -18,6 +18,10 @@
     &__description {
       font-size: $val-fontSizeRegular;
       color: $col-movie-description;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 80vw;
     }
     &__image {
       &--size {
