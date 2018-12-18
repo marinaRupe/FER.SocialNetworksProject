@@ -51,6 +51,25 @@ const movieActions = {
       }
     };
   },
+
+  fetchNowPlayingMovies() {
+    const page = 1;
+
+    return async (dispatch) => {
+      try {
+        const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page));
+        if (resp.status === 200) {
+          await dispatch(actions.fetchMostRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+        }
+      } catch (error) {
+        if (error.status === 400) {
+          history.push(APP.NOT_FOUND_ERROR);
+        } else {
+          history.push(APP.SERVER_ERROR);
+        }
+      }
+    };
+  },
 };
 
 export default movieActions;
