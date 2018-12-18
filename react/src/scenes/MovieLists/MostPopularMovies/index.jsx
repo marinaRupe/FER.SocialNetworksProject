@@ -47,22 +47,22 @@ class MostPopularMovies extends Component {
 
     if (isLoading) {
       return (
-        <div className="movie-list">
-          Loading...
+        <div className='movie-list loading'>
+          <div class='loader border-top-info'></div>
         </div>
       );
     }
 
     if (movies.length > 0) {
       return (
-        <div className="movie-list">
+        <div className='movie-list'>
           {movies.map(m => <MovieListItem key={m.imdbID} movie={m} />)}
         </div>
       );
     }
 
     return (
-      <div className="movie-list">
+      <div className='movie-list'>
         Movies not found.
       </div>
     );
@@ -73,7 +73,7 @@ class MostPopularMovies extends Component {
 
     return (
       <div>
-        <div className="movie-list__title">Most popular movies</div>
+        <div className='movie-list__title'>Most popular movies</div>
         {this.renderMovieList()}
         <PaginationComponent
           current={page}

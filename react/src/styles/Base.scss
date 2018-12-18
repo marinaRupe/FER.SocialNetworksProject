@@ -22,6 +22,15 @@ a {
   color: $col-normalText--light !important;
 }
 
+.loading {
+  display: flex;
+  align-items: center;
+  .loader {
+    border: 10px solid $col-stylish-color;
+    border-top: 10px solid #33b5e5;
+  }
+}
+
 /* Custom */
 
 .link {

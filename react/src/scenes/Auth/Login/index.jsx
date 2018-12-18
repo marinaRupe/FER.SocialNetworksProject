@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { APP } from '../../../constants/routes';
 import { facebookJSSDKSetup, checkLoginState, getToken } from '../../../utils/auth.utils';
+import { buttonTypes } from '../../../enums/buttonTypes.enum';
+import ButtonComponent from '../../../components/ButtonComponent';
 
 class Login extends Component {
   componentDidMount() {
@@ -40,9 +42,11 @@ class Login extends Component {
             data-use-continue-as='false'
             onClick={this.handleClickOnLoginButton}
           >
-            <button className='btn-primary'>
-              Login with Facebook
-            </button>
+            <ButtonComponent
+              action={this.logout}
+              text='Login with Facebook'
+              type={buttonTypes.primary}
+            />
           </div>
         </div>
       </div>

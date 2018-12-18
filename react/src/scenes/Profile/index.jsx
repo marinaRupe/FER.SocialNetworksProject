@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { facebookJSSDKSetup } from '../../utils/auth.utils';
 import userActions from '../../redux/actionCreators/userActionCreator';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
-import Button from '../../components/Button';
+import ButtonComponent from '../../components/ButtonComponent';
 
 class Profile extends Component {
   componentDidMount() {
@@ -44,7 +44,7 @@ class Profile extends Component {
         <div className='profile__title'>Profile</div>
         {this.renderProfileData()}
         <div>
-          <Button
+          <ButtonComponent
             action={this.logout}
             text='Logout'
             type={buttonTypes.secondary}
