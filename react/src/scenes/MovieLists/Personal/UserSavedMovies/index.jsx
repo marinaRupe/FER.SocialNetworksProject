@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import movieActions from '../../../redux/actionCreators/movieActionCreator';
-import MovieListItem from '../../../components/Movie/MovieListItem';
-import PaginationComponent from '../../../components/PaginationComponent';
+import movieActions from '../../../../redux/actionCreators/movieActionCreator';
+import MovieListItem from '../../../../components/Movie/MovieListItem';
+import PaginationComponent from '../../../../components/PaginationComponent';
 
-class MostPopularMovies extends Component {
+class UserSavedMovies extends Component {
   constructor(props) {
     super(props);
 
@@ -20,7 +20,7 @@ class MostPopularMovies extends Component {
       isLoading: true,
     });
 
-    dispatch(movieActions.fetchMostPopularMovies());
+    dispatch(movieActions.fetchMostRatedMovies()); // TODO: change action
 
     this.setState({
       isLoading: false,
@@ -34,7 +34,7 @@ class MostPopularMovies extends Component {
       isLoading: true,
     });
 
-    dispatch(movieActions.fetchMostPopularMovies(page));
+    dispatch(movieActions.fetchMostRatedMovies(page)); // TODO: change action
 
     this.setState({
       isLoading: false,
@@ -73,7 +73,7 @@ class MostPopularMovies extends Component {
 
     return (
       <div>
-        <div className='movie-list__title'>Most popular movies</div>
+        <div className='movie-list__title'>Saved movies</div>
         {this.renderMovieList()}
         <PaginationComponent
           current={page}
@@ -93,4 +93,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(MostPopularMovies);
+export default connect(mapStateToProps)(UserSavedMovies);

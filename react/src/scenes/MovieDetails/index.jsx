@@ -111,6 +111,16 @@ class MovieDetails extends Component {
   }
 
   render() {
+    const { isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <div className='movie__details loading'>
+          <div class='loader border-top-info'></div>
+        </div>
+      );
+    };
+
     return (
       <div>
         <div className='movie-list__title'>Movie details</div>

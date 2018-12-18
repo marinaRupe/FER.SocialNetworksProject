@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import movieActions from '../../../redux/actionCreators/movieActionCreator';
 import MovieListItem from '../../../components/Movie/MovieListItem';
+import PaginationComponent from '../../../components/PaginationComponent';
 
 class MostRatedMovies extends Component {
   constructor(props) {
@@ -26,38 +27,59 @@ class MostRatedMovies extends Component {
     });
   }
 
+  fetchMovies = page => {
+    const { dispatch } = this.props;
+
+    this.setState({
+      isLoading: true,
+    });
+
+    dispatch(movieActions.fetchMostRatedMovies(page));
+
+    this.setState({
+      isLoading: false,
+    });
+  }
+
   renderMovieList = () => {
     const { isLoading } = this.state;
     const { movies } = this.props;
 
     if (isLoading) {
       return (
-        <div className="movie-list">
-          Loading...
+        <div className='movie-list loading'>
+          <div class='loader border-top-info'></div>
         </div>
       );
     }
 
     if (movies.length > 0) {
       return (
-        <div className="movie-list">
+        <div className='movie-list'>
           {movies.map(m => <MovieListItem key={m.imdbID} movie={m} />)}
         </div>
       );
     }
 
     return (
-      <div className="movie-list">
+      <div className='movie-list'>
         Movies not found.
       </div>
     );
   }
 
   render() {
+    const { page, totalPages } = this.props;
+
     return (
       <div>
-        <div className="movie-list__title">Most rated movies</div>
+        <div className='movie-list__title'>Most rated movies</div>
         {this.renderMovieList()}
+        <PaginationComponent
+          current={page}
+          total={totalPages}
+          action={this.fetchMovies}
+        />
       </div>
     );
   }
@@ -66,6 +88,8 @@ class MostRatedMovies extends Component {
 const mapStateToProps = state => {
   return {
     movies: state.movies.list,
+    page: state.movies.page,
+    totalPages: state.movies.totalPages,
   };
 };
 
