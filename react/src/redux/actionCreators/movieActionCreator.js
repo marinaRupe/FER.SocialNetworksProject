@@ -18,9 +18,7 @@ const movieActions = {
       }
     };
   },
-  fetchMostPopularMovies() {
-    const page = 1;
-
+  fetchMostPopularMovies(page = 1) {
     return async (dispatch) => {
       try {
         const resp = await axios.get(API.MOVIE.FETCH_MOST_POPUAR_MOVIES(page));
@@ -37,9 +35,7 @@ const movieActions = {
     };
   },
 
-  fetchMostRatedMovies() {
-    const page = 1;
-
+  fetchMostRatedMovies(page = 1) {
     return async (dispatch) => {
       try {
         const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page));

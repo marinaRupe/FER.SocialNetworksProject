@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import Home from './scenes/Home';
+import NavigationBar from './components/NavigationBar';
 import PrivateRoute from './scenes/Auth/PrivateRoute';
 import Login from './scenes/Auth/Login';
 import Register from './scenes/Auth/Register';
 import MostPopularMovies from './scenes/MovieLists/MostPopularMovies';
 import MostRatedMovies from './scenes/MovieLists/MostRatedMovies';
+import UserRatedMovies from './scenes/MovieLists/Personal/UserRatedMovies';
+import UserSavedMovies from './scenes/MovieLists/Personal/UserSavedMovies';
+import UserWatchedMovies from './scenes/MovieLists/Personal/UserWatchedMovies';
 import MovieDetails from './scenes/MovieDetails';
 import Error404 from './scenes/Error/Error404';
 import Error500 from './scenes/Error/Error500';
@@ -22,6 +26,7 @@ class App extends Component {
     return (
       <Router history={history}>
         <div>
+          <NavigationBar />
           <Switch>
             <Route exact path={APP.AUTH.LOGIN} component={Login} />
             <Route exact path={APP.AUTH.REGISTER} component={Register} />
@@ -38,6 +43,23 @@ class App extends Component {
               path={APP.MOVIE.MOST_RATED_MOVIES}
               component={MostRatedMovies}
             />
+
+            <PrivateRoute
+              authed={this.authed()}
+              path={APP.MOVIE.PERSONAL.USER_RATED_MOVIES}
+              component={UserRatedMovies}
+            />
+            <PrivateRoute
+              authed={this.authed()}
+              path={APP.MOVIE.PERSONAL.USER_WATCHED_MOVIES}
+              component={UserWatchedMovies}
+            />
+            <PrivateRoute
+              authed={this.authed()}
+              path={APP.MOVIE.PERSONAL.USER_SAVED_MOVIES}
+              component={UserSavedMovies}
+            />
+
             <PrivateRoute
               authed={this.authed()}
               path={APP.MOVIE.DETAILS()}

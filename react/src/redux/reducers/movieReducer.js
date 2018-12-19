@@ -10,8 +10,8 @@ export default function movieReducer(state = initialState.movies, action) {
         ...state,
         list: action.data.results,
         page: action.data.page,
-        totalPages: action.data.total_pages,
-        totalResults: action.data.total_results,
+        totalPages: action.data.totalPages,
+        totalResults: action.data.totalResults,
       };
     }
     return { ...state };
@@ -21,8 +21,8 @@ export default function movieReducer(state = initialState.movies, action) {
         ...state,
         list: action.data.results,
         page: action.data.page,
-        totalPages: action.data.total_pages,
-        totalResults: action.data.total_results,
+        totalPages: action.data.totalPages,
+        totalResults: action.data.totalResults,
       };
     }
     return { ...state };

@@ -2,14 +2,36 @@
 @import 'styles/Colors.scss';
 @import 'styles/Constants.scss';
 
+
+/* Override */
 body {
-  background-color: $col-fancy-black;
+  background-color: $col-backgroung-black;
   color: $col-normalText--light;
 }
 
 a {
   text-decoration: none;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.page-link {
+  color: $col-normalText--light !important;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  .loader {
+    border: 10px solid $col-stylish-color;
+    border-top: 10px solid #33b5e5;
+  }
+}
+
+/* Custom */
 
 .link {
   color: $col-primary;
@@ -20,7 +42,7 @@ a {
 .btn-primary {
   padding: $val-spacing-xs $val-spacing-s;
   margin: $val-spacing-xxs;
-  background-color: $col-primary;
+  background-color: $col-btn-primary !important;
   color: $col-normalText--dark;
   border-radius: $val-btnBorderRadius;
   text-decoration: none;

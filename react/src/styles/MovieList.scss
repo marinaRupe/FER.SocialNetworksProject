@@ -11,4 +11,7 @@
     font-size: $val-fontSizeXBig;
     font-weight: $val-fontWeightBold;
   }
+  &.loading {
+    padding-bottom: 50px;
+  }
 }

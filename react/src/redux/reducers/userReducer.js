@@ -13,6 +13,15 @@ export default function userReducer(state = initialState.users, action) {
       };
     }
     return { ...state };
+  case types.USER_LOGOUT:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        currentUser: null,
+        loggedIn: false,
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }

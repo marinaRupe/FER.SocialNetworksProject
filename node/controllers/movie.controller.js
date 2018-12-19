@@ -1,38 +1,29 @@
 const errors = require('restify-errors');
-const tmdbService = require('../services/tmdb.service');
 const MovieService = require('../services/movie.service');
+const defaultValues = require('../constants/defaultValues.constants');
 
 const getMostPopularMovies = async (req, res) => {
-  const { page } = req.params;
+  const { page = 1 } = req.params;
+  const { pageSize = defaultValues.DEFAULT_PAGE_SIZE } = req.query;
 
   const movies = await MovieService.getMoviesByPopularity(page);
+  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
 
-  // TODO: calculate total pages, results
-  const data = { page, totalPages: 1, totalResults: movies.length, results: movies };
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
 
   res.send(data);
 };
 
 const getMostRatedMovies = async (req, res) => {
-  const { page } = req.params;
+  const { page = 1 } = req.params;
+  const { pageSize = defaultValues.DEFAULT_PAGE_SIZE } = req.query;
 
-  const response = await tmdbService.getMostPopularMovies(page);
+  const movies = await MovieService.getMoviesByImdbRating(page);
+  const totalPages = Math.ceil(await MovieService.getMoviesCount({ 'imdbRating': { '$nin': [null, 'N/A'] } }) / pageSize);
 
-  if (response.status === 400) {
-    throw new errors.NotFoundError('Movies not found.');
-  }
-
-  if (response.status !== 200) {
-    throw new errors.BadRequestError('Bad request.');
-  }
-
-  const movies = await tmdbService.getDetailedMovies(response.data.results);
-
-  const data = { ...response.data, results: movies };
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
 
   res.send(data);
-
-  await tmdbService.saveMovieList(movies);
 };
 
 module.exports = {
