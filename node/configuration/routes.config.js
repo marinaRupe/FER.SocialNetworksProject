@@ -6,6 +6,7 @@ const userRouter = require('../routes/api/user.routes');
 const movieReviewRouter = require('../routes/api/movieReview.routes');
 const movieRouter = require('../routes/api/movie.routes');
 const cinemaRouter = require('../routes/api/cinema.routes');
+const weatherRouter = require('../routes/api/weather.routes');
 
 const useProductionRoutes = app => {
   app.use('/images', express.static(path.join(__dirname, '..', '..', 'dist-react', 'images'), { maxAge: 31557600000 }));
@@ -23,6 +24,7 @@ const configure = app => {
   app.use(`${apiConstants.API_PATH}/movie-review`, movieReviewRouter);
   app.use(`${apiConstants.API_PATH}/movie`, movieRouter);
   app.use(`${apiConstants.API_PATH}/cinema`, cinemaRouter);
+  app.use(`${apiConstants.API_PATH}/weather`, weatherRouter);
 
   if (expressConfig.isProduction()) {
     useProductionRoutes(app);
