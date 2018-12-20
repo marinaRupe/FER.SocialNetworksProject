@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import movieActions from '../../../redux/actionCreators/movieActionCreator';
 import MovieListItem from '../../../components/Movie/MovieListItem';
-import PaginationComponent from '../../../components/PaginationComponent';
 
-class MostPopularMovies extends Component {
+class NowPlayingMovies extends Component {
   constructor(props) {
     super(props);
 
@@ -20,21 +19,7 @@ class MostPopularMovies extends Component {
       isLoading: true,
     });
 
-    dispatch(movieActions.fetchMostPopularMovies());
-
-    this.setState({
-      isLoading: false,
-    });
-  }
-
-  fetchMovies = page => {
-    const { dispatch } = this.props;
-
-    this.setState({
-      isLoading: true,
-    });
-
-    dispatch(movieActions.fetchMostPopularMovies(page));
+    dispatch(movieActions.fetchNowPlayingMovies());
 
     this.setState({
       isLoading: false,
@@ -47,39 +32,32 @@ class MostPopularMovies extends Component {
 
     if (isLoading) {
       return (
-        <div className='movie-list loading'>
-          <div class='loader border-top-info'></div>
+        <div className="movie-list">
+          Loading...
         </div>
       );
     }
 
     if (movies.length > 0) {
       return (
-        <div className='movie-list'>
+        <div className="movie-list">
           {movies.map(m => <MovieListItem key={m.imdbID} movie={m} />)}
         </div>
       );
     }
 
     return (
-      <div className='movie-list'>
+      <div className="movie-list">
         Movies not found.
       </div>
     );
   }
 
   render() {
-    const { page, totalPages } = this.props;
-
     return (
       <div>
-        <div className='movie-list__title'>Most popular movies</div>
+        <div className="movie-list__title">Now playing movies</div>
         {this.renderMovieList()}
-        <PaginationComponent
-          current={page}
-          total={totalPages}
-          action={this.fetchMovies}
-        />
       </div>
     );
   }
@@ -88,9 +66,7 @@ class MostPopularMovies extends Component {
 const mapStateToProps = state => {
   return {
     movies: state.movies.list,
-    page: state.movies.page,
-    totalPages: state.movies.totalPages,
   };
 };
 
-export default connect(mapStateToProps)(MostPopularMovies);
+export default connect(mapStateToProps)(NowPlayingMovies);

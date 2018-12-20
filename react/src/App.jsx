@@ -18,6 +18,7 @@ import { APP } from './constants/routes';
 import { getToken } from './utils/auth.utils';
 import history from './history';
 import './styles/App.css';
+import {Helmet} from 'react-helmet';
 
 class App extends Component {
   authed = () => !!getToken();
@@ -27,6 +28,16 @@ class App extends Component {
       <Router history={history}>
         <div>
           <NavigationBar />
+          <Helmet>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+              integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+              crossorigin=""/>
+            <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+              integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+              crossorigin=""></script>
+            <script src="https://unpkg.com/react-leaflet/dist/react-leaflet.min.js"></script>
+
+          </Helmet>
           <Switch>
             <Route exact path={APP.AUTH.LOGIN} component={Login} />
             <Route exact path={APP.AUTH.REGISTER} component={Register} />

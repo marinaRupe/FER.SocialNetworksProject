@@ -17,6 +17,9 @@ export const API = {
       FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`
     }
   },
+  CINEMA: {
+    FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`
+  }
 };
 
 export const APP = {

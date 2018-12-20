@@ -13,6 +13,9 @@ const initialState = {
   reviews: {
     activeMovieReviews: []
   },
+  cinemas: {
+    list: []
+  }
 };
 
 export default initialState;
