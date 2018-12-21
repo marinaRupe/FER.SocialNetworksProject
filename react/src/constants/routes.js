@@ -19,6 +19,12 @@ export const API = {
   },
   CINEMA: {
     FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`
+  },
+  WEATHER: {
+    FETCH_WEATHER_BY_LOCATION: (location) => `${API_URL}/weather/${location}`
+  },
+  APP:{
+    FETCH_APP_INFO: `${API_URL}/app/info`
   }
 };
 

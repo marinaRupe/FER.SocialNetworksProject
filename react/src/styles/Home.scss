@@ -15,4 +15,16 @@
     height: 500px;
     width: 500px;
   }
+  &__weather-info{
+    color: $col-btn-primary;
+    padding: 10px;
+    margin-bottom: 5px;
+  }
+  &__app-info{
+    color: $col-btn-primary;
+    padding: 10px;
+    margin-bottom: 5px;
+    font-size: $val-fontSizeBig;
+    font-weight: $val-fontWeightBold;
+  }
 }

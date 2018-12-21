@@ -4,7 +4,7 @@ const WeatherController = require('../../controllers/weather.controller');
 
 const router = express.Router();
 
-router.get('/current/:location', asyncWrap(WeatherController.getCurrentWeather));
+router.get('/:location', asyncWrap(WeatherController.getCurrentWeather));
 
 
 module.exports = router;

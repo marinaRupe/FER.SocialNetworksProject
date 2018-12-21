@@ -15,7 +15,12 @@ const initialState = {
   },
   cinemas: {
     list: []
+  },
+  weather: {
+    current: null
+  },
+  app: {
+    info: null
   }
 };
-
 export default initialState;

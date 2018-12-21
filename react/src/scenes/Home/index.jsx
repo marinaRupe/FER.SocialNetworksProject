@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 import { APP } from '../../constants/routes';
 import { Map, TileLayer} from 'react-leaflet';
 import cinemaActions from '../../redux/actionCreators/cinemaActionCreator';
+import weatherActions from '../../redux/actionCreators/weatherActionCreator';
+import appInfoActions from '../../redux/actionCreators/appInfoActionCreator';
 import CinemaMarker from '../../components/Home/CinemaMarker';
+import WeatherInfo from '../../components/Home/WeatherInfo';
+import AppInfo from '../../components/Home/AppInfo';
 import { connect } from 'react-redux';
 import * as values from '../../constants/values';
+import { MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 
 class Home extends Component {
   constructor(props) {
@@ -25,6 +30,8 @@ class Home extends Component {
     });
 
     dispatch(cinemaActions.fetchCinemasByCenterLocation(values.CURRENT_LOCATION));
+    dispatch(weatherActions.fetchWeatherByLocation(values.CURRENT_LOCATION));
+    dispatch(appInfoActions.fetchAppInfo());
 
     this.setState({
       isLoading: false,
@@ -65,25 +72,40 @@ class Home extends Component {
     );
   }
 
+  renderWeatherInfo = () => {
+    const { weather } = this.props;
+
+    if (weather != null) {
+      return (
+        <WeatherInfo weather={weather}></WeatherInfo>
+      );
+    }
+  }
+
+  renderAppInfo = () => {
+    const { info } = this.props;
+
+    if (info != null) {
+      return (
+        <AppInfo info={info}></AppInfo>
+      );
+    }
+  }
+
   render() {
     return (
       <div className="home-page">
-        {this.renderCinemaMapWithMarkers()}
-        <button className='btn-primary'>
-          <Link to={APP.PROFILE}>
-            Profile
-          </Link>
-        </button>
-        <button className='btn-primary'>
-          <Link to={APP.MOVIE.POPULAR_MOVIES}>
-            Most popular movies
-          </Link>
-        </button>
-        <button className='btn-primary'>
-          <Link to={APP.MOVIE.MOST_RATED_MOVIES}>
-            Most rated movies
-          </Link>
-        </button>
+        <MDBContainer>
+          <MDBRow>
+            <MDBCol>
+              {this.renderAppInfo()}
+            </MDBCol>
+            <MDBCol>
+              {this.renderWeatherInfo()}
+              {this.renderCinemaMapWithMarkers()}
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
       </div>
     );
   }
@@ -91,7 +113,9 @@ class Home extends Component {
 const mapStateToProps = state => {
 
   return {
-    cinemas: state.cinemas.list
+    cinemas: state.cinemas.list,
+    weather: state.weather.current,
+    info: state.app.info
   };
 };
 

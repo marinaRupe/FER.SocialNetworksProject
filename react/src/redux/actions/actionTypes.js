@@ -13,3 +13,9 @@ export const FETCH_REVIEWS_FOR_MOVIE = 'FETCH_REVIEWS_FOR_MOVIE';
 
 // cinema actions
 export const FETCH_CINEMAS_BY_CENTER_LOCATION = 'FETCH_CINEMAS_BY_CENTER_LOCATION';
+
+// weather actions
+export const FETCH_WEATHER_BY_LOCATION = 'FETCH_WEATHER_BY_LOCATION';
+
+// app info actions
+export const FETCH_APP_INFO = 'FETCH_APP_INFO';

@@ -1,5 +1,6 @@
 const errors = require('restify-errors');
 const weatherService = require('../services/weather.service');
+const WeatherViewModel = require('../dataTransferObjects/viewModels/weather.viewModel');
 
 const getCurrentWeather = async (req, res) => {
   const { location } = req.params;
@@ -10,7 +11,7 @@ const getCurrentWeather = async (req, res) => {
     throw new errors.BadRequestError('Bad request.');
   }
 
-  res.send(response.data.results);
+  res.json(new WeatherViewModel(response.data));
 };
 
 module.exports = {
