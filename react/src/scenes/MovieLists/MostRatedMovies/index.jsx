@@ -48,7 +48,7 @@ class MostRatedMovies extends Component {
     if (isLoading) {
       return (
         <div className='movie-list loading'>
-          <div class='loader border-top-info'></div>
+          <div class='loader border-top-info' />
         </div>
       );
     }

@@ -26,6 +26,19 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.FETCH_TOP_MOVIES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        topMovies: {
+          list: action.data.results,
+          page: action.data.page,
+          totalPages: action.data.totalPages,
+          totalResults: action.data.totalResults,
+        } 
+      };
+    }
+    return { ...state };
   case types.FETCH_ACTIVE_MOVIE:
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {

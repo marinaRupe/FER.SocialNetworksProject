@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { MDBJumbotron, MDBContainer, MDBRow, MDBCol } from 'mdbreact';
 import { APP } from '../../../constants/routes';
 import { facebookJSSDKSetup, checkLoginState, getToken } from '../../../utils/auth.utils';
 import { buttonTypes } from '../../../enums/buttonTypes.enum';
@@ -30,25 +31,41 @@ class Login extends Component {
 
     return (
       <div className='login-page'>
-        <div className='login-page__title'>Login</div>
-        <div>
-          <div
-            className='fb-login-button'
-            data-max-rows='1'
-            data-size='large'
-            data-button-type='login_with'
-            data-show-faces='true'
-            data-auto-logout-link='true'
-            data-use-continue-as='false'
-            onClick={this.handleClickOnLoginButton}
-          >
-            <ButtonComponent
-              action={this.logout}
-              text='Login with Facebook'
-              type={buttonTypes.primary}
-            />
-          </div>
-        </div>
+        <MDBContainer className='mt-5 text-center'>
+          <MDBRow>
+            <MDBCol>
+              <MDBJumbotron className='login-page__jumbotron'>
+                <h2 className='h1 display-3'>Hello, movie lover!</h2>
+                <p className='lead'>
+                  If you enjoy watching movies, this is the app for you.
+                </p>
+                <p>
+                  Login with Facebook and explore movies.
+                </p>
+                <p className='lead'>
+                  <div>
+                    <div
+                      className='fb-login-button'
+                      data-max-rows='1'
+                      data-size='large'
+                      data-button-type='login_with'
+                      data-show-faces='true'
+                      data-auto-logout-link='true'
+                      data-use-continue-as='false'
+                      onClick={this.handleClickOnLoginButton}
+                    >
+                      <ButtonComponent
+                        action={this.logout}
+                        text='Login with Facebook'
+                        type={buttonTypes.primary}
+                      />
+                    </div>
+                  </div>
+                </p>
+              </MDBJumbotron>
+            </MDBCol>
+          </MDBRow>
+        </MDBContainer>
       </div>
     );
   }
