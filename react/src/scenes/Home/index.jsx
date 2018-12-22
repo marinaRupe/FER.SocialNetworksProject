@@ -37,6 +37,7 @@ class Home extends Component {
     dispatch(weatherActions.fetchWeatherByLocation(values.CURRENT_LOCATION));
     dispatch(appInfoActions.fetchAppInfo());
     dispatch(movieActions.fetchTopMovies(1, 5));
+    dispatch(movieActions.fetchRecommendedMovies(1, 5));
 
     this.setState({
       isLoading: false,
@@ -75,7 +76,7 @@ class Home extends Component {
                   attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                   url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
                 />
-                {cinemas.map(c => <CinemaMarker cinema={c} />)}
+                {cinemas.map((c, index) => <CinemaMarker key={index} cinema={c} />)}
               </Map>
             </MDBCol>
           </MDBRow>
@@ -186,7 +187,7 @@ const mapStateToProps = state => {
     weather: state.weather.current,
     info: state.app.info,
     topMovies: state.movies.topMovies.list,
-    recommendedMovies: state.movies.topMovies.list, // TODO: recommend movies
+    recommendedMovies: state.movies.recommendedMovies.list,
   };
 };
 

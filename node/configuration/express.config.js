@@ -1,5 +1,6 @@
 const debug = require('debug')('node:server');
-const http = require('http');
+const fs = require('fs');
+const https = require('https');
 const dotenv = require('dotenv');
 
 const allowCrossDomain = (req, res, next) => {
@@ -47,7 +48,11 @@ const listen = app => {
   const port = normalizePort(process.env.PORT || '3001');
   app.set('port', port);
 
-  const server = http.createServer(app);
+  const privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
+  const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+
+  const credentials = { key: privateKey, cert: certificate };
+  const server = https.createServer(credentials, app);
 
   server.listen(port);
   server.on('listening', onListening.bind(null, server));

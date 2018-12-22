@@ -17,7 +17,7 @@ const useProductionRoutes = app => {
 };
 
 const useDevelopmentRoutes = app => {
-  app.get('/:url?', (req, res) => (res.redirect(`http://localhost:3001/${req.params.url || ''}`)));
+  app.get('/:url?', (req, res) => (res.redirect(`https://localhost:3001/${req.params.url || ''}`)));
 };
 
 const configure = app => {

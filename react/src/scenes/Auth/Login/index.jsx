@@ -42,26 +42,24 @@ class Login extends Component {
                 <p>
                   Login with Facebook and explore movies.
                 </p>
-                <p className='lead'>
-                  <div>
-                    <div
-                      className='fb-login-button'
-                      data-max-rows='1'
-                      data-size='large'
-                      data-button-type='login_with'
-                      data-show-faces='true'
-                      data-auto-logout-link='true'
-                      data-use-continue-as='false'
-                      onClick={this.handleClickOnLoginButton}
-                    >
-                      <ButtonComponent
-                        action={this.logout}
-                        text='Login with Facebook'
-                        type={buttonTypes.primary}
-                      />
-                    </div>
+                <div className='lead'>
+                  <div
+                    className='fb-login-button'
+                    data-max-rows='1'
+                    data-size='large'
+                    data-button-type='login_with'
+                    data-show-faces='true'
+                    data-auto-logout-link='true'
+                    data-use-continue-as='false'
+                    onClick={this.handleClickOnLoginButton}
+                  >
+                    <ButtonComponent
+                      action={() => null}
+                      text='Login with Facebook'
+                      type={buttonTypes.primary}
+                    />
                   </div>
-                </p>
+                </div>
               </MDBJumbotron>
             </MDBCol>
           </MDBRow>
