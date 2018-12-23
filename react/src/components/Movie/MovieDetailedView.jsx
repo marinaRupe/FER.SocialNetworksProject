@@ -46,8 +46,8 @@ class MovieDetailedView extends Component {
             {
               movie.crew && movie.crew.length > 0 ?
                 <ul>
-                  {movie.crew.map((crewMember) =>
-                    <li key={crewMember.id}>{crewMember.name}</li>
+                  {movie.crew.map((crewMember, index) =>
+                    <li key={index}>{crewMember.name}</li>
                   )}
                 </ul>
                 :
@@ -58,8 +58,8 @@ class MovieDetailedView extends Component {
           <div>
             Genres: 
             <ul>
-              {movie.genres.map((g, index) =>
-                <li key={index}>{g}</li>
+              {(movie.genres || []).map((g) =>
+                <li key={g}>{g}</li>
               )}
             </ul>
           </div>
@@ -67,8 +67,8 @@ class MovieDetailedView extends Component {
           <div>
             Languages: 
             <ul>
-              {movie.languages.map((lang, index) =>
-                <li key={index}>{lang}</li>
+              {(movie.languages || []).map((lang) =>
+                <li key={lang}>{lang}</li>
               )}
             </ul>
           </div>

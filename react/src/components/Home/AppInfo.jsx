@@ -6,16 +6,21 @@ class AppInfo extends Component {
     const { info } = this.props;
 
     return (
-
-      <div>
-        <div className='home-page__app-info'>
-          Number of movies in db: {info.movies_count}
+      <div className='info-block'>
+        <div className='info-block__column'>
+          <i className='material-icons'>movie</i>
+          <span>Movies:</span>
+          <strong>{info.movies_count}</strong>
         </div>
-        <div className='home-page__app-info'>
-          Number of users in db: {info.users_count}
+        <div className='info-block__column'>
+          <i className='material-icons'>person</i>
+          <span>Users:</span>
+          <strong>{info.users_count}</strong>
         </div>
-        <div className='home-page__app-info'>
-          Number of APIs in db: {info.api_count}
+        <div className='info-block__column'>
+          <i className='material-icons'>laptop</i>
+          <span>APIs:</span>
+          <strong>{info.api_count}</strong>
         </div>
       </div>
     );

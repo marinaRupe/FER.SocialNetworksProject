@@ -11,7 +11,7 @@ const MOVIE_VIDEOS = tmdbMovieId => `/movie/${tmdbMovieId}/videos`;
 const MOVIE_TRANSLATIONS = tmdbMovieId => `/movie/${tmdbMovieId}/translations`;
 const MOVIE_CREDITS = tmdbMovieId => `/movie/${tmdbMovieId}/credits`;
 
-const TMDB_IMAGES_URL = 'http://image.tmdb.org/t/p/';
+const TMDB_IMAGES_URL = 'https://image.tmdb.org/t/p/';
 const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/watch';
 
 const getMovieDetails = async tmdbMovieId => {

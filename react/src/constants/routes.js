@@ -9,8 +9,8 @@ export const API = {
     CHANGE_PASSWORD: `${API_URL}/user/changePassword`,
   },
   MOVIE: {
-    FETCH_MOST_POPUAR_MOVIES: (page) => `${API_URL}/movie/most-popular/${page}`,
-    FETCH_MOST_RATED_MOVIES: (page) => `${API_URL}/movie/most-rated/${page}`,
+    FETCH_MOST_POPUAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
+    FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
   },
   REVIEWS: {
     MOVIE: {
@@ -38,10 +38,12 @@ export const APP = {
     DETAILS: (movieId = ':movieId') => `/movie/${movieId}/details`,
     POPULAR_MOVIES: '/movies/most-popular',
     MOST_RATED_MOVIES: '/movies/most-rated',
+    NOW_PLAYING_MOVIES: '/movies/now-playing',
     PERSONAL: {
       USER_RATED_MOVIES: '/movies/rated',
       USER_WATCHED_MOVIES: '/movies/watched',
       USER_SAVED_MOVIES: '/movies/saved',
+      RECOMMENDED_MOVIES: '/movies/recommended',
     }
   },
   PROFILE: '/profile',

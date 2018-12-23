@@ -68,11 +68,9 @@ const statusChangeCallback = (response, dispatch) => {
       };
 
       if (dispatch) {
-        dispatch(userActions.login(user));
+        dispatch(userActions.login(user, response));
       }
     });
-
-    setToken(response.authResponse.accessToken, response.authResponse.expiresIn);
   } else if (response.status === 'not_authorized') {
     history.push(APP.AUTH.LOGIN);
   } else {

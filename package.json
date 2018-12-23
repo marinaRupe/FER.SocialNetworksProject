@@ -5,14 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "node node/server.js",
-    "rstart": "npm run rlint && npm start --prefix react",
+    "rstart": "set HTTPS=true&&npm run rlint && npm start --prefix react",
     "build": "npm run rlint && npm run build --prefix react",
     "nstart": "npm run nlint && nodemon node/server.js",
     "populate-db": "node node/populateDb.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint node react --ext .js,.jsx",
     "rlint": "./node_modules/.bin/eslint react --ext .js,.jsx",
-    "nlint": "./node_modules/.bin/eslint node"
+    "nlint": "./node_modules/.bin/eslint node",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",

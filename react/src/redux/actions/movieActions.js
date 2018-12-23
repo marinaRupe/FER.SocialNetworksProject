@@ -23,3 +23,19 @@ export const fetchActiveMovie = ({ status, data }) => {
     type: types.FETCH_ACTIVE_MOVIE,
   };
 };
+
+export const fetchTopMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_TOP_MOVIES,
+  };
+};
+
+export const fetchRecommendedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_RECOMMENDED_MOVIES,
+  };
+};

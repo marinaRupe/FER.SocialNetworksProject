@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import movieActions from '../../../redux/actionCreators/movieActionCreator';
-import MovieListItem from '../../../components/Movie/MovieListItem';
+import movieActions from '../../../../redux/actionCreators/movieActionCreator';
+import MovieListItem from '../../../../components/Movie/MovieListItem';
+import PaginationComponent from '../../../../components/PaginationComponent';
 
-class NowPlayingMovies extends Component {
+class RecommendedMovies extends Component {
   constructor(props) {
     super(props);
 
@@ -19,7 +20,21 @@ class NowPlayingMovies extends Component {
       isLoading: true,
     });
 
-    dispatch(movieActions.fetchNowPlayingMovies());
+    dispatch(movieActions.fetchMostRatedMovies()); // TODO: change action
+
+    this.setState({
+      isLoading: false,
+    });
+  }
+
+  fetchMovies = page => {
+    const { dispatch } = this.props;
+
+    this.setState({
+      isLoading: true,
+    });
+
+    dispatch(movieActions.fetchMostRatedMovies(page)); // TODO: change action
 
     this.setState({
       isLoading: false,
@@ -33,7 +48,7 @@ class NowPlayingMovies extends Component {
     if (isLoading) {
       return (
         <div className='movie-list loading'>
-          <div class='loader border-top-info' />
+          <div class='loader border-top-info'></div>
         </div>
       );
     }
@@ -54,10 +69,17 @@ class NowPlayingMovies extends Component {
   }
 
   render() {
+    const { page, totalPages } = this.props;
+
     return (
       <div>
-        <div className='movie-list__title'>Now playing movies</div>
+        <div className='movie-list__title'>Recommended for you</div>
         {this.renderMovieList()}
+        <PaginationComponent
+          current={page}
+          total={totalPages}
+          action={this.fetchMovies}
+        />
       </div>
     );
   }
@@ -66,7 +88,9 @@ class NowPlayingMovies extends Component {
 const mapStateToProps = state => {
   return {
     movies: state.movies.list,
+    page: state.movies.page,
+    totalPages: state.movies.totalPages,
   };
 };
 
-export default connect(mapStateToProps)(NowPlayingMovies);
+export default connect(mapStateToProps)(RecommendedMovies);
