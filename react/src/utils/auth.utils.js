@@ -1,7 +1,7 @@
 import history from '../history';
 import { APP } from '../constants/routes';
 import * as values from '../constants/values';
-import userActions from '../redux/actionCreators/userActionCreator';
+import userActions from '../redux/actionCreators/user.actions';
 
 export const getToken = () => (localStorage.getItem(values.TOKEN));
 

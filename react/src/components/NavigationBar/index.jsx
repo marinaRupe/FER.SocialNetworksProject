@@ -13,7 +13,7 @@ import {
 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import userActions from '../../redux/actionCreators/userActionCreator';
+import userActions from '../../redux/actionCreators/user.actions';
 import { facebookJSSDKSetup } from '../../utils/auth.utils';
 import { APP } from '../../constants/routes';
 import { appColors } from '../../constants/colors';

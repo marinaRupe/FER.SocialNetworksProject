@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import movieActions from '../../../redux/actionCreators/movieActionCreator';
+import movieActions from '../../../redux/actionCreators/movie.actions';
 import MovieListItem from '../../../components/Movie/MovieListItem';
 import PaginationComponent from '../../../components/PaginationComponent';
 

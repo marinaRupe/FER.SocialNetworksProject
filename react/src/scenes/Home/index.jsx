@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 import { Map, TileLayer} from 'react-leaflet';
-import cinemaActions from '../../redux/actionCreators/cinemaActionCreator';
-import movieActions from '../../redux/actionCreators/movieActionCreator';
-import weatherActions from '../../redux/actionCreators/weatherActionCreator';
-import appInfoActions from '../../redux/actionCreators/appInfoActionCreator';
+import cinemaActions from '../../redux/actionCreators/cinema.actions';
+import movieActions from '../../redux/actionCreators/movie.actions';
+import weatherActions from '../../redux/actionCreators/weather.actions';
+import appInfoActions from '../../redux/actionCreators/appInfo.actions';
 import CinemaMarker from '../../components/Home/CinemaMarker';
 import WeatherInfo from '../../components/Home/WeatherInfo';
 import AppInfo from '../../components/Home/AppInfo';
@@ -180,6 +180,7 @@ class Home extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
 
   return {
@@ -190,5 +191,9 @@ const mapStateToProps = state => {
     recommendedMovies: state.movies.recommendedMovies.list,
   };
 };
+
+const mapDipatchToProps = {
+
+}
 
 export default connect(mapStateToProps)(Home);

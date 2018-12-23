@@ -9,7 +9,7 @@ export const API = {
     CHANGE_PASSWORD: `${API_URL}/user/changePassword`,
   },
   MOVIE: {
-    FETCH_MOST_POPUAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
+    FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
     FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
   },
   REVIEWS: {

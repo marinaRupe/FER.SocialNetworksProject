@@ -1,4 +1,4 @@
-import * as types from './actionTypes';
+import * as types from '../../constants/actionTypes';
 
 export const fetchAppInfo = ({ status, data }) => {
   return {

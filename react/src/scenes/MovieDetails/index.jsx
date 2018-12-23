@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import movieActions from '../../redux/actionCreators/movieActionCreator';
-import movieReviewActions from '../../redux/actionCreators/movieReviewActionCreator';
+import movieActions from '../../redux/actionCreators/movie.actions';
+import movieReviewActions from '../../redux/actionCreators/movieReview.actions';
 import MovieDetailedView from '../../components/Movie/MovieDetailedView';
 
 class MovieDetails extends Component {

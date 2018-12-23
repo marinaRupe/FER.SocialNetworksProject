@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { facebookJSSDKSetup } from '../../utils/auth.utils';
-import userActions from '../../redux/actionCreators/userActionCreator';
+import userActions from '../../redux/actionCreators/user.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
 
