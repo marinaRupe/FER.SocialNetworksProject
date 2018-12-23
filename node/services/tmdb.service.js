@@ -18,7 +18,7 @@ const getMovieDetails = async tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}/movie/${tmdbMovieId}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
-    }
+    },
   });
 
   return response;
@@ -33,7 +33,7 @@ const getDetailedMovies = async movieList => {
       movies.push(movieWithDetails.toObject());
     } else {
       const movieWithDetailsResponse = await getMovieDetails(movie.id);
-    
+
       if (movieWithDetailsResponse.status === 200) {
         const movieWithDetails = await mapMovie(movieWithDetailsResponse.data);
         movies.push(movieWithDetails);
@@ -52,8 +52,8 @@ const getMostPopularMovies = (page = 1) => {
     params: {
       'api_key': process.env.TMDB_API_KEY,
       'sort_by': 'popularity.desc',
-      page
-    }
+      page,
+    },
   });
 
   return response;
@@ -64,8 +64,8 @@ const getMostRatedMovies = (page = 1) => {
     params: {
       'api_key': process.env.TMDB_API_KEY,
       'sort_by': 'vote_average.desc',
-      page
-    }
+      page,
+    },
   });
 
   return response;
@@ -98,7 +98,7 @@ const getMovieExternalIds = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_EXTERNAL_IDS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY2,
-    }
+    },
   });
 
   return response;
@@ -108,7 +108,7 @@ const getMovieAlternativeTitles = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_ALTERNATIVE_TITLES(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY3,
-    }
+    },
   });
 
   return response;
@@ -118,7 +118,7 @@ const getMovieKeywords = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_KEYWORDS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY2,
-    }
+    },
   });
 
   return response;
@@ -128,7 +128,7 @@ const getMovieVideos = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_VIDEOS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY3,
-    }
+    },
   });
 
   return response;
@@ -138,7 +138,7 @@ const getMovieTranslations = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_TRANSLATIONS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY2,
-    }
+    },
   });
 
   return response;
@@ -148,7 +148,7 @@ const getMovieCredits = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_CREDITS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY3,
-    }
+    },
   });
 
   return response;
@@ -161,8 +161,8 @@ const fetchMovies = (page = 1) => {
       'api_key': process.env.TMDB_API_KEY,
       'sort_by': 'release_date.desc',
       'release_date.lte': '2017-09-10',
-      page
-    }
+      page,
+    },
   });
 
   return response;
@@ -176,7 +176,7 @@ const mapMovie = async movie => {
     console.info('No IMDb ID for movie with TMDB ID = ' + movie.id);
     return movie;
   }
-  
+
   const externalIds = (await getMovieExternalIds(movieTmdbId)).data || {};
   const alternativeTitles = (await getMovieAlternativeTitles(movieTmdbId)).data || {};
   const keywords = (await getMovieKeywords(movieTmdbId)).data || {};
@@ -203,7 +203,7 @@ const mapMovie = async movie => {
     videos: (videos.results || []).filter(v => v.site === 'YouTube').map(v => ({
       name: v.name,
       key: v.key,
-      url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`
+      url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`,
     })),
     website: movie.homepage || null,
 

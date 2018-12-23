@@ -16,7 +16,7 @@ const loginWithFacebook = async (req, res) => {
     picture,
     birthday,
     ageRange,
-    gender
+    gender,
   } = user;
 
   if (!email.match(settings.EMAIL_REGEX)) {
@@ -89,5 +89,5 @@ const register = async (req, res) => {
 module.exports = {
   login,
   register,
-  loginWithFacebook
+  loginWithFacebook,
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import movieActions from '../../../redux/actionCreators/movieActionCreator';
+import * as movieActions from '../../../redux/actions/movie.actions';
 import MovieListItem from '../../../components/Movie/MovieListItem';
 import PaginationComponent from '../../../components/PaginationComponent';
 
@@ -14,30 +14,18 @@ class MostRatedMovies extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-
-    this.setState({
-      isLoading: true,
-    });
-
-    dispatch(movieActions.fetchMostRatedMovies());
-
-    this.setState({
-      isLoading: false,
-    });
+    this.fetchMovies();
   }
 
   fetchMovies = page => {
-    const { dispatch } = this.props;
-
     this.setState({
       isLoading: true,
-    });
-
-    dispatch(movieActions.fetchMostRatedMovies(page));
-
-    this.setState({
-      isLoading: false,
+    }, async () => {
+      const { fetchMostRatedMovies } = this.props;
+      await fetchMostRatedMovies(page);
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 
@@ -48,7 +36,7 @@ class MostRatedMovies extends Component {
     if (isLoading) {
       return (
         <div className='movie-list loading'>
-          <div class='loader border-top-info' />
+          <div className='loader border-top-info' />
         </div>
       );
     }
@@ -93,4 +81,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(MostRatedMovies);
+const mapDispatchToProps = {
+  fetchMostRatedMovies: movieActions.fetchMostRatedMovies,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MostRatedMovies);

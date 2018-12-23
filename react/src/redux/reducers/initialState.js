@@ -20,19 +20,19 @@ const initialState = {
       page: 1,
       totalPages: 1,
       totalResults: 0,
-    }
+    },
   },
   reviews: {
-    activeMovieReviews: []
+    activeMovieReviews: [],
   },
   cinemas: {
-    list: []
+    list: [],
   },
   weather: {
-    current: null
+    current: null,
   },
   app: {
-    info: null
-  }
+    info: null,
+  },
 };
 export default initialState;

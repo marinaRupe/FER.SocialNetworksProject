@@ -14,5 +14,5 @@ const getCinemas = async (req, res) => {
 };
 
 module.exports = {
-  getCinemas
+  getCinemas,
 };

@@ -7,9 +7,9 @@ import { buttonTypes } from '../../enums/buttonTypes.enum';
 class ButtonComponent extends Component {
   render() {
     const { type, text, action } = this.props;
-  
+
     let color = appColors.btnSecondary;
-    
+
     if (type === buttonTypes.primary) {
       color = appColors.btnPrimary;
     }

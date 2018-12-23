@@ -50,7 +50,7 @@ const crewSchema = new Schema({
   },
   job: {
     type: String,
-  }
+  },
 });
 
 const videoSchema = new Schema({

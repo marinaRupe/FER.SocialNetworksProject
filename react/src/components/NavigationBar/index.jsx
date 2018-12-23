@@ -7,22 +7,22 @@ import {
   NavbarToggler, Collapse,
   Dropdown,
   DropdownToggle,
-  DropdownMenu, 
+  DropdownMenu,
   DropdownItem,
-  Fa
+  Fa,
 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import userActions from '../../redux/actionCreators/userActionCreator';
-import { facebookJSSDKSetup } from '../../utils/auth.utils';
+import * as userActions from '../../redux/actions/user.actions';
 import { APP } from '../../constants/routes';
 import { appColors } from '../../constants/colors';
+import { facebookJSSDKSetup } from '../../utils/auth.utils';
 
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
   }
 
@@ -31,7 +31,6 @@ class NavigationBar extends React.Component {
   }
 
   toggleCollapse = () => this.setState({ isOpen: !this.state.isOpen });
-  
 
   logout = () => {
     const { dispatch } = this.props;
@@ -81,7 +80,7 @@ class NavigationBar extends React.Component {
             <NavbarNav right>
               <NavItem>
                 <Dropdown>
-                  <DropdownToggle  nav caret>
+                  <DropdownToggle nav caret>
                     <div className='d-none d-md-inline'>Your movie lists</div>
                   </DropdownToggle>
                   <DropdownMenu className='dropdown-default'right>
