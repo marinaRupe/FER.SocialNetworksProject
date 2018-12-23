@@ -7,9 +7,9 @@ import {
   NavbarToggler, Collapse,
   Dropdown,
   DropdownToggle,
-  DropdownMenu, 
+  DropdownMenu,
   DropdownItem,
-  Fa
+  Fa,
 } from 'mdbreact';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -22,7 +22,7 @@ class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
   }
 

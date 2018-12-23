@@ -15,5 +15,5 @@ const getCurrentWeather = async (req, res) => {
 };
 
 module.exports = {
-  getCurrentWeather
+  getCurrentWeather,
 };

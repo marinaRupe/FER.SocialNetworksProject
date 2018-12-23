@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import * as types from '../../constants/actionTypes';
+import * as types from '../actionTypes';
 import { ACTION_STATUS } from '../../enums/responseStatus.enums';
 
 export default function weatherReducer(state = initialState.weather, action) {
@@ -8,7 +8,7 @@ export default function weatherReducer(state = initialState.weather, action) {
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {
         ...state,
-        current: action.data
+        current: action.data,
       };
     }
     return { ...state };

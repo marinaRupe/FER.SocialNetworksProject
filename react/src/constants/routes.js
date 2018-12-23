@@ -14,18 +14,18 @@ export const API = {
   },
   REVIEWS: {
     MOVIE: {
-      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`
-    }
+      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`,
+    },
   },
   CINEMA: {
-    FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`
+    FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`,
   },
   WEATHER: {
-    FETCH_WEATHER_BY_LOCATION: (location) => `${API_URL}/weather/${location}`
+    FETCH_WEATHER_BY_LOCATION: (location) => `${API_URL}/weather/${location}`,
   },
   APP:{
-    FETCH_APP_INFO: `${API_URL}/app/info`
-  }
+    FETCH_APP_INFO: `${API_URL}/app/info`,
+  },
 };
 
 export const APP = {
@@ -44,7 +44,7 @@ export const APP = {
       USER_WATCHED_MOVIES: '/movies/watched',
       USER_SAVED_MOVIES: '/movies/saved',
       RECOMMENDED_MOVIES: '/movies/recommended',
-    }
+    },
   },
   PROFILE: '/profile',
   SERVER_ERROR: '/error/500',

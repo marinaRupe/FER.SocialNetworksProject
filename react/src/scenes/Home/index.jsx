@@ -25,7 +25,7 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      isLoading: false
+      isLoading: false,
     };
   }
 
@@ -33,12 +33,12 @@ class Home extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { 
+      const {
         fetchCinemasByCenterLocation,
         fetchWeatherByLocation,
         fetchAppInfo,
         fetchTopMovies,
-        fetchRecommendedMovies
+        fetchRecommendedMovies,
       } = this.props;
 
       await fetchCinemasByCenterLocation(values.CURRENT_LOCATION);
@@ -88,7 +88,6 @@ class Home extends Component {
               </Map>
             </MDBCol>
           </MDBRow>
-          
         </div>
       );
     }
@@ -156,7 +155,7 @@ class Home extends Component {
     return (
       <div className='home-page'>
         <MDBContainer>
-          <MDBRow className='mb-40'>   
+          <MDBRow className='mb-40'>
             <MDBCol md='6' className='offset-md-3'>
               {this.renderWeatherInfo()}
               {this.renderCinemaMapWithMarkers()}

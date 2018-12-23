@@ -37,7 +37,7 @@ const personSchema = new Schema({
   profileImage: {
     type: String,
     trim: true,
-  }
+  },
 });
 
 module.exports = mongoose.model('Person', personSchema);

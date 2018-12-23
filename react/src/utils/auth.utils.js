@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import history from '../history';
 import { APP } from '../constants/routes';
 import * as values from '../constants/values';
@@ -20,14 +21,14 @@ export const facebookJSSDKSetup = dispatch => {
       appId      : process.env.REACT_APP_FACEBOOK_APP_ID,
       cookie     : true,
       xfbml      : true,
-      version    : process.env.REACT_APP_FACEBOOK_API_VERSION
+      version    : process.env.REACT_APP_FACEBOOK_API_VERSION,
     });
-  
+
     window.FB.getLoginStatus(response => {
       statusChangeCallback(response, dispatch);
     });
   };
-  
+
   (function(d, s, id) {
     let js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
@@ -78,8 +79,7 @@ const statusChangeCallback = (response, dispatch) => {
         } else {
           console.log('NO dispatch');
         }
-      }); 
-      
+      });
     });
   } else if (response.status === 'not_authorized') {
     history.push(APP.AUTH.LOGIN);

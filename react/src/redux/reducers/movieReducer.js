@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import * as types from '../../constants/actionTypes';
+import * as types from '../../actionTypes/actionTypes';
 import { ACTION_STATUS } from '../../enums/responseStatus.enums';
 
 export default function movieReducer(state = initialState.movies, action) {
@@ -35,7 +35,7 @@ export default function movieReducer(state = initialState.movies, action) {
           page: action.data.page,
           totalPages: action.data.totalPages,
           totalResults: action.data.totalResults,
-        } 
+        },
       };
     }
     return { ...state };
@@ -48,7 +48,7 @@ export default function movieReducer(state = initialState.movies, action) {
           page: action.data.page,
           totalPages: action.data.totalPages,
           totalResults: action.data.totalResults,
-        } 
+        },
       };
     }
     return { ...state };
@@ -56,7 +56,7 @@ export default function movieReducer(state = initialState.movies, action) {
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {
         ...state,
-        activeMovie: { ...state.list.find(m => m.imdbID.toString() === action.data) }
+        activeMovie: { ...state.list.find(m => m.imdbID.toString() === action.data) },
       };
     }
     return { ...state };

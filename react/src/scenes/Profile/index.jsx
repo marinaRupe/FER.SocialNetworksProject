@@ -91,7 +91,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  logout: userActions.logout
+  logout: userActions.logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
