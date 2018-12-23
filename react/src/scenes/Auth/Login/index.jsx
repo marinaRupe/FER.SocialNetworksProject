@@ -25,7 +25,7 @@ class Login extends Component {
   };
 
   render() {
-    if (getToken()) {
+    if (!!getToken()) {
       return <Redirect to={APP.ROOT} />;
     }
 
