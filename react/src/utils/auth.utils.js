@@ -1,7 +1,7 @@
 import history from '../history';
 import { APP } from '../constants/routes';
 import * as values from '../constants/values';
-import userActions from '../redux/actionCreators/user.actions';
+import * as userActions from '../redux/actions/user.actions';
 
 export const getToken = () => (localStorage.getItem(values.TOKEN));
 
@@ -14,6 +14,7 @@ export const deleteToken = () => {
 };
 
 export const facebookJSSDKSetup = dispatch => {
+  console.log('facebookJSSDKSetup');
   window.fbAsyncInit = () => {
     window.FB.init({
       appId      : process.env.REACT_APP_FACEBOOK_APP_ID,
@@ -37,6 +38,7 @@ export const facebookJSSDKSetup = dispatch => {
 };
 
 export const checkLoginState = dispatch => {
+  console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
     window.location.reload(true);
@@ -71,7 +73,10 @@ const statusChangeCallback = (response, dispatch) => {
           ageRange: res.age_range,
         };
         if (dispatch) {
+          console.log('dispatch');
           dispatch(userActions.login(user, response));
+        } else {
+          console.log('NO dispatch');
         }
       }); 
       

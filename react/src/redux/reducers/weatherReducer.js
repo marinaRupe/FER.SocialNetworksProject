@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import * as types from '../actions/actionTypes';
+import * as types from '../../constants/actionTypes';
 import { ACTION_STATUS } from '../../enums/responseStatus.enums';
 
 export default function weatherReducer(state = initialState.weather, action) {

@@ -2,20 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 import { Map, TileLayer} from 'react-leaflet';
-import cinemaActions from '../../redux/actionCreators/cinema.actions';
-import movieActions from '../../redux/actionCreators/movie.actions';
-import weatherActions from '../../redux/actionCreators/weather.actions';
-import appInfoActions from '../../redux/actionCreators/appInfo.actions';
+
+import * as cinemaActions from '../../redux/actions/cinema.actions';
+import * as movieActions from '../../redux/actions/movie.actions';
+import * as weatherActions from '../../redux/actions/weather.actions';
+import * as appInfoActions from '../../redux/actions/appInfo.actions';
+
 import CinemaMarker from '../../components/Home/CinemaMarker';
 import WeatherInfo from '../../components/Home/WeatherInfo';
 import AppInfo from '../../components/Home/AppInfo';
 import MovieListItem from '../../components/Movie/MovieListItem';
 import ButtonComponent from '../../components/ButtonComponent';
+
 import * as values from '../../constants/values';
 import { APP } from '../../constants/routes';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import history from '../../history';
 
+// TODO: this component is to large, move the larger render functions to separate component
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -26,23 +30,27 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-
-    const { dispatch } = this.props;
-
     this.setState({
       isLoading: true,
+    }, async () => {
+      const { 
+        fetchCinemasByCenterLocation,
+        fetchWeatherByLocation,
+        fetchAppInfo,
+        fetchTopMovies,
+        fetchRecommendedMovies
+      } = this.props;
+
+      await fetchCinemasByCenterLocation(values.CURRENT_LOCATION);
+      await fetchWeatherByLocation(values.CURRENT_LOCATION);
+      await fetchAppInfo();
+      await fetchTopMovies(1, 5);
+      await fetchRecommendedMovies(1, 5);
+
+      this.setState({
+        isLoading: false,
+      });
     });
-
-    dispatch(cinemaActions.fetchCinemasByCenterLocation(values.CURRENT_LOCATION));
-    dispatch(weatherActions.fetchWeatherByLocation(values.CURRENT_LOCATION));
-    dispatch(appInfoActions.fetchAppInfo());
-    dispatch(movieActions.fetchTopMovies(1, 5));
-    dispatch(movieActions.fetchRecommendedMovies(1, 5));
-
-    this.setState({
-      isLoading: false,
-    });
-
   }
 
   renderCinemaMapWithMarkers = () => {
@@ -52,7 +60,7 @@ class Home extends Component {
     if (isLoading) {
       return (
         <div className='cinema-list loading'>
-          <div class='loader border-top-info' />
+          <div className='loader border-top-info' />
         </div>
       );
     }
@@ -118,7 +126,7 @@ class Home extends Component {
     if (isLoading) {
       return (
         <div className='movie-list small loading'>
-          <div class='loader border-top-info' />
+          <div className='loader border-top-info' />
         </div>
       );
     }
@@ -182,7 +190,6 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => {
-
   return {
     cinemas: state.cinemas.list,
     weather: state.weather.current,
@@ -192,8 +199,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDipatchToProps = {
+const mapDispatchToProps = {
+  fetchCinemasByCenterLocation: cinemaActions.fetchCinemasByCenterLocation,
+  fetchWeatherByLocation: weatherActions.fetchWeatherByLocation,
+  fetchAppInfo: appInfoActions.fetchAppInfo,
+  fetchTopMovies: movieActions.fetchTopMovies,
+  fetchRecommendedMovies: movieActions.fetchRecommendedMovies,
+};
 
-}
-
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import movieActions from '../../../redux/actionCreators/movie.actions';
+import * as movieActions from '../../../redux/actions/movie.actions';
 import MovieListItem from '../../../components/Movie/MovieListItem';
 
 class NowPlayingMovies extends Component {
@@ -13,16 +13,18 @@ class NowPlayingMovies extends Component {
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
+    this.fetchMovies();
+  }
 
+  fetchMovies = page => {
     this.setState({
       isLoading: true,
-    });
-
-    dispatch(movieActions.fetchNowPlayingMovies());
-
-    this.setState({
-      isLoading: false,
+    }, async () => {
+      const { fetchNowPlayingMovies } = this.props;
+      await fetchNowPlayingMovies(page);
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 
@@ -33,7 +35,7 @@ class NowPlayingMovies extends Component {
     if (isLoading) {
       return (
         <div className='movie-list loading'>
-          <div class='loader border-top-info' />
+          <div className='loader border-top-info' />
         </div>
       );
     }
@@ -69,4 +71,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(NowPlayingMovies);
+const mapDispatchToProps = {
+  fetchNowPlayingMovies: movieActions.fetchNowPlayingMovies,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NowPlayingMovies);

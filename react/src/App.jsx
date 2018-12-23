@@ -26,9 +26,6 @@ import history from './history';
 import './styles/App.css';
 
 class App extends Component {
-  componentDidMount() {
-    
-  }
 
   render() {
     return (

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { ACTION_STATUS } from '../../enums/responseStatus.enums';
 import { API } from '../../constants/routes';
 import { actionWrapper } from '../../utils/redux.utils';
-
 import * as actionCreators from '../actionCreators/weather.actionCreators';
 
 export function fetchWeatherByLocation(location) {

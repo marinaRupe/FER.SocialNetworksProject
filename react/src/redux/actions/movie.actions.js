@@ -31,11 +31,9 @@ export function fetchMostRatedMovies(page = 1, pageSize = 30) {
   return actionWrapper(action);
 }
 
-export function fetchNowPlayingMovies() {
-  const page = 1;
-
+export function fetchNowPlayingMovies(page = 1, pageSize = 30) {
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page));
+    const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page, pageSize));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchMostRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
