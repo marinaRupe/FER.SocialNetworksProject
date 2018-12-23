@@ -7,7 +7,7 @@ class CinemaMarker extends Component {
   render() {
     const image = new Leaflet.Icon({
       iconUrl: require('../../images/map-marker.png'),
-      iconSize:[20, 35]
+      iconSize:[20, 35],
     });
     const { cinema } = this.props;
 

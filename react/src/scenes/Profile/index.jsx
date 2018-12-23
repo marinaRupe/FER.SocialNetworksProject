@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardBody, CardImage, CardTitle, CardText, Col, Row } from 'mdbreact';
-import { facebookJSSDKSetup } from '../../utils/auth.utils';
-import userActions from '../../redux/actionCreators/userActionCreator';
+import * as userActions from '../../redux/actions/user.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
 import backgroundImage from '../../images/popcorn.jpg';
+import { facebookJSSDKSetup } from '../../utils/auth.utils';
 
 class Profile extends Component {
   componentDidMount() {
@@ -13,9 +13,9 @@ class Profile extends Component {
   }
 
   logout = () => {
-    const { dispatch } = this.props;
+    const { logout } = this.props;
     window.FB.logout(response => {
-      dispatch(userActions.logout());
+      logout();
     });
   }
 
@@ -90,4 +90,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = {
+  logout: userActions.logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

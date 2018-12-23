@@ -105,5 +105,5 @@ const expandMovie = async movie => {
 module.exports = {
   mapMovieList,
   expandMovieList,
-  expandMovie
+  expandMovie,
 };

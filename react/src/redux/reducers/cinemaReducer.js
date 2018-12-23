@@ -1,5 +1,5 @@
 import initialState from './initialState';
-import * as types from '../actions/actionTypes';
+import * as types from '../actionTypes';
 import { ACTION_STATUS } from '../../enums/responseStatus.enums';
 
 export default function cinemaReducer(state = initialState.cinemas, action) {

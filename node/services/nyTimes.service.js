@@ -7,12 +7,12 @@ const getReviews = async (movieTitle='') => {
     params: {
       'api-key': process.env.NY_TIMES_API_KEY,
       query: `'${movieTitle}'`,
-    }
+    },
   });
 
   return response;
 };
 
 module.exports = {
-  getReviews
+  getReviews,
 };

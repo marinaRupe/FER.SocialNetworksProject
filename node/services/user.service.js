@@ -55,7 +55,7 @@ const createUser = async (
     picture,
     birthday,
     ageRange,
-    gender
+    gender,
   });
 
   await user.save();
