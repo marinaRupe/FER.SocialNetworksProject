@@ -28,9 +28,14 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Last name is required.'],
   },
+  name: {
+    type: String,
+    required: [true, 'Name is required.'],
+  },
   picture: String,
   birthday: Date,
-  gender: String
+  ageRange: Object,
+  gender: String,
 });
 
 userSchema.methods.setPassword = function setPassword(newPassword) {

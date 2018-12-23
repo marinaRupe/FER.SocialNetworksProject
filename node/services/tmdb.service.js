@@ -11,14 +11,14 @@ const MOVIE_VIDEOS = tmdbMovieId => `/movie/${tmdbMovieId}/videos`;
 const MOVIE_TRANSLATIONS = tmdbMovieId => `/movie/${tmdbMovieId}/translations`;
 const MOVIE_CREDITS = tmdbMovieId => `/movie/${tmdbMovieId}/credits`;
 
-const TMDB_IMAGES_URL = 'http://image.tmdb.org/t/p/';
+const TMDB_IMAGES_URL = 'https://image.tmdb.org/t/p/';
 const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/watch';
 
 const getMovieDetails = async tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}/movie/${tmdbMovieId}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
-    }
+    },
   });
 
   return response;
@@ -33,7 +33,7 @@ const getDetailedMovies = async movieList => {
       movies.push(movieWithDetails.toObject());
     } else {
       const movieWithDetailsResponse = await getMovieDetails(movie.id);
-    
+
       if (movieWithDetailsResponse.status === 200) {
         const movieWithDetails = await mapMovie(movieWithDetailsResponse.data);
         movies.push(movieWithDetails);
@@ -52,8 +52,8 @@ const getMostPopularMovies = (page = 1) => {
     params: {
       'api_key': process.env.TMDB_API_KEY,
       'sort_by': 'popularity.desc',
-      page
-    }
+      page,
+    },
   });
 
   return response;
@@ -64,8 +64,8 @@ const getMostRatedMovies = (page = 1) => {
     params: {
       'api_key': process.env.TMDB_API_KEY,
       'sort_by': 'vote_average.desc',
-      page
-    }
+      page,
+    },
   });
 
   return response;
@@ -98,7 +98,7 @@ const getMovieExternalIds = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_EXTERNAL_IDS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY2,
-    }
+    },
   });
 
   return response;
@@ -107,8 +107,8 @@ const getMovieExternalIds = tmdbMovieId => {
 const getMovieAlternativeTitles = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_ALTERNATIVE_TITLES(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
-    }
+      'api_key': process.env.TMDB_API_KEY3,
+    },
   });
 
   return response;
@@ -118,7 +118,7 @@ const getMovieKeywords = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_KEYWORDS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY2,
-    }
+    },
   });
 
   return response;
@@ -127,8 +127,8 @@ const getMovieKeywords = tmdbMovieId => {
 const getMovieVideos = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_VIDEOS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
-    }
+      'api_key': process.env.TMDB_API_KEY3,
+    },
   });
 
   return response;
@@ -138,7 +138,7 @@ const getMovieTranslations = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_TRANSLATIONS(tmdbMovieId)}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY2,
-    }
+    },
   });
 
   return response;
@@ -147,8 +147,8 @@ const getMovieTranslations = tmdbMovieId => {
 const getMovieCredits = tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}${MOVIE_CREDITS(tmdbMovieId)}`, {
     params: {
-      'api_key': process.env.TMDB_API_KEY,
-    }
+      'api_key': process.env.TMDB_API_KEY3,
+    },
   });
 
   return response;
@@ -159,9 +159,10 @@ const fetchMovies = (page = 1) => {
   const response = axios.get(`${MOVIE_API_URL}${DISCOVER_MOVIE_URL}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
-      'sort_by': 'popularity.desc',
-      page
-    }
+      'sort_by': 'release_date.desc',
+      'release_date.lte': '2017-09-10',
+      page,
+    },
   });
 
   return response;
@@ -170,7 +171,12 @@ const fetchMovies = (page = 1) => {
 const mapMovie = async movie => {
   const defaultPosterSize = 'w500';
   const movieTmdbId = movie.id;
-  
+
+  if (!movie.imdb_id) {
+    console.info('No IMDb ID for movie with TMDB ID = ' + movie.id);
+    return movie;
+  }
+
   const externalIds = (await getMovieExternalIds(movieTmdbId)).data || {};
   const alternativeTitles = (await getMovieAlternativeTitles(movieTmdbId)).data || {};
   const keywords = (await getMovieKeywords(movieTmdbId)).data || {};
@@ -197,7 +203,7 @@ const mapMovie = async movie => {
     videos: (videos.results || []).filter(v => v.site === 'YouTube').map(v => ({
       name: v.name,
       key: v.key,
-      url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`
+      url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`,
     })),
     website: movie.homepage || null,
 
@@ -247,6 +253,7 @@ module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
   mapMovieList,
+  mapMovie,
   saveMovieList,
   fetchMovies,
 };

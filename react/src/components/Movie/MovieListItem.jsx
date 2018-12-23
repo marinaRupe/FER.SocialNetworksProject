@@ -30,6 +30,9 @@ class MovieListItem extends Component {
               {movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))}
             </span>
           </div>
+          <div>
+            Rating: {movie.imdbRating || '-'}
+          </div>
         </div>
       </div>
     );

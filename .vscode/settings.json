@@ -14,5 +14,12 @@
   },
   "eslint.workingDirectories": [
     "./node", "./react"
+  ],
+  "files.insertFinalNewline": true,
+  "cSpell.words": [
+    "Omdb",
+    "imdb",
+    "metascore",
+    "tmdb"
   ]
 }

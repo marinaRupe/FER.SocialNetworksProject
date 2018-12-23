@@ -1,4 +1,5 @@
 const Movie = require('../models/movie.model');
+const defaultValues = require('../constants/defaultValues.constants');
 
 const existsMovieWithImdbID = async imdbID => (await Movie.countDocuments({ imdbID })) > 0;
 
@@ -8,12 +9,36 @@ const getMovieWithImdbID = async imdbID => (await Movie.findOne({ imdbID }).exec
 
 const getMovieWithTmdbID = async tmdbID => (await Movie.findOne({ tmdbID }).exec());
 
-const getMoviesByPopularity = async page => (await Movie.find()
-  .skip((page - 1) * 40)
-  .limit(40)
+const getMoviesByPopularity = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => (await Movie.find()
+  .skip((page - 1) * pageSize)
+  .limit(pageSize)
   .sort({ 'tmdbPopularity' : 'desc' })
   .exec()
 );
+
+const getMoviesByImdbRating = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) =>
+  (await Movie.find({ 'imdbRating': { '$nin': [null, 'N/A'] } })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ 'imdbRating' : 'desc' })
+    .exec()
+  );
+
+const getMoviesByReleaseDate = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => (await Movie.find()
+  .skip((page - 1) * pageSize)
+  .limit(pageSize)
+  .sort({ 'releaseDate' : 'desc' })
+  .exec()
+);
+
+const getMoviesWithNoOmdbData = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) =>
+  (await Movie.find({ 'awards': null })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .exec()
+  );
+
+const getMoviesCount = async (filter = {}) => (await Movie.countDocuments(filter));
 
 const saveMovie = async movie => {
   const newMovie = new Movie({
@@ -58,5 +83,10 @@ module.exports = {
   getMovieWithTmdbID,
   saveMovie,
   saveMovieList,
+  updateMovie,
   getMoviesByPopularity,
+  getMoviesByImdbRating,
+  getMoviesByReleaseDate,
+  getMoviesWithNoOmdbData,
+  getMoviesCount,
 };
