@@ -51,25 +51,30 @@ const statusChangeCallback = (response, dispatch) => {
     console.log('Fetching user data...');
 
     window.FB.api('/me', {
-      fields: 'name,first_name,last_name,picture,birthday,age_range,email,gender,relationship_status',
+      fields: 'name,first_name,last_name,birthday,age_range,email,gender,relationship_status',
     },
     res => {
       console.log('Successful login for: ' + res.name);
       console.log(res);
-      const user = {
-        token: response.authResponse.accessToken,
-        firstName: res.first_name,
-        lastName: res.last_name,
-        email: res.email,
-        userID: res.id,
-        picture: res.picture.data.url,
-        gender: res.gender,
-        birthday: res.birthday,
-      };
 
-      if (dispatch) {
-        dispatch(userActions.login(user, response));
-      }
+      window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
+        const user = {
+          token: response.authResponse.accessToken,
+          firstName: res.first_name,
+          lastName: res.last_name,
+          name: res.name,
+          email: res.email,
+          userID: res.id,
+          picture: imageResponse.data ? imageResponse.data.url : res.data.url,
+          gender: res.gender,
+          birthday: res.birthday,
+          ageRange: res.age_range,
+        };
+        if (dispatch) {
+          dispatch(userActions.login(user, response));
+        }
+      }); 
+      
     });
   } else if (response.status === 'not_authorized') {
     history.push(APP.AUTH.LOGIN);

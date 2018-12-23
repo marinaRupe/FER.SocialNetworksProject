@@ -28,8 +28,13 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Last name is required.'],
   },
+  name: {
+    type: String,
+    required: [true, 'Name is required.'],
+  },
   picture: String,
   birthday: Date,
+  ageRange: Object,
   gender: String
 });
 

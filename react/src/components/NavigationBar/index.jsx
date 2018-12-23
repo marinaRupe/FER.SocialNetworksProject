@@ -55,7 +55,7 @@ class NavigationBar extends React.Component {
         />
         <Collapse id='navbarCollapse3' isOpen={this.state.isOpen} navbar>
           <NavbarNav left>
-            <NavItem active>
+            <NavItem>
               <NavLink to={APP.ROOT}>Home</NavLink>
             </NavItem>
 
