@@ -64,6 +64,7 @@
         "code": 120
       }
     ],
+    "no-multi-spaces": "warn",
     "react/jsx-uses-vars": 1,
     "react/jsx-uses-react": 1
   },
