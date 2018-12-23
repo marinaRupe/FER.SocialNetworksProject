@@ -58,11 +58,7 @@ class Home extends Component {
     const { cinemas } = this.props;
 
     if (isLoading) {
-      return (
-        <div className='cinema-list loading'>
-          <div className='loader border-top-info' />
-        </div>
-      );
+      return;
     }
 
     if (cinemas.length > 0) {

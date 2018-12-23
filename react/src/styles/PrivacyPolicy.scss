@@ -1,0 +1,22 @@
+@import 'styles/Colors.scss';
+@import 'styles/Constants.scss';
+
+.privacy-policy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__title {
+    color: $col-title--big;
+    font-size: $val-fontSizeXBig;
+    padding: $val-spacing-s $val-spacing-xs;
+    text-align: center;
+  }
+  &__subtitle {
+    font-size: $val-fontSizeBig;
+    padding: $val-spacing-xs 0;
+    font-weight: $val-fontWeightBold;
+  }
+  &__content {
+    padding: $val-spacing-s $val-spacing-l;
+  }
+}

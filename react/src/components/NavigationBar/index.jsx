@@ -57,7 +57,11 @@ class NavigationBar extends React.Component {
             <NavItem>
               <NavLink to={APP.ROOT}>Home</NavLink>
             </NavItem>
-
+            {!currentUser &&
+              <NavItem>
+                <NavLink to={APP.PRIVACY_POLICY}>Privacy policy</NavLink>
+              </NavItem>
+            }
             {currentUser &&
               <React.Fragment>
                 <NavItem>
@@ -97,6 +101,7 @@ class NavigationBar extends React.Component {
                   </DropdownToggle>
                   <DropdownMenu className='dropdown-default' right>
                     <DropdownItem href={APP.PROFILE}>Profile</DropdownItem>
+                    <DropdownItem href={APP.PRIVACY_POLICY}>Privacy policy</DropdownItem>
                     <DropdownItem onClick={this.logout} className='logout-link'>Logout</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
