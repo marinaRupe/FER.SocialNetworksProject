@@ -17,6 +17,7 @@ import MovieDetails from './scenes/MovieDetails';
 import Error404 from './scenes/Error/Error404';
 import Error500 from './scenes/Error/Error500';
 import Profile from './scenes/Profile';
+import PrivacyPolicy from './scenes/PrivacyPolicy';
 import { APP } from './constants/routes';
 import { getToken } from './utils/auth.utils';
 import history from './history';
@@ -42,6 +43,7 @@ class App extends Component {
           <Switch>
             <Route exact path={APP.AUTH.LOGIN} component={Login} />
             <Route exact path={APP.AUTH.REGISTER} component={Register} />
+            <Route exact path={APP.PRIVACY_POLICY} component={PrivacyPolicy} />
             <Route exact path={APP.NOT_FOUND_ERROR} component={Error404} />
             <Route exact path={APP.SERVER_ERROR} component={Error500} />
 
