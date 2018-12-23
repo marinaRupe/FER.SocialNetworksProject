@@ -8,12 +8,12 @@ const getAppInfo = async (req, res) => {
   const response = {
     movies_count: movies,
     users_count: users.length,
-    api_count: 6
+    api_count: 6,
   };
 
   res.send(response);
 };
 
 module.exports = {
-  getAppInfo
+  getAppInfo,
 };

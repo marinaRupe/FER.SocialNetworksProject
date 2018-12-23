@@ -56,7 +56,7 @@ class MovieDetailedView extends Component {
           </div>
 
           <div>
-            Genres: 
+            Genres:
             <ul>
               {(movie.genres || []).map((g) =>
                 <li key={g}>{g}</li>
@@ -65,7 +65,7 @@ class MovieDetailedView extends Component {
           </div>
 
           <div>
-            Languages: 
+            Languages:
             <ul>
               {(movie.languages || []).map((lang) =>
                 <li key={lang}>{lang}</li>
@@ -80,7 +80,7 @@ class MovieDetailedView extends Component {
               <Link className='link' to={movie.website}>{movie.website}</Link>
             </div>
           }
-          
+
         </div>
       </div>
     );

@@ -10,12 +10,12 @@ const getCurrentWeather = async (location='') => {
       'lat':location.split(',')[0],
       'lon': location.split(',')[1],
       'appid': process.env.OPEN_WEATHER_API_KEY,
-      'units': 'metric'
-    }
+      'units': 'metric',
+    },
   });
   return response;
 };
 
 module.exports = {
-  getCurrentWeather
+  getCurrentWeather,
 };

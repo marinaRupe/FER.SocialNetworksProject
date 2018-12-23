@@ -10,13 +10,13 @@ const getCinemas = async (location='') => {
       'cat':'cinema',
       'at': location,
       'app_id': process.env.HERE_API_ID,
-      'app_code': process.env.HERE_APP_CODE
-    }
+      'app_code': process.env.HERE_APP_CODE,
+    },
   });
 
   return response;
 };
 
 module.exports = {
-  getCinemas
+  getCinemas,
 };
