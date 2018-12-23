@@ -1,5 +1,6 @@
 const debug = require('debug')('node:server');
 const fs = require('fs');
+const http = require('http');
 const https = require('https');
 const dotenv = require('dotenv');
 
@@ -48,11 +49,16 @@ const listen = app => {
   const port = normalizePort(process.env.PORT || '3001');
   app.set('port', port);
 
-  const privateKey  = fs.readFileSync('sslcert/server.key', 'utf8');
-  const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+  let server;
+  if (isDevelopment()) {
+    const privateKey = fs.readFileSync('sslcert/server.key', 'utf8');
+    const certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
 
-  const credentials = { key: privateKey, cert: certificate };
-  const server = https.createServer(credentials, app);
+    const credentials = { key: privateKey, cert: certificate };
+    server = https.createServer(credentials, app);
+  } else {
+    server = http.createServer(app);
+  }
 
   server.listen(port);
   server.on('listening', onListening.bind(null, server));
