@@ -24,7 +24,7 @@ export const API = {
     FETCH_WEATHER_BY_LOCATION: (location) => `${API_URL}/weather/${location}`,
   },
   LOCATION: {
-    FIND: (query = '') => `${API_URL}/location/find?q=${encodeURIComponent(query)}`
+    FIND: (query = '') => `${API_URL}/location/find?q=${encodeURIComponent(query)}`,
   },
   APP:{
     FETCH_APP_INFO: `${API_URL}/app/info`,
