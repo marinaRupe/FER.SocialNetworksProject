@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
+import axios from 'axios';
 import history from '../history';
-import { APP } from '../constants/routes';
+import { APP, API } from '../constants/routes';
 import * as values from '../constants/values';
 import * as userActions from '../redux/actions/user.actions';
 
@@ -66,11 +67,8 @@ const statusChangeCallback = (response, dispatch) => {
       } : null;
 
       if (res.location) {
-        window.FB.api(`/${res.location.id}`, {
-          fields: 'location',
-        }, locationRes => {
-          console.log(locationRes);
-        });
+        axios.get(API.LOCATION.FIND(res.location.name))
+          .then((_res) => console.log(_res.data));
       }
 
       const likedPages = {
