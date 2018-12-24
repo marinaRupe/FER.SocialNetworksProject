@@ -35,6 +35,7 @@ export const APP = {
     REGISTER: '/register',
   },
   PRIVACY_POLICY: '/privacy-policy',
+  CONTACT_US: '/contact-us',
   MOVIE: {
     DETAILS: (movieId = ':movieId') => `/movie/${movieId}/details`,
     POPULAR_MOVIES: '/movies/most-popular',

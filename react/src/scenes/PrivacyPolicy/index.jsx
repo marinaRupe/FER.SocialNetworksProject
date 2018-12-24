@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class PrivacyPolicy extends Component {
   render() {
     return (
-      <div className='privacy-policy'>
+      <div className='privacy-policy page'>
         <div className='privacy-policy__title'>FER.SocialNetworksProject Privacy Policy</div>
         <div className='privacy-policy__content'>
           <p>

@@ -36,8 +36,11 @@ a {
 
 .link {
   color: $col-primary;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
+  &:hover, :active, :focus {
+    color: darken($col-primary, 5%);
+  }
 }
 
 .btn-primary {
@@ -54,6 +57,26 @@ a {
     color: $col-normalText--dark;
     font-size: $val-fontSizeRegular;
     font-weight: $val-fontWeightBold;
+  }
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $val-spacing-l $val-spacing-s;
+  background-color: black;
+  .link {
+    color: white;
+    font-weight: 200;
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
   }
 }
 

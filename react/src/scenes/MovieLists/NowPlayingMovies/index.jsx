@@ -60,7 +60,7 @@ class NowPlayingMovies extends Component {
     const { page, totalPages } = this.props;
 
     return (
-      <div>
+      <div className='page'>
         <div className='movie-list__title'>Now playing movies</div>
         {this.renderMovieList()}
         <PaginationComponent
