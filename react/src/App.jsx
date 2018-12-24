@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import Home from './scenes/Home';
@@ -16,6 +16,7 @@ import MovieDetails from './scenes/MovieDetails';
 import Error404 from './scenes/Error/Error404';
 import Error500 from './scenes/Error/Error500';
 import PrivacyPolicy from './scenes/PrivacyPolicy';
+import ContactUs from './scenes/ContactUs';
 import Profile from './scenes/Profile';
 
 import NavigationBar from './components/NavigationBar';
@@ -46,6 +47,7 @@ class App extends Component {
             <Route exact path={APP.AUTH.LOGIN} component={Login} />
             <Route exact path={APP.AUTH.REGISTER} component={Register} />
             <Route exact path={APP.PRIVACY_POLICY} component={PrivacyPolicy} />
+            <Route exact path={APP.CONTACT_US} component={ContactUs} />
             <Route exact path={APP.NOT_FOUND_ERROR} component={Error404} />
             <Route exact path={APP.SERVER_ERROR} component={Error500} />
 
@@ -65,6 +67,10 @@ class App extends Component {
 
             <Route path='*' component={Error404} />
           </Switch>
+          <footer className='footer'>
+            <Link to={APP.CONTACT_US} className='link'>Contact Us</Link>
+            <Link to={APP.PRIVACY_POLICY} className='link'>Privacy Policy</Link>
+          </footer>
         </div>
       </Router>
     );

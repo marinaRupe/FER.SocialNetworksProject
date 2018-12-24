@@ -149,7 +149,7 @@ class Home extends Component {
     const { topMovies, recommendedMovies } = this.props;
 
     return (
-      <div className='home-page'>
+      <div className='home-page page'>
         <MDBContainer>
           <MDBRow className='mb-40'>
             <MDBCol md='6' className='offset-md-3'>

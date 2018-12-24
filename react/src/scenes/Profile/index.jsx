@@ -76,7 +76,7 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className='profile'>
+      <div className='profile page'>
         <div className='profile__title'>Profile</div>
         {this.renderProfileData()}
       </div>

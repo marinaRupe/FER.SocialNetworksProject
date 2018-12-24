@@ -120,7 +120,7 @@ class MovieDetails extends Component {
     };
 
     return (
-      <div>
+      <div className='page'>
         <div className='movie-list__title'>Movie details</div>
         {this.renderMovieDetails()}
         {this.renderMovieReviews()}
