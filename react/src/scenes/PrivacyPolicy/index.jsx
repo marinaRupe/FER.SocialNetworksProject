@@ -8,7 +8,8 @@ class PrivacyPolicy extends Component {
         <div className='privacy-policy__content'>
           <p>
             FER.SocialNetworksProject is a web platform for searching and reviewing movies.
-            The FER.SocialNetworksProject platform includes the FER.SocialNetworksProject websites, apps and related online services, together the <strong>"Service"</strong>.
+            The FER.SocialNetworksProject platform includes the FER.SocialNetworksProject websites, apps
+            and related online services, together the <strong>"Service"</strong>.
           </p>
           <p>
             This Privacy Policy describes how your information is collected, used and shared when you use the Service.
@@ -23,12 +24,13 @@ class PrivacyPolicy extends Component {
           </p>
           <ul>
             <li>your contact information, such as full name and email address;</li>
-            <li>your username and password;</li>
+            <li>your Facebook public profile information, such as name and profile picture;</li>
+            <li>other information from your Facebook profile, such as birthday, location and liked pages</li>
             <li>
               the content, communications and other information you provide when you use the Service,
               including when you sign up for an account, create or share content.
-              This can include information in or about the content you provide (such as metadata),
-              such as the movie rating;
+              This can include information in or about the content you provide,
+              such as movie ratings;
             </li>
           </ul>
 
@@ -44,7 +46,7 @@ class PrivacyPolicy extends Component {
               enhancing the security and safety of the Service for you and other users,
               such as by investigating suspicious activity or violations of applicable terms or policies;
             </li>
-            <li>personalising your experience;</li>
+            <li>personalizing your experience;</li>
             <li>
               associating activity on the Service across different devices
               operated by the same individual to improve the overall operation of the Service;
@@ -57,12 +59,32 @@ class PrivacyPolicy extends Component {
             III. Disclosure of information
           </div>
 
+          <p>
+            The Service discloses the information collected in the following ways:
+          </p>
+          <li>
+            to third-party apps, websites or other services that you can connect to through the Service,
+            such as Facebook;
+          </li>
+          <li>to protect the safety of any person; to address fraud, security or technical issues; and</li>
+          <li>
+            in connection with a subpoena, warrant, discovery order
+            or other request or order from a law enforcement agency.
+          </li>
+
           <div className='privacy-policy__subtitle'>
             IV. Accessing and modifying your information
           </div>
           <p>
             You may access, correct or delete information that you have uploaded to
             the Service using the tools within the Service (for example, editing your movie ratings or history).
+          </p>
+          <p>
+            Furthermore, you may request to review, modify and/or delete any additional personal information collected
+            by the Service by contacting fer.socialnetworksproject@gmail.com.
+          </p>
+          <p>
+            It typically takes about 30 days to collect all of the data connected to a user's account.
           </p>
 
           <div className='privacy-policy__subtitle'>
@@ -76,6 +98,14 @@ class PrivacyPolicy extends Component {
           <div className='privacy-policy__subtitle'>
             VI. Account Closure
           </div>
+          <p>
+            If you would like to stop using the Service, you may request to delete your Account
+            and related personal information by contacting fer.socialnetworksproject@gmail.com.
+          </p>
+          <p>
+            It typically takes about 60 days to delete an account after a request has been received and processed,
+            but some information may remain in backup copies for a reasonable period of time.
+          </p>
 
           <div className='privacy-policy__subtitle'>
             VII. Changes to the Privacy Policy
@@ -85,7 +115,7 @@ class PrivacyPolicy extends Component {
             When updated the "Effective date" below will be amended and the new Privacy Policy will be posted online.
           </p>
 
-          <div className='privacy-policy__subtitle'>   
+          <div className='privacy-policy__subtitle'>
             VIII. Contact
           </div>
           <p>
@@ -94,7 +124,7 @@ class PrivacyPolicy extends Component {
 
           <br />
           <p>
-            Effective Date: 23 Dec 2018
+            Effective Date: 24 Dec 2018
           </p>
         </div>
       </div>
