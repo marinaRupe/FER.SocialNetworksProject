@@ -81,7 +81,7 @@ class PrivacyPolicy extends Component {
           </p>
           <p>
             Furthermore, you may request to review, modify and/or delete any additional personal information collected
-            by the Service by contacting fer.socialnetworksproject@gmail.com.
+            by the Service by contacting us.
           </p>
           <p>
             It typically takes about 30 days to collect all of the data connected to a user's account.
@@ -100,7 +100,7 @@ class PrivacyPolicy extends Component {
           </div>
           <p>
             If you would like to stop using the Service, you may request to delete your Account
-            and related personal information by contacting fer.socialnetworksproject@gmail.com.
+            and related personal information by contacting us.
           </p>
           <p>
             It typically takes about 60 days to delete an account after a request has been received and processed,
