@@ -115,7 +115,7 @@ class PrivacyPolicy extends Component {
             When updated the "Effective date" below will be amended and the new Privacy Policy will be posted online.
           </p>
 
-          <div className='privacy-policy__subtitle'>   
+          <div className='privacy-policy__subtitle'>
             VIII. Contact
           </div>
           <p>
