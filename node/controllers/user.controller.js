@@ -27,7 +27,7 @@ const loginWithFacebook = async (req, res) => {
     });
   }
 
-  if (!await UserService.existsUserId(userID)) {
+  if (!await UserService.existsEmail(email)) {
     await UserService.createUser(
       userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender);
   }
