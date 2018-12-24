@@ -1,0 +1,32 @@
+@import 'styles/Colors.scss';
+@import 'styles/Constants.scss';
+
+.contact-us {
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+  &__title {
+    color: $col-title--big;
+    font-size: $val-fontSizeXBig;
+    padding: $val-spacing-xxs $val-spacing-l;
+  }
+  &__subtitle {
+    font-size: $val-fontSizeBig;
+    padding: $val-spacing-xs 0;
+    font-weight: $val-fontWeightBold;
+  }
+  &__content {
+    padding: $val-spacing-xs $val-spacing-l;
+  }
+  &__email {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    .material-icons {
+      margin-right: 5px;
+      text-decoration: none;
+    }
+  }
+}

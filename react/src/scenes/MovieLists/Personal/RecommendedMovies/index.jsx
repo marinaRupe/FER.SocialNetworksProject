@@ -60,7 +60,7 @@ class RecommendedMovies extends Component {
     const { page, totalPages } = this.props;
 
     return (
-      <div>
+      <div className='page'>
         <div className='movie-list__title'>Recommended for you</div>
         {this.renderMovieList()}
         <PaginationComponent
