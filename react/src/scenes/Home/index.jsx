@@ -39,10 +39,13 @@ class Home extends Component {
         fetchAppInfo,
         fetchTopMovies,
         fetchRecommendedMovies,
+        currentUser,
       } = this.props;
 
-      await fetchCinemasByCenterLocation(values.CURRENT_LOCATION);
-      await fetchWeatherByLocation(values.CURRENT_LOCATION);
+      const userLocation = values.CURRENT_LOCATION; //(currentUser && currentUser.location) || values.CURRENT_LOCATION;
+
+      await fetchCinemasByCenterLocation(userLocation);
+      await fetchWeatherByLocation(userLocation);
       await fetchAppInfo();
       await fetchTopMovies(1, 5);
       await fetchRecommendedMovies(1, 5);
@@ -191,6 +194,7 @@ const mapStateToProps = state => {
     info: state.app.info,
     topMovies: state.movies.topMovies.list,
     recommendedMovies: state.movies.recommendedMovies.list,
+    currentUser: state.users.currentUser,
   };
 };
 

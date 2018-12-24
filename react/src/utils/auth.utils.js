@@ -54,11 +54,29 @@ const statusChangeCallback = (response, dispatch) => {
     console.log('Fetching user data...');
 
     window.FB.api('/me', {
-      fields: 'name,first_name,last_name,birthday,age_range,email,gender,relationship_status',
+      fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
     },
     res => {
       console.log('Successful login for: ' + res.name);
       console.log(res);
+
+      const location = res.location ? {
+        id: res.location.id,
+        name: res.location.name,
+      } : null;
+
+      if (res.location) {
+        window.FB.api(`/${res.location.id}`, {
+          fields: 'location',
+        }, locationRes => {
+          console.log(locationRes);
+        });
+      }
+
+      const likedPages = {
+        pages: (res.likes && res.likes.data) || [],
+        paging: res.likes && res.likes.paging,
+      };
 
       window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
         const user = {
@@ -72,7 +90,10 @@ const statusChangeCallback = (response, dispatch) => {
           gender: res.gender,
           birthday: res.birthday,
           ageRange: res.age_range,
+          location,
+          likedPages,
         };
+
         if (dispatch) {
           console.log('dispatch');
           dispatch(userActions.login(user, response));

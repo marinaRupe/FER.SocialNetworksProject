@@ -10,6 +10,8 @@ class UserLoginViewModel {
     this.gender = user.gender;
     this.birthday = user.birthday;
     this.ageRange = user.ageRange;
+    this.location = user.location;
+    this.likedPages = user.likedPages;
   }
 }
 

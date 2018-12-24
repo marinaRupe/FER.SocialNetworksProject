@@ -17,6 +17,8 @@ const loginWithFacebook = async (req, res) => {
     birthday,
     ageRange,
     gender,
+    location,
+    likedPages,
   } = user;
 
   if (!email.match(settings.EMAIL_REGEX)) {
@@ -29,7 +31,7 @@ const loginWithFacebook = async (req, res) => {
 
   if (!await UserService.existsEmail(email)) {
     await UserService.createUser(
-      userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender);
+      userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender, location, likedPages);
   }
 
   res.json(new UserLoginViewModel(user));

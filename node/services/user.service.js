@@ -44,7 +44,7 @@ const add = async (email, password, firstName, lastName, name) => {
 };
 
 const createUser = async (
-  userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender) => {
+  userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender, location, likedPages) => {
   const user = new User({
     userID,
     email,
@@ -56,6 +56,8 @@ const createUser = async (
     birthday,
     ageRange,
     gender,
+    location,
+    likedPages,
   });
 
   await user.save();
