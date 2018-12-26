@@ -16,7 +16,7 @@ export const deleteToken = () => {
 };
 
 export const facebookJSSDKSetup = dispatch => {
-  console.log('facebookJSSDKSetup');
+  //console.log('facebookJSSDKSetup');
   window.fbAsyncInit = () => {
     window.FB.init({
       appId      : process.env.REACT_APP_FACEBOOK_APP_ID,
@@ -40,7 +40,7 @@ export const facebookJSSDKSetup = dispatch => {
 };
 
 export const checkLoginState = dispatch => {
-  console.log('checkLoginState');
+  //console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
     window.location.reload(true);
@@ -48,27 +48,33 @@ export const checkLoginState = dispatch => {
 };
 
 const statusChangeCallback = (response, dispatch) => {
-  console.log('statusChangeCallback');
-  console.log(response);
+  //console.log('statusChangeCallback');
+  //console.log(response);
 
   if (response.status === 'connected') {
-    console.log('Fetching user data...');
+    //console.log('Fetching user data...');
 
     window.FB.api('/me', {
       fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
     },
     res => {
-      console.log('Successful login for: ' + res.name);
-      console.log(res);
+      //console.log('Successful login for: ' + res.name);
+      //console.log(res);
 
-      const location = res.location ? {
-        id: res.location.id,
-        name: res.location.name,
-      } : null;
+      let location = null;
 
       if (res.location) {
         axios.get(API.LOCATION.FIND(res.location.name))
-          .then((_res) => console.log(_res.data));
+          .then((_res) => {
+            location = {
+              id: res.location.id,
+              name: res.location.name,
+              coordinates: {
+                latitude: +_res.data.lat,
+                longitude: +_res.data.lng,
+              },
+            };
+          });
       }
 
       const likedPages = {
@@ -93,10 +99,10 @@ const statusChangeCallback = (response, dispatch) => {
         };
 
         if (dispatch) {
-          console.log('dispatch');
+          //console.log('dispatch');
           dispatch(userActions.login(user, response));
         } else {
-          console.log('NO dispatch');
+          //console.log('NO dispatch');
         }
       });
     });
