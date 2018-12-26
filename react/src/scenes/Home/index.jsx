@@ -50,7 +50,8 @@ class Home extends Component {
       await fetchWeatherByLocation(userLocation);
       await fetchAppInfo();
       await fetchTopMovies(1, 5);
-      await fetchRecommendedMovies(1, 5);
+      await fetchRecommendedMovies(1, 5, currentUser);
+      console.log(currentUser);
 
       this.setState({
         isLoading: false,

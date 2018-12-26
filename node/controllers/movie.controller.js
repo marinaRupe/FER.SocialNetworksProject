@@ -26,7 +26,23 @@ const getMostRatedMovies = async (req, res) => {
   res.send(data);
 };
 
+const getRecomendedMovies = async (req, res) => {
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, likes} = req.query;
+
+  const filter = MovieService.makeFilter(gender, age, likes);
+  const movies = await MovieService.getMoviesByFilter(+page, +pageSize, filter);
+
+  const totalPages = Math.ceil(
+    await MovieService.getMoviesCount(filter) / pageSize
+  );
+
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  res.send(data);
+};
+
 module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
+  getRecomendedMovies,
 };

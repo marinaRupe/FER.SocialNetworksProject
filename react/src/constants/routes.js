@@ -11,6 +11,7 @@ export const API = {
   MOVIE: {
     FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
     FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
+    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) => `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
   },
   REVIEWS: {
     MOVIE: {
