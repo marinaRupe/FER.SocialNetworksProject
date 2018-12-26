@@ -42,7 +42,9 @@ class Home extends Component {
         currentUser,
       } = this.props;
 
-      const userLocation = values.CURRENT_LOCATION; //(currentUser && currentUser.location) || values.CURRENT_LOCATION;
+      const userLocation = (currentUser && currentUser.location && currentUser.location.coordinates
+        && [currentUser.location.coordinates.latitude, currentUser.location.coordinates.longitude])
+        || values.CURRENT_LOCATION;
 
       await fetchCinemasByCenterLocation(userLocation);
       await fetchWeatherByLocation(userLocation);
