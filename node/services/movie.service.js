@@ -92,7 +92,7 @@ const makeFilter = (gender, age=0, likes=[]) =>{
     filter['genres']= { '$in': ['action', 'horror'] };
   }
 
-  if (age >= 18) {
+  if (age < 18 && age != 0) {
     filter['adult']= { '$nin': [true] };
   }
 
