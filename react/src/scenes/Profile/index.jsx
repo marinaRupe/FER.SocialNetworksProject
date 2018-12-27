@@ -55,6 +55,12 @@ class Profile extends Component {
                         <span>{currentUser.birthday}</span>
                       </span>
                     }
+                    { currentUser.gender &&
+                    <span className='profile__user-info--item'>
+                        <i className='material-icons'>accessibility</i>
+                        <span>{currentUser.gender}</span>
+                      </span>
+                    }
                   </CardText>
                   <div className='profile__btn-container'>
                     <ButtonComponent
