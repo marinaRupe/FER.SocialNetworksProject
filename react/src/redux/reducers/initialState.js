@@ -8,14 +8,31 @@ const initialState = {
     page: 1,
     totalPages: 1,
     totalResults: 0,
-    activeMovie: null
+    activeMovie: null,
+    topMovies: {
+      list: [],
+      page: 1,
+      totalPages: 1,
+      totalResults: 0,
+    },
+    recommendedMovies: {
+      list: [],
+      page: 1,
+      totalPages: 1,
+      totalResults: 0,
+    },
   },
   reviews: {
-    activeMovieReviews: []
+    activeMovieReviews: [],
   },
   cinemas: {
-    list: []
-  }
+    list: [],
+  },
+  weather: {
+    current: null,
+  },
+  app: {
+    info: null,
+  },
 };
-
 export default initialState;

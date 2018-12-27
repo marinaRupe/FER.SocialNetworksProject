@@ -21,11 +21,12 @@ const findByToken = async (token) => {
 
 const findAll = async () => User.find().exec();
 
-const addNewUser = (email, password, firstName, lastName) => {
+const addNewUser = (email, password, firstName, lastName, name) => {
   const user = new User({
     email,
     firstName,
     lastName,
+    name,
   });
 
   user.setPassword(password);
@@ -34,8 +35,8 @@ const addNewUser = (email, password, firstName, lastName) => {
   return user;
 };
 
-const add = async (email, password, firstName, lastName) => {
-  const user = addNewUser(email, password, firstName, lastName);
+const add = async (email, password, firstName, lastName, name) => {
+  const user = addNewUser(email, password, firstName, lastName, name);
 
   await user.save();
 
@@ -43,16 +44,20 @@ const add = async (email, password, firstName, lastName) => {
 };
 
 const createUser = async (
-  userID, email, token, firstName, lastName, picture, birthday, gender) => {
+  userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender, location, likedPages) => {
   const user = new User({
     userID,
     email,
     firstName,
     lastName,
+    name,
     token,
     picture,
     birthday,
-    gender
+    ageRange,
+    gender,
+    location,
+    likedPages,
   });
 
   await user.save();

@@ -9,17 +9,27 @@ export const API = {
     CHANGE_PASSWORD: `${API_URL}/user/changePassword`,
   },
   MOVIE: {
-    FETCH_MOST_POPUAR_MOVIES: (page) => `${API_URL}/movie/most-popular/${page}`,
-    FETCH_MOST_RATED_MOVIES: (page) => `${API_URL}/movie/most-rated/${page}`,
+    FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
+    FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
+    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) => `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
   },
   REVIEWS: {
     MOVIE: {
-      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`
-    }
+      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`,
+    },
   },
   CINEMA: {
-    FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`
-  }
+    FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`,
+  },
+  WEATHER: {
+    FETCH_WEATHER_BY_LOCATION: (location) => `${API_URL}/weather/${location}`,
+  },
+  LOCATION: {
+    FIND: (query = '') => `${API_URL}/location/find?q=${encodeURIComponent(query)}`,
+  },
+  APP:{
+    FETCH_APP_INFO: `${API_URL}/app/info`,
+  },
 };
 
 export const APP = {
@@ -28,15 +38,19 @@ export const APP = {
     LOGIN: '/login',
     REGISTER: '/register',
   },
+  PRIVACY_POLICY: '/privacy-policy',
+  CONTACT_US: '/contact-us',
   MOVIE: {
     DETAILS: (movieId = ':movieId') => `/movie/${movieId}/details`,
     POPULAR_MOVIES: '/movies/most-popular',
     MOST_RATED_MOVIES: '/movies/most-rated',
+    NOW_PLAYING_MOVIES: '/movies/now-playing',
     PERSONAL: {
       USER_RATED_MOVIES: '/movies/rated',
       USER_WATCHED_MOVIES: '/movies/watched',
       USER_SAVED_MOVIES: '/movies/saved',
-    }
+      RECOMMENDED_MOVIES: '/movies/recommended',
+    },
   },
   PROFILE: '/profile',
   SERVER_ERROR: '/error/500',

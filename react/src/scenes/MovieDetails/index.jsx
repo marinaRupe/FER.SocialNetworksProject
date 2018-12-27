@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import movieActions from '../../redux/actionCreators/movieActionCreator';
-import movieReviewActions from '../../redux/actionCreators/movieReviewActionCreator';
+import * as movieActions from '../../redux/actions/movie.actions';
+import * as movieReviewActions from '../../redux/actions/movieReview.actions';
 import MovieDetailedView from '../../components/Movie/MovieDetailedView';
 
 class MovieDetails extends Component {
@@ -15,27 +15,25 @@ class MovieDetails extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, match: { params: { movieId } } } = this.props;
-
     this.setState({
       isLoading: true,
-    });
-
-    dispatch(movieActions.fetchActiveMovie(movieId));
-
-    this.setState({
-      isLoading: false,
+    }, async () => {
+      const { fetchActiveMovie, match: { params: { movieId } } } = this.props;
+      await fetchActiveMovie(movieId);
+      this.setState({
+        isLoading: false,
+      });
     });
   }
 
-  componentDidUpdate(prevProps) {
-    const { dispatch, movie } = this.props;
+  async componentDidUpdate(prevProps) {
+    const { fetchReviewsForMovie, movie } = this.props;
 
     if (!movie) return;
 
     if (prevProps.movie && (movie.imdbID === prevProps.movie.imdbID)) return;
 
-    dispatch(movieReviewActions.fetchReviewsForMovie(movie.title));
+    await fetchReviewsForMovie(movie.title);
   }
 
   renderMovieDetails = () => {
@@ -60,10 +58,10 @@ class MovieDetails extends Component {
     const { movie, reviews } = this.props;
 
     if (movie) {
-      const movieYear = movie.releaseDate.split('-')[0];
+      const movieYear = movie.releaseDate && movie.releaseDate.split('-')[0];
       // eslint-disable-next-line
       const reviewsList = reviews.map((review, index) => {
-        const year = review.opening_date.split('-')[0];
+        const year = review.opening_date && review.opening_date.split('-')[0];
         if (year === movieYear) {
           return (
             <div
@@ -116,13 +114,13 @@ class MovieDetails extends Component {
     if (isLoading) {
       return (
         <div className='movie__details loading'>
-          <div class='loader border-top-info'></div>
+          <div className='loader border-top-info'></div>
         </div>
       );
     };
 
     return (
-      <div>
+      <div className='page'>
         <div className='movie-list__title'>Movie details</div>
         {this.renderMovieDetails()}
         {this.renderMovieReviews()}
@@ -138,4 +136,9 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(withRouter(MovieDetails));
+const mapDispatchToProps = {
+  fetchReviewsForMovie: movieReviewActions.fetchReviewsForMovie,
+  fetchActiveMovie: movieActions.fetchActiveMovie,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MovieDetails));

@@ -14,4 +14,9 @@
   &.loading {
     padding-bottom: 50px;
   }
+  &.small {
+    .movie__list-item {
+      width: 90%;
+    }
+  }
 }

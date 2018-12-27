@@ -1,4 +1,4 @@
-import * as types from './actionTypes';
+import * as types from '../actionTypes';
 
 export const fetchMostPopularMovies = ({ status, data }) => {
   return {
@@ -21,5 +21,21 @@ export const fetchActiveMovie = ({ status, data }) => {
     data,
     status,
     type: types.FETCH_ACTIVE_MOVIE,
+  };
+};
+
+export const fetchTopMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_TOP_MOVIES,
+  };
+};
+
+export const fetchRecommendedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_RECOMMENDED_MOVIES,
   };
 };

@@ -7,6 +7,7 @@ const movieReviewRouter = require('../routes/api/movieReview.routes');
 const movieRouter = require('../routes/api/movie.routes');
 const cinemaRouter = require('../routes/api/cinema.routes');
 const weatherRouter = require('../routes/api/weather.routes');
+const locationRouter = require('../routes/api/location.routes');
 const infoRouter = require('../routes/api/info.routes');
 
 const useProductionRoutes = app => {
@@ -17,7 +18,7 @@ const useProductionRoutes = app => {
 };
 
 const useDevelopmentRoutes = app => {
-  app.get('/:url?', (req, res) => (res.redirect(`http://localhost:3001/${req.params.url || ''}`)));
+  app.get('/:url?', (req, res) => (res.redirect(`https://localhost:3001/${req.params.url || ''}`)));
 };
 
 const configure = app => {
@@ -26,6 +27,7 @@ const configure = app => {
   app.use(`${apiConstants.API_PATH}/movie`, movieRouter);
   app.use(`${apiConstants.API_PATH}/cinema`, cinemaRouter);
   app.use(`${apiConstants.API_PATH}/weather`, weatherRouter);
+  app.use(`${apiConstants.API_PATH}/location`, locationRouter);
   app.use(`${apiConstants.API_PATH}/app`, infoRouter);
 
   if (expressConfig.isProduction()) {

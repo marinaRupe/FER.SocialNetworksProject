@@ -66,7 +66,7 @@ class PaginationComponent extends Component {
 PaginationComponent.propTypes = {
   total: PropTypes.number.isRequired,
   current: PropTypes.number.isRequired,
-  action: PropTypes.func.isRequired
+  action: PropTypes.func.isRequired,
 };
 
 export default PaginationComponent;

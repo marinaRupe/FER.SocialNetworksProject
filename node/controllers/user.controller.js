@@ -12,9 +12,13 @@ const loginWithFacebook = async (req, res) => {
     token,
     firstName,
     lastName,
+    name,
     picture,
     birthday,
-    gender
+    ageRange,
+    gender,
+    location,
+    likedPages,
   } = user;
 
   if (!email.match(settings.EMAIL_REGEX)) {
@@ -25,9 +29,9 @@ const loginWithFacebook = async (req, res) => {
     });
   }
 
-  if (!await UserService.existsUserId(userID)) {
+  if (!await UserService.existsEmail(email)) {
     await UserService.createUser(
-      userID, email, token, firstName, lastName, picture, birthday, gender);
+      userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender, location, likedPages);
   }
 
   res.json(new UserLoginViewModel(user));
@@ -62,6 +66,7 @@ const register = async (req, res) => {
     email,
     firstName,
     lastName,
+    name,
     password,
   } = req.body;
 
@@ -78,7 +83,7 @@ const register = async (req, res) => {
     });
   }
 
-  const user = await UserService.add(email, password, firstName, lastName);
+  const user = await UserService.add(email, password, firstName, lastName, name);
 
   res.json(new UserLoginViewModel(user));
 };
@@ -86,5 +91,5 @@ const register = async (req, res) => {
 module.exports = {
   login,
   register,
-  loginWithFacebook
+  loginWithFacebook,
 };

@@ -5,6 +5,7 @@ const isValidUserObject = user => {
     email,
     firstName,
     lastName,
+    name,
   } = user;
 
   const errors = {};
@@ -15,6 +16,10 @@ const isValidUserObject = user => {
 
   if (!lastName) {
     errors.lastName = 'Last name is invalid.';
+  }
+
+  if (!name) {
+    errors.name = 'Full name is invalid.';
   }
 
   if (!email.match(settings.EMAIL_REGEX)) {
