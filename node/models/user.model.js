@@ -36,6 +36,8 @@ const userSchema = new Schema({
   birthday: Date,
   ageRange: Object,
   gender: String,
+  location: Object,
+  likedPages: Object,
 });
 
 userSchema.methods.setPassword = function setPassword(newPassword) {

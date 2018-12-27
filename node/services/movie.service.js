@@ -31,6 +31,14 @@ const getMoviesByReleaseDate = async (page, pageSize = defaultValues.DEFAULT_PAG
   .exec()
 );
 
+const getMoviesByFilter = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, filter) =>
+  (await Movie.find(filter)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ 'tmdbPopularity' : 'desc' })
+    .exec()
+  );
+
 const getMoviesWithNoOmdbData = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) =>
   (await Movie.find({ 'awards': null })
     .skip((page - 1) * pageSize)
@@ -76,6 +84,33 @@ const saveMovieList = async movies => {
   }
 };
 
+const makeFilter = (gender, age=0, likes = []) =>{
+  const filter = {};
+  if (gender === 'female') {
+    filter['genres'] = { '$in': ['romance', 'family'] };
+  } else if (gender === 'male') {
+    filter['genres'] = { '$in': ['action', 'horror'] };
+  }
+
+  if (age < 18 && age != 0) {
+    filter['adult'] = { '$nin': [true] };
+  }
+
+  if (likes.length > 0) {
+    filter['title'] = likes.split(',').map(x => new RegExp(x, 'gi'));
+    const orFilter = { '$or': [
+      { 'genres': filter['genres'] },
+      { 'title': filter['title'] },
+    ]};
+    if (filter['adult']) {
+      orFilter['adult'] = filter['adult'];
+    }
+    return {...orFilter, 'imdbRating': { '$nin': [null, 'N/A'] }};
+  }
+
+  return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
+};
+
 module.exports = {
   existsMovieWithImdbID,
   existsMovieWithTmdbID,
@@ -89,4 +124,6 @@ module.exports = {
   getMoviesByReleaseDate,
   getMoviesWithNoOmdbData,
   getMoviesCount,
+  getMoviesByFilter,
+  makeFilter,
 };

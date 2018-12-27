@@ -51,9 +51,13 @@ export function fetchTopMovies(page = 1, pageSize = 5) {
   return actionWrapper(action);
 }
 
-export function fetchRecommendedMovies(page = 1, pageSize = 5) {
+export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page, pageSize)); // TODO: change
+    const names = [];
+    user.likedPages.pages.forEach((element) => {
+      names.push(element.name);
+    });
+    const resp = await axios.get(API.MOVIE.FETCH_RECOMMENDED_MOVIES(page, pageSize, user.gender, user.ageRange.min ,names)); // TODO: change
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchRecommendedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }

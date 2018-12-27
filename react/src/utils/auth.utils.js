@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
+import axios from 'axios';
 import history from '../history';
-import { APP } from '../constants/routes';
+import { APP, API } from '../constants/routes';
 import * as values from '../constants/values';
 import * as userActions from '../redux/actions/user.actions';
 
@@ -14,8 +15,25 @@ export const deleteToken = () => {
   localStorage.removeItem(values.TOKEN);
 };
 
+export const getLocation = async (res) => {
+  if (res.location) {
+    const location = await axios.get(API.LOCATION.FIND(res.location.name))
+      .then((_res) => {return {
+        id: res.location.id,
+        name: res.location.name,
+        coordinates: {
+          latitude: +_res.data.lat,
+          longitude: +_res.data.lng,
+        },
+      };
+      });
+
+    return location;
+  }
+};
+
 export const facebookJSSDKSetup = dispatch => {
-  console.log('facebookJSSDKSetup');
+  //console.log('facebookJSSDKSetup');
   window.fbAsyncInit = () => {
     window.FB.init({
       appId      : process.env.REACT_APP_FACEBOOK_APP_ID,
@@ -39,7 +57,7 @@ export const facebookJSSDKSetup = dispatch => {
 };
 
 export const checkLoginState = dispatch => {
-  console.log('checkLoginState');
+  //console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
     window.location.reload(true);
@@ -47,18 +65,25 @@ export const checkLoginState = dispatch => {
 };
 
 const statusChangeCallback = (response, dispatch) => {
-  console.log('statusChangeCallback');
-  console.log(response);
+  //console.log('statusChangeCallback');
+  //console.log(response);
 
   if (response.status === 'connected') {
-    console.log('Fetching user data...');
+    //console.log('Fetching user data...');
 
     window.FB.api('/me', {
-      fields: 'name,first_name,last_name,birthday,age_range,email,gender,relationship_status',
+      fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
     },
-    res => {
-      console.log('Successful login for: ' + res.name);
-      console.log(res);
+    async res => {
+      //console.log('Successful login for: ' + res.name);
+
+
+      const location = await getLocation(res);
+
+      const likedPages = {
+        pages: (res.likes && res.likes.data) || [],
+        paging: res.likes && res.likes.paging,
+      };
 
       window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
         const user = {
@@ -72,12 +97,15 @@ const statusChangeCallback = (response, dispatch) => {
           gender: res.gender,
           birthday: res.birthday,
           ageRange: res.age_range,
+          location,
+          likedPages,
         };
+
         if (dispatch) {
-          console.log('dispatch');
+          //console.log('dispatch');
           dispatch(userActions.login(user, response));
         } else {
-          console.log('NO dispatch');
+          //console.log('NO dispatch');
         }
       });
     });

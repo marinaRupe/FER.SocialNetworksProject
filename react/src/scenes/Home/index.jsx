@@ -39,13 +39,18 @@ class Home extends Component {
         fetchAppInfo,
         fetchTopMovies,
         fetchRecommendedMovies,
+        currentUser,
       } = this.props;
 
-      await fetchCinemasByCenterLocation(values.CURRENT_LOCATION);
-      await fetchWeatherByLocation(values.CURRENT_LOCATION);
+      const userLocation = (currentUser && currentUser.location && currentUser.location.coordinates
+        && [currentUser.location.coordinates.latitude, currentUser.location.coordinates.longitude])
+        || values.CURRENT_LOCATION;
+
+      await fetchCinemasByCenterLocation(userLocation);
+      await fetchWeatherByLocation(userLocation);
       await fetchAppInfo();
       await fetchTopMovies(1, 5);
-      await fetchRecommendedMovies(1, 5);
+      await fetchRecommendedMovies(1, 5, currentUser);
 
       this.setState({
         isLoading: false,
@@ -153,8 +158,8 @@ class Home extends Component {
         <MDBContainer>
           <MDBRow className='mb-40'>
             <MDBCol md='6' className='offset-md-3'>
-              {this.renderWeatherInfo()}
-              {this.renderCinemaMapWithMarkers()}
+              {/* {this.renderWeatherInfo()}
+              {this.renderCinemaMapWithMarkers()} */}
             </MDBCol>
           </MDBRow>
           <MDBRow className='mb-40'>
@@ -191,6 +196,7 @@ const mapStateToProps = state => {
     info: state.app.info,
     topMovies: state.movies.topMovies.list,
     recommendedMovies: state.movies.recommendedMovies.list,
+    currentUser: state.users.currentUser,
   };
 };
 

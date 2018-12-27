@@ -8,4 +8,6 @@ router.get('/most-popular', asyncWrap(MovieController.getMostPopularMovies));
 
 router.get('/most-rated', asyncWrap(MovieController.getMostRatedMovies));
 
+router.get('/recommended', asyncWrap(MovieController.getRecomendedMovies));
+
 module.exports = router;

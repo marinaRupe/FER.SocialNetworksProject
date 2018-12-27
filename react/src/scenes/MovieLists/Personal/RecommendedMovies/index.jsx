@@ -21,8 +21,8 @@ class RecommendedMovies extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { fetchMostRatedMovies } = this.props;
-      await fetchMostRatedMovies(page); // TODO: change action
+      const { fetchRecommendedMovies, currentUser } = this.props;
+      await fetchRecommendedMovies(page,5,currentUser);
       this.setState({
         isLoading: false,
       });
@@ -75,14 +75,15 @@ class RecommendedMovies extends Component {
 
 const mapStateToProps = state => {
   return {
-    movies: state.movies.list,
-    page: state.movies.page,
-    totalPages: state.movies.totalPages,
+    movies: state.movies.recommendedMovies.list,
+    page: state.movies.recommendedMovies.page,
+    totalPages: state.movies.recommendedMovies.totalPages,
+    currentUser: state.users.currentUser
   };
 };
 
 const mapDispatchToProps = {
-  fetchMostRatedMovies: movieActions.fetchMostRatedMovies, // TODO: change action
+  fetchRecommendedMovies: movieActions.fetchRecommendedMovies, // TODO: change action
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecommendedMovies);
