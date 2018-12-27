@@ -32,10 +32,10 @@ const getMoviesByReleaseDate = async (page, pageSize = defaultValues.DEFAULT_PAG
 );
 
 const getMoviesByFilter = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, filter) =>
-  (await Movie.find({...filter, 'imdbRating': { '$nin': [null, 'N/A'] }})
+  (await Movie.find(filter)
     .skip((page - 1) * pageSize)
     .limit(pageSize)
-    .sort({ 'tmdbPopularity' : 'desc', 'imdbRating' : 'desc' })
+    .sort({ 'tmdbPopularity' : 'desc' })
     .exec()
   );
 
@@ -105,10 +105,10 @@ const makeFilter = (gender, age=0, likes = []) =>{
     if (filter['adult']) {
       orFilter['adult'] = filter['adult'];
     }
-    return orFilter;
+    return {...orFilter, 'imdbRating': { '$nin': [null, 'N/A'] }};
   }
 
-  return filter;
+  return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
 };
 
 module.exports = {
