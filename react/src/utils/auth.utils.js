@@ -15,6 +15,23 @@ export const deleteToken = () => {
   localStorage.removeItem(values.TOKEN);
 };
 
+export const getLocation = async (res) => {
+  if (res.location) {
+    const location = await axios.get(API.LOCATION.FIND(res.location.name))
+      .then((_res) => {return {
+        id: res.location.id,
+        name: res.location.name,
+        coordinates: {
+          latitude: +_res.data.lat,
+          longitude: +_res.data.lng,
+        },
+      };
+      });
+
+    return location;
+  }
+};
+
 export const facebookJSSDKSetup = dispatch => {
   //console.log('facebookJSSDKSetup');
   window.fbAsyncInit = () => {
@@ -57,25 +74,11 @@ const statusChangeCallback = (response, dispatch) => {
     window.FB.api('/me', {
       fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
     },
-    res => {
+    async res => {
       //console.log('Successful login for: ' + res.name);
-      //console.log(res);
 
-      let location = null;
 
-      if (res.location) {
-        axios.get(API.LOCATION.FIND(res.location.name))
-          .then((_res) => {
-            location = {
-              id: res.location.id,
-              name: res.location.name,
-              coordinates: {
-                latitude: +_res.data.lat,
-                longitude: +_res.data.lng,
-              },
-            };
-          });
-      }
+      const location = await getLocation(res);
 
       const likedPages = {
         pages: (res.likes && res.likes.data) || [],

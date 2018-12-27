@@ -51,7 +51,6 @@ class Home extends Component {
       await fetchAppInfo();
       await fetchTopMovies(1, 5);
       await fetchRecommendedMovies(1, 5, currentUser);
-      console.log(currentUser);
 
       this.setState({
         isLoading: false,
@@ -159,6 +158,7 @@ class Home extends Component {
         <MDBContainer>
           <MDBRow className='mb-40'>
             <MDBCol md='6' className='offset-md-3'>
+              {this.renderWeatherInfo()}
               {this.renderCinemaMapWithMarkers()}
             </MDBCol>
           </MDBRow>
