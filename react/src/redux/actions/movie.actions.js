@@ -22,7 +22,6 @@ export function fetchMostPopularMovies(page = 1, pageSize = 30) {
 }
 
 export function fetchMostRatedMovies(page = 1, pageSize = 30) {
-  debugger;
   const action = async (dispatch) => {
     const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page, pageSize));
     if (resp.status === 200) {
