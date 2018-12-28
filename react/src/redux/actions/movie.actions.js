@@ -22,6 +22,7 @@ export function fetchMostPopularMovies(page = 1, pageSize = 30) {
 }
 
 export function fetchMostRatedMovies(page = 1, pageSize = 30) {
+  debugger;
   const action = async (dispatch) => {
     const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page, pageSize));
     if (resp.status === 200) {
@@ -60,6 +61,36 @@ export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
     const resp = await axios.get(API.MOVIE.FETCH_RECOMMENDED_MOVIES(page, pageSize, user.gender, user.ageRange.min ,names)); // TODO: change
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchRecommendedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function fetchUserSavedMovies(page = 1, pageSize = 30) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.MOVIE.FETCH_USER_SAVED_MOVIES (page, pageSize));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchUserSavedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function fetchUserWatchedMovies(page = 1, pageSize = 30) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.MOVIE.FETCH_USER_WATCHED_MOVIES(page, pageSize));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchUserWatchedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function fetchUserRatedMovies(page = 1, pageSize = 30) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchUserRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
   };
   return actionWrapper(action);

@@ -56,7 +56,7 @@ class Profile extends Component {
                       </span>
                     }
                     { currentUser.gender &&
-                    <span className='profile__user-info--item'>
+                      <span className='profile__user-info--item'>
                         <i className='material-icons'>accessibility</i>
                         <span>{currentUser.gender}</span>
                       </span>

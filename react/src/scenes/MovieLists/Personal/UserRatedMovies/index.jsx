@@ -21,8 +21,8 @@ class UserRatedMovies extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { fetchMostRatedMovies } = this.props;
-      await fetchMostRatedMovies(page); // TODO: change action
+      const { fetchUserRatedMovies } = this.props;
+      await fetchUserRatedMovies(page); // TODO: change action
       this.setState({
         isLoading: false,
       });
@@ -82,7 +82,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  fetchMostRatedMovies: movieActions.fetchMostRatedMovies, // TODO: change action
+  fetchUserRatedMovies: movieActions.fetchUserRatedMovies, // TODO: change action
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRatedMovies);

@@ -60,6 +60,39 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.FETCH_USER_SAVED_MOVIES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        list: action.data.results,
+        page: action.data.page,
+        totalPages: action.data.totalPages,
+        totalResults: action.data.totalResults,
+      };
+    }
+    return { ...state };
+  case types.FETCH_USER_WATCHED_MOVIES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        list: action.data.results,
+        page: action.data.page,
+        totalPages: action.data.totalPages,
+        totalResults: action.data.totalResults,
+      };
+    }
+    return { ...state };
+  case types.FETCH_USER_RATED_MOVIES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        list: action.data.results,
+        page: action.data.page,
+        totalPages: action.data.totalPages,
+        totalResults: action.data.totalResults,
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }

@@ -39,3 +39,27 @@ export const fetchRecommendedMovies = ({ status, data }) => {
     type: types.FETCH_RECOMMENDED_MOVIES,
   };
 };
+
+export const fetchUserRatedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_RATED_MOVIES,
+  };
+};
+
+export const fetchUserWatchedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_WATCHED_MOVIES,
+  };
+};
+
+export const fetchUserSavedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_SAVED_MOVIES,
+  };
+};
