@@ -65,9 +65,13 @@ export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
   return actionWrapper(action);
 }
 
-export function fetchUserSavedMovies(page = 1, pageSize = 30) {
+export function fetchUserSavedMovies(page = 1, pageSize = 30, user) {
+
+  //console.log("user id is: " + user.userID);
+  console.log("user-saved url is: " + API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
+
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_USER_SAVED_MOVIES (page, pageSize));
+    const resp = await axios.get(API.MOVIE.FETCH_USER_SAVED_MOVIES (page, pageSize, user.userID));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchUserSavedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
@@ -75,9 +79,13 @@ export function fetchUserSavedMovies(page = 1, pageSize = 30) {
   return actionWrapper(action);
 }
 
-export function fetchUserWatchedMovies(page = 1, pageSize = 30) {
+export function fetchUserWatchedMovies(page = 1, pageSize = 30, user) {
+
+  //console.log("user id is: " + user.userID);
+  console.log("user-watched url is: " + API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
+
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_USER_WATCHED_MOVIES(page, pageSize));
+    const resp = await axios.get(API.MOVIE.FETCH_USER_WATCHED_MOVIES(page, pageSize, user.userID));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchUserWatchedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
@@ -85,9 +93,14 @@ export function fetchUserWatchedMovies(page = 1, pageSize = 30) {
   return actionWrapper(action);
 }
 
-export function fetchUserRatedMovies(page = 1, pageSize = 30) {
+export function fetchUserRatedMovies(page = 1, pageSize = 30, user) {
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize));
+
+    //console.log("user id is: " + user.userID);
+    console.log("user-rated url is: " + API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
+
+    const resp = await axios.get(API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
+
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchUserRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }

@@ -23,6 +23,7 @@ class Profile extends Component {
     const { currentUser } = this.props;
 
     if (currentUser) {
+      //console.log("user id is: " + currentUser.userID);
       return (
         <div className='profile__user-info'>
           <Row>
