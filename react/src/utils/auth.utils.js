@@ -32,7 +32,7 @@ export const getLocation = async (res) => {
 };
 
 export const facebookJSSDKSetup = dispatch => {
-  //console.log('facebookJSSDKSetup');
+  // console.log('facebookJSSDKSetup');
   window.fbAsyncInit = () => {
     window.FB.init({
       appId      : process.env.REACT_APP_FACEBOOK_APP_ID,
@@ -56,15 +56,15 @@ export const facebookJSSDKSetup = dispatch => {
 };
 
 export const checkLoginState = dispatch => {
-  //console.log('checkLoginState');
+  // console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
   }, true);
 };
 
 const statusChangeCallback = (response, dispatch) => {
-  console.log('statusChangeCallback');
-  console.log(response);
+  // console.log('statusChangeCallback');
+  // console.log(response);
 
   if (response.status === 'connected') {
     if (!getToken()) {
@@ -109,7 +109,7 @@ const login = (response, dispatch) => {
 
 export const logout = dispatch => {
   window.FB.getLoginStatus(response => {
-    console.log('getLoginStatus', response);
+    // console.log('getLoginStatus', response);
     if (response.status === 'connected') {
       window.FB.logout(_ => {
         dispatch(userActions.logout());
