@@ -1,5 +1,7 @@
 const errors = require('restify-errors');
 const User = require('../models/user.model');
+const Movie = require('../models/movie.model');
+const defaultValues = require('../constants/defaultValues.constants');
 
 const findByEmail = async email => {
   const user = await User.findOne({ email }).exec();
@@ -83,6 +85,35 @@ const updateUser = async (user, id) => await User.findByIdAndUpdate(
 
 const deleteUser = async email => await User.deleteOne({ email });
 
+
+const getUserWatchedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
+    await
+        Movie.find()
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .sort({ 'tmdbPopularity' : 'desc' })
+            .exec()
+
+);
+
+const getUserSavedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
+    await
+        Movie.find()
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .sort({ 'tmdbPopularity' : 'desc' })
+            .exec()
+);
+
+const getUserRatedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
+    await
+        Movie.find()
+            .skip((page - 1) * pageSize)
+            .limit(pageSize)
+            .sort({ 'tmdbPopularity' : 'desc' })
+            .exec()
+);
+
 module.exports = {
   findByEmail,
   findByToken,
@@ -94,4 +125,7 @@ module.exports = {
   updateUser,
   deleteUser,
   existsUserId,
+  getUserRatedMovies,
+  getUserSavedMovies,
+  getUserWatchedMovies,
 };

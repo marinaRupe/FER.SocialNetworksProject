@@ -1,5 +1,6 @@
 const errors = require('restify-errors');
 const MovieService = require('../services/movie.service');
+const UserService = require('../services/user.service');
 const defaultValues = require('../constants/defaultValues.constants');
 
 const getMostPopularMovies = async (req, res) => {
@@ -26,7 +27,7 @@ const getMostRatedMovies = async (req, res) => {
   res.send(data);
 };
 
-const getRecomendedMovies = async (req, res) => {
+const getRecommendedMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, likes} = req.query;
 
   const filter = MovieService.makeFilter(gender, age, likes);
@@ -41,8 +42,50 @@ const getRecomendedMovies = async (req, res) => {
   res.send(data);
 };
 
+const getUserWatchedMovies= async (req, res) => {
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
+
+  console.log('uso u getUserWatchedMovies--------------------');
+  //console.log("backend user id: " + userID);
+
+  const movies = await UserService.getUserWatchedMovies(+page, +pageSize, userID);
+
+  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  res.send(data);
+};
+
+const getUserSavedMovies= async (req, res) => {
+
+  console.log('in saved..');
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
+
+  const movies = await UserService.getUserSavedMovies(+page, +pageSize, userID);
+  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  res.send(data);
+};
+
+const getUserRatedMovies= async (req, res) => {
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
+
+  const movies = await UserService.getUserRatedMovies(+page, +pageSize, userID);
+  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  res.send(data);
+};
+
 module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
-  getRecomendedMovies,
+  getRecommendedMovies,
+  getUserWatchedMovies,
+  getUserSavedMovies,
+  getUserRatedMovies,
 };
