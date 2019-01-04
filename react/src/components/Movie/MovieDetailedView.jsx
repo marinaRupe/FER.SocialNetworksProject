@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { APP } from '../../constants/routes';
+import { DEFAULT_MOVIE_POSTER } from '../../constants/values';
 
 class MovieDetailedView extends Component {
   render() {
     const { movie } = this.props;
+    const poster = !movie.poster || movie.poster === 'N/A' ? DEFAULT_MOVIE_POSTER : movie.poster;
 
     return (
       <div
@@ -12,7 +14,8 @@ class MovieDetailedView extends Component {
       >
         <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
           <img
-            src={movie.poster} alt=''
+            src={poster}
+            alt=''
             className='movie__detailed__image--size-l'
             onClick={this.openMovieDetails}
           />
@@ -32,8 +35,8 @@ class MovieDetailedView extends Component {
             {
               movie.cast && movie.cast.length > 0 ?
                 <ul>
-                  {movie.cast.map((castMember) =>
-                    <li key={castMember.id}>{castMember.name} (as {castMember.characterName})</li>
+                  {movie.cast.map((castMember, index) =>
+                    <li key={index}>{castMember.name} (as {castMember.characterName})</li>
                   )}
                 </ul>
                 :

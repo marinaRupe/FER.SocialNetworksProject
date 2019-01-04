@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { APP } from '../../constants/routes';
+import { DEFAULT_MOVIE_POSTER } from '../../constants/values';
 
 class MovieListItem extends Component {
   render() {
     const { movie } = this.props;
+    const poster = !movie.poster || movie.poster === 'N/A' ? DEFAULT_MOVIE_POSTER : movie.poster;
 
     return (
       <div
@@ -12,7 +14,8 @@ class MovieListItem extends Component {
       >
         <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
           <img
-            src={movie.poster} alt=''
+            src={poster}
+            alt=''
             className='movie__list-item__image--size-m'
             onClick={this.openMovieDetails}
           />

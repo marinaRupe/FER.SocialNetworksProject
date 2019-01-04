@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import history from '../history';
-import { APP, API } from '../constants/routes';
+import { API } from '../constants/routes';
 import * as values from '../constants/values';
 import * as userActions from '../redux/actions/user.actions';
 
@@ -60,58 +59,57 @@ export const checkLoginState = dispatch => {
   //console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
-    window.location.reload(true);
   });
 };
 
 const statusChangeCallback = (response, dispatch) => {
-  //console.log('statusChangeCallback');
-  //console.log(response);
+  console.log('statusChangeCallback');
+  console.log(response);
 
   if (response.status === 'connected') {
-    //console.log('Fetching user data...');
-
-    window.FB.api('/me', {
-      fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
-    },
-    async res => {
-      //console.log('Successful login for: ' + res.name);
-
-
-      const location = await getLocation(res);
-
-      const likedPages = {
-        pages: (res.likes && res.likes.data) || [],
-        paging: res.likes && res.likes.paging,
-      };
-
-      window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
-        const user = {
-          token: response.authResponse.accessToken,
-          firstName: res.first_name,
-          lastName: res.last_name,
-          name: res.name,
-          email: res.email,
-          userID: res.id,
-          picture: imageResponse.data ? imageResponse.data.url : res.data.url,
-          gender: res.gender,
-          birthday: res.birthday,
-          ageRange: res.age_range,
-          location,
-          likedPages,
-        };
-
-        if (dispatch) {
-          //console.log('dispatch');
-          dispatch(userActions.login(user, response));
-        } else {
-          //console.log('NO dispatch');
-        }
-      });
-    });
-  } else if (response.status === 'not_authorized') {
+    if (!getToken()) {
+      login(response, dispatch);
+    }
+  } else if (response.status === 'authorization_expired') {
     dispatch(userActions.logout());
   } else {
-    dispatch(userActions.logout());
+    console.warn(response.status);
   }
 };
+
+const login = (response, dispatch) => {
+  window.FB.api('/me', {
+    fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
+  },
+  async res => {
+    const location = await getLocation(res);
+
+    const likedPages = {
+      pages: (res.likes && res.likes.data) || [],
+      paging: res.likes && res.likes.paging,
+    };
+
+    window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
+      const user = {
+        token: response.authResponse.accessToken,
+        firstName: res.first_name,
+        lastName: res.last_name,
+        name: res.name,
+        email: res.email,
+        userID: res.id,
+        picture: imageResponse.data ? imageResponse.data.url : res.data.url,
+        gender: res.gender,
+        birthday: res.birthday,
+        ageRange: res.age_range,
+        location,
+        likedPages,
+      };
+
+      dispatch(userActions.login(user, response.authResponse));
+    });
+  });
+};
+
+export const logout = dispatch => window.FB.logout(_ => {
+  dispatch(userActions.logout());
+});
