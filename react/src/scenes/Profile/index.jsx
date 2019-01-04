@@ -49,10 +49,10 @@ class Profile extends Component {
                         {currentUser.email}
                       </span>
                     }
-                    { currentUser.birthday &&
+                    { currentUser.ageRange &&
                       <span className='profile__user-info--item'>
                         <i className='material-icons'>cake</i>
-                        <span>{currentUser.birthday}</span>
+                        <span>{currentUser.ageRange.min} - {currentUser.ageRange.max}</span>
                       </span>
                     }
                   </CardText>

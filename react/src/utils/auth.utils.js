@@ -72,7 +72,7 @@ const statusChangeCallback = (response, dispatch) => {
     //console.log('Fetching user data...');
 
     window.FB.api('/me', {
-      fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
+      fields: 'name,first_name,last_name,age_range,email,gender,location,likes',
     },
     async res => {
       //console.log('Successful login for: ' + res.name);
@@ -95,7 +95,6 @@ const statusChangeCallback = (response, dispatch) => {
           userID: res.id,
           picture: imageResponse.data ? imageResponse.data.url : res.data.url,
           gender: res.gender,
-          birthday: res.birthday,
           ageRange: res.age_range,
           location,
           likedPages,

@@ -21,7 +21,7 @@ class Login extends Component {
       checkLoginState(dispatch);
     },
     {
-      scope: 'email,user_gender,user_likes,user_location,user_birthday,user_age_range',
+      scope: 'email,user_gender,user_likes,user_location,user_age_range',
     });
   };
 
