@@ -43,7 +43,7 @@ export const facebookJSSDKSetup = dispatch => {
 
     window.FB.getLoginStatus(response => {
       statusChangeCallback(response, dispatch);
-    });
+    }, true);
   };
 
   (function(d, s, id) {
@@ -59,7 +59,7 @@ export const checkLoginState = dispatch => {
   //console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
-  });
+  }, true);
 };
 
 const statusChangeCallback = (response, dispatch) => {
@@ -70,10 +70,8 @@ const statusChangeCallback = (response, dispatch) => {
     if (!getToken()) {
       login(response, dispatch);
     }
-  } else if (response.status === 'authorization_expired') {
-    dispatch(userActions.logout());
   } else {
-    console.warn(response.status);
+    dispatch(userActions.logout());
   }
 };
 
@@ -109,6 +107,15 @@ const login = (response, dispatch) => {
   });
 };
 
-export const logout = dispatch => window.FB.logout(_ => {
-  dispatch(userActions.logout());
-});
+export const logout = dispatch => {
+  window.FB.getLoginStatus(response => {
+    console.log('getLoginStatus', response);
+    if (response.status === 'connected') {
+      window.FB.logout(_ => {
+        dispatch(userActions.logout());
+      });
+    } else {
+      dispatch(userActions.logout());
+    }
+  }, true);
+};
