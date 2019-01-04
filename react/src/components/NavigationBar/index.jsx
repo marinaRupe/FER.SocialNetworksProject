@@ -29,7 +29,6 @@ class NavigationBar extends React.Component {
   }
 
   componentDidMount() {
-    console.log('mount navigation');
     facebookJSSDKSetup(this.props.dispatch);
   }
 
