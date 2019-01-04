@@ -87,31 +87,60 @@ const deleteUser = async email => await User.deleteOne({ email });
 
 
 const getUserWatchedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-    await
-        Movie.find()
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .sort({ 'tmdbPopularity' : 'desc' })
-            .exec()
+  await
+  User.findOne({'userID':userID},{'userMovies.watchedMovies':1})
+    .map(function (user) {
+      let watchedMovies = user.userMovies.watchedMovies;
 
+      let jumpOver = (page - 1) * pageSize;
+
+      if(watchedMovies.length >= jumpOver){
+        watchedMovies = watchedMovies.slice(jumpOver, watchedMovies.length);
+      }
+
+      watchedMovies = watchedMovies.slice(0, pageSize);
+
+      return watchedMovies;
+    })
+    .exec()
 );
 
 const getUserSavedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-    await
-        Movie.find()
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .sort({ 'tmdbPopularity' : 'desc' })
-            .exec()
+  await
+  User.findOne({'userID':userID},{'userMovies.savedMovies':1})
+    .map(function (user) {
+      let savedMovies = user.userMovies.savedMovies;
+
+      let jumpOver = (page - 1) * pageSize;
+
+      if(savedMovies.length >= jumpOver){
+        savedMovies = savedMovies.slice(jumpOver, savedMovies.length);
+      }
+
+      savedMovies = savedMovies.slice(0, pageSize);
+
+      return savedMovies;
+    })
+    .exec()
 );
 
 const getUserRatedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-    await
-        Movie.find()
-            .skip((page - 1) * pageSize)
-            .limit(pageSize)
-            .sort({ 'tmdbPopularity' : 'desc' })
-            .exec()
+  await
+  User.findOne({'userID':userID},{'userMovies.ratedMovies':1})
+    .map(function (user) {
+      let ratedMovies = user.userMovies.ratedMovies;
+
+      let jumpOver = (page - 1) * pageSize;
+
+      if(ratedMovies.length >= jumpOver){
+        ratedMovies = ratedMovies.slice(jumpOver, ratedMovies.length);
+      }
+
+      ratedMovies = ratedMovies.slice(0, pageSize);
+
+      return ratedMovies;
+    })
+    .exec()
 );
 
 module.exports = {
