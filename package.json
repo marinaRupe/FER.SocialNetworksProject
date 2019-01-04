@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node node/server.js",
-    "rstart": "set HTTPS=true&&npm run rlint && npm start --prefix react",
+    "rstart": "set HTTPS=true && npm run rlint && npm start --prefix react",
     "build": "npm run rlint && npm run build --prefix react",
     "nstart": "npm run nlint && nodemon node/server.js",
     "populate-db": "node node/populateDb.js",
