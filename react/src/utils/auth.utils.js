@@ -110,8 +110,8 @@ const statusChangeCallback = (response, dispatch) => {
       });
     });
   } else if (response.status === 'not_authorized') {
-    history.push(APP.AUTH.LOGIN);
+    dispatch(userActions.logout());
   } else {
-    history.push(APP.AUTH.LOGIN);
+    dispatch(userActions.logout());
   }
 };

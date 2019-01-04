@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { MDBJumbotron, MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 import { APP } from '../../../constants/routes';
 import { facebookJSSDKSetup, checkLoginState, getToken } from '../../../utils/auth.utils';
-import { buttonTypes } from '../../../enums/buttonTypes.enum';
-import ButtonComponent from '../../../components/ButtonComponent';
 import facebookLogo from '../../../images/logo.png';
 
 class Login extends Component {
