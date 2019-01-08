@@ -135,4 +135,10 @@ const movieSchema = new Schema({
   rated: String, // e.g. PG
 });
 
+movieSchema.index(
+  { title: 'text', plot: 'text' },
+  { weights: { title: 10, plot: 1 } },
+  { name: 'movie_text_index_1' }
+);
+
 module.exports = mongoose.model('Movie', movieSchema);

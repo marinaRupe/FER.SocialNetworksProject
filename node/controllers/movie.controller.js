@@ -26,7 +26,7 @@ const getMostRatedMovies = async (req, res) => {
   res.send(data);
 };
 
-const getRecomendedMovies = async (req, res) => {
+const getRecommendedMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, likes} = req.query;
 
   const filter = MovieService.makeFilter(gender, age, likes);
@@ -41,8 +41,18 @@ const getRecomendedMovies = async (req, res) => {
   res.send(data);
 };
 
+const getMoviesForSearch = async (req, res) => {
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, searchString } = req.query;
+
+  const { pagesCount, movies } = await MovieService.findMovies(searchString, +page, +pageSize);
+
+  const data = { page: +page, pagesCount, totalResults: movies.length, results: movies };
+  res.send(data);
+};
+
 module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
-  getRecomendedMovies,
+  getRecommendedMovies,
+  getMoviesForSearch,
 };

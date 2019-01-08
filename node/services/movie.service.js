@@ -111,6 +111,36 @@ const makeFilter = (gender, age=0, likes = []) =>{
   return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
 };
 
+const findMovies = async (text, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
+  const count = await Movie.countDocuments({
+    $or: [
+      { genres: { $regex: `^${text}`, $options: 'i' } },
+      { keywords: { $regex: `^${text}`, $options: 'i' } },
+      { alternativeTitles: { $regex: `^${text}`, $options: 'i' } },
+      { $text: { $search: text } },
+    ],
+  });
+
+  const movies = await Movie
+    .find({
+      $or: [
+        { genres: { $regex: `^${text}`, $options: 'i' } },
+        { keywords: { $regex: `^${text}`, $options: 'i' } },
+        { alternativeTitles: { $regex: `^${text}`, $options: 'i' } },
+        { $text: { $search: text } },
+      ],
+    }, { score: { $meta: 'textScore' } })
+    .sort({ score: { $meta: 'textScore' }, tmdbPopularity: 'desc' })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .exec();
+
+  return {
+    pagesCount: count / pageSize,
+    movies,
+  };
+};
+
 module.exports = {
   existsMovieWithImdbID,
   existsMovieWithTmdbID,
@@ -126,4 +156,5 @@ module.exports = {
   getMoviesCount,
   getMoviesByFilter,
   makeFilter,
+  findMovies,
 };

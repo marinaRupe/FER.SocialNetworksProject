@@ -21,6 +21,12 @@ const initialState = {
       totalPages: 1,
       totalResults: 0,
     },
+    foundMovies: {
+      list: [],
+      page: 1,
+      totalPages: 1,
+      totalResults: 0,
+    },
   },
   reviews: {
     activeMovieReviews: [],

@@ -64,3 +64,13 @@ export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
   };
   return actionWrapper(action);
 }
+
+export function searchMovies(searchString, page = 1, pageSize = 30) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.MOVIE.SEARCH(page, pageSize, searchString));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.searchMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}

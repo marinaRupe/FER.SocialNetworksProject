@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const API_VERSION = 'v1.0';
 
 export const API_URL = `/api/${API_VERSION}`;
@@ -12,11 +13,10 @@ export const API = {
     FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
     FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
     FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) => `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
+    SEARCH: (page, pageSize, searchString) => `${API_URL}/movie/search/?page=${page}&pageSize=${pageSize}&searchString=${searchString}`,
   },
   REVIEWS: {
-    MOVIE: {
-      FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`,
-    },
+    FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`,
   },
   CINEMA: {
     FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`,
@@ -45,6 +45,7 @@ export const APP = {
     POPULAR_MOVIES: '/movies/most-popular',
     MOST_RATED_MOVIES: '/movies/most-rated',
     NOW_PLAYING_MOVIES: '/movies/now-playing',
+    SEARCH: '/movies/search',
     PERSONAL: {
       USER_RATED_MOVIES: '/movies/rated',
       USER_WATCHED_MOVIES: '/movies/watched',

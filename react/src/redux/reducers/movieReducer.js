@@ -15,7 +15,7 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
-  case types.FETCH_MOST_RATED_MOVIES:
+  case types.FETCH_MOST_RATED_MOVIES: // FIXME: either use the route above or save the state somewhere else
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {
         ...state,
@@ -44,6 +44,19 @@ export default function movieReducer(state = initialState.movies, action) {
       return {
         ...state,
         recommendedMovies: {
+          list: action.data.results,
+          page: action.data.page,
+          totalPages: action.data.totalPages,
+          totalResults: action.data.totalResults,
+        },
+      };
+    }
+    return { ...state };
+  case types.SEARCH_MOVIES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        foundMovies: {
           list: action.data.results,
           page: action.data.page,
           totalPages: action.data.totalPages,

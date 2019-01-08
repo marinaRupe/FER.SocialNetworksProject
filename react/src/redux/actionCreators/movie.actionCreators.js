@@ -39,3 +39,11 @@ export const fetchRecommendedMovies = ({ status, data }) => {
     type: types.FETCH_RECOMMENDED_MOVIES,
   };
 };
+
+export const searchMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.SEARCH_MOVIES,
+  };
+};

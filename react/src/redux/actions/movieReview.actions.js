@@ -6,7 +6,7 @@ import * as actionCreators from '../actionCreators/movieReview.actionCreators';
 
 export function fetchReviewsForMovie(movieTitle='') {
   const action = async (dispatch) => {
-    const resp = await axios.get(API.REVIEWS.MOVIE.FETCH_REVIEWS_FOR_MOVIE(movieTitle));
+    const resp = await axios.get(API.REVIEWS.FETCH_REVIEWS_FOR_MOVIE(movieTitle));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchReviewsForMovie({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }

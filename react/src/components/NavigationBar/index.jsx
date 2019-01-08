@@ -81,6 +81,9 @@ class NavigationBar extends React.Component {
                 <NavItem>
                   <NavLink to={APP.MOVIE.PERSONAL.RECOMMENDED_MOVIES}>Recommended</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink to={APP.MOVIE.SEARCH}>Search</NavLink>
+                </NavItem>
               </React.Fragment>
             }
           </NavbarNav>
