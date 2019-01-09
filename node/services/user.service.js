@@ -1,6 +1,5 @@
 const errors = require('restify-errors');
 const User = require('../models/user.model');
-const Movie = require('../models/movie.model');
 const defaultValues = require('../constants/defaultValues.constants');
 
 const findByEmail = async email => {
@@ -60,6 +59,11 @@ const createUser = async (
     gender,
     location,
     likedPages,
+    userMovies: {
+      watchedMovies: [],
+      ratedMovies: [],
+      savedMovies: [],
+    },
   });
 
   await user.save();
@@ -87,14 +91,13 @@ const deleteUser = async email => await User.deleteOne({ email });
 
 
 const getUserWatchedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-  await
-  User.findOne({'userID':userID},{'userMovies.watchedMovies':1})
-    .map(function (user) {
-      let watchedMovies = user.userMovies.watchedMovies;
+  await User.findOne({ 'userID': userID }, { 'userMovies.watchedMovies': 1 })
+    .map((user) => {
+      let { watchedMovies } = user.userMovies;
 
-      let jumpOver = (page - 1) * pageSize;
+      const jumpOver = (page - 1) * pageSize;
 
-      if(watchedMovies.length >= jumpOver){
+      if (watchedMovies.length >= jumpOver){
         watchedMovies = watchedMovies.slice(jumpOver, watchedMovies.length);
       }
 
@@ -106,12 +109,11 @@ const getUserWatchedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_
 );
 
 const getUserSavedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-  await
-  User.findOne({'userID':userID},{'userMovies.savedMovies':1})
-    .map(function (user) {
-      let savedMovies = user.userMovies.savedMovies;
+  await User.findOne({'userID':userID},{'userMovies.savedMovies':1})
+    .map((user) => {
+      let { savedMovies } = user.userMovies;
 
-      let jumpOver = (page - 1) * pageSize;
+      const jumpOver = (page - 1) * pageSize;
 
       if(savedMovies.length >= jumpOver){
         savedMovies = savedMovies.slice(jumpOver, savedMovies.length);
@@ -125,14 +127,13 @@ const getUserSavedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SI
 );
 
 const getUserRatedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-  await
-  User.findOne({'userID':userID},{'userMovies.ratedMovies':1})
-    .map(function (user) {
-      let ratedMovies = user.userMovies.ratedMovies;
+  await User.findOne({ 'userID': userID }, { 'userMovies.ratedMovies': 1 })
+    .map((user) => {
+      let { ratedMovies } = user.userMovies;
 
-      let jumpOver = (page - 1) * pageSize;
+      const jumpOver = (page - 1) * pageSize;
 
-      if(ratedMovies.length >= jumpOver){
+      if (ratedMovies.length >= jumpOver) {
         ratedMovies = ratedMovies.slice(jumpOver, ratedMovies.length);
       }
 

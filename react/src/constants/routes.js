@@ -11,10 +11,14 @@ export const API = {
   MOVIE: {
     FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
     FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
-    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) => `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
-    FETCH_USER_WATCHED_MOVIES: (page, pageSize, userID) => `${API_URL}/movie/user-watched/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
-    FETCH_USER_RATED_MOVIES: (page, pageSize, userID) => `${API_URL}/movie/user-rated/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
-    FETCH_USER_SAVED_MOVIES: (page, pageSize, userID) => `${API_URL}/movie/user-saved/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
+    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) =>
+      `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
+    FETCH_USER_WATCHED_MOVIES: (page, pageSize, userID) =>
+      `${API_URL}/movie/user-watched/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
+    FETCH_USER_RATED_MOVIES: (page, pageSize, userID) =>
+      `${API_URL}/movie/user-rated/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
+    FETCH_USER_SAVED_MOVIES: (page, pageSize, userID) =>
+      `${API_URL}/movie/user-saved/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
   },
   REVIEWS: {
     MOVIE: {

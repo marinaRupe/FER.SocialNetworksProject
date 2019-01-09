@@ -101,14 +101,14 @@ const makeFilter = (gender, age=0, likes = []) =>{
     const orFilter = { '$or': [
       { 'genres': filter['genres'] },
       { 'title': filter['title'] },
-    ]};
+    ] };
     if (filter['adult']) {
       orFilter['adult'] = filter['adult'];
     }
-    return {...orFilter, 'imdbRating': { '$nin': [null, 'N/A'] }};
+    return { ...orFilter, 'imdbRating': { '$nin': [null, 'N/A'] } };
   }
 
-  return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
+  return { ...filter, 'imdbRating': { '$nin': [null, 'N/A'] } };
 };
 
 module.exports = {

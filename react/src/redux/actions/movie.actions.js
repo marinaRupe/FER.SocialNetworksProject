@@ -57,7 +57,10 @@ export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
     user.likedPages.pages.forEach((element) => {
       names.push(element.name);
     });
-    const resp = await axios.get(API.MOVIE.FETCH_RECOMMENDED_MOVIES(page, pageSize, user.gender, user.ageRange.min ,names)); // TODO: change
+
+    const resp = await axios.get(
+      API.MOVIE.FETCH_RECOMMENDED_MOVIES(page, pageSize, user.gender, user.ageRange.min, names)); // TODO: change
+
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchRecommendedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
@@ -66,10 +69,6 @@ export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
 }
 
 export function fetchUserSavedMovies(page = 1, pageSize = 30, user) {
-
-  //console.log("user id is: " + user.userID);
-  console.log('user-saved url is: ' + API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
-
   const action = async (dispatch) => {
     const resp = await axios.get(API.MOVIE.FETCH_USER_SAVED_MOVIES (page, pageSize, user.userID));
     if (resp.status === 200) {
@@ -80,10 +79,6 @@ export function fetchUserSavedMovies(page = 1, pageSize = 30, user) {
 }
 
 export function fetchUserWatchedMovies(page = 1, pageSize = 30, user) {
-
-  //console.log("user id is: " + user.userID);
-  console.log('user-watched url is: ' + API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
-
   const action = async (dispatch) => {
     const resp = await axios.get(API.MOVIE.FETCH_USER_WATCHED_MOVIES(page, pageSize, user.userID));
     if (resp.status === 200) {
@@ -95,10 +90,6 @@ export function fetchUserWatchedMovies(page = 1, pageSize = 30, user) {
 
 export function fetchUserRatedMovies(page = 1, pageSize = 30, user) {
   const action = async (dispatch) => {
-
-    //console.log("user id is: " + user.userID);
-    console.log('user-rated url is: ' + API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
-
     const resp = await axios.get(API.MOVIE.FETCH_USER_RATED_MOVIES(page, pageSize, user.userID));
 
     if (resp.status === 200) {

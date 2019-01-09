@@ -45,16 +45,14 @@ const getRecommendedMovies = async (req, res) => {
 const getUserWatchedMovies= async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
 
-  //console.log("backend user id: " + userID);
-
   const watchedMoviesIDs = await UserService.getUserWatchedMovies(+page, +pageSize, userID);
-  let watchedMovies = [];
+  const watchedMovies = [];
 
-  for(let i=0; i<watchedMoviesIDs.length;i++){
-    watchedMovies[i]=(await MovieService.getMovieWithImdbID(watchedMoviesIDs[i]));
+  for (let i = 0; i < watchedMoviesIDs.length; i++) {
+    watchedMovies[i] = (await MovieService.getMovieWithImdbID(watchedMoviesIDs[i]));
   }
 
-  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+  const totalPages = Math.ceil(watchedMoviesIDs.length / pageSize);
   const data = { page: +page, totalPages, totalResults: watchedMoviesIDs.length, results: watchedMovies };
 
   res.send(data);
@@ -65,13 +63,13 @@ const getUserSavedMovies= async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
 
   const savedMoviesIDs = await UserService.getUserSavedMovies(+page, +pageSize, userID);
-  let savedMovies = [];
+  const savedMovies = [];
 
-  for(let i=0; i<savedMoviesIDs.length;i++){
-    savedMovies[i]=(await MovieService.getMovieWithImdbID(savedMoviesIDs[i]));
+  for (let i = 0; i < savedMoviesIDs.length; i++) {
+    savedMovies[i] = (await MovieService.getMovieWithImdbID(savedMoviesIDs[i]));
   }
 
-  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+  const totalPages = Math.ceil(savedMoviesIDs.length / pageSize);
   const data = { page: +page, totalPages, totalResults: savedMoviesIDs.length, results: savedMovies };
 
   res.send(data);
@@ -81,13 +79,13 @@ const getUserRatedMovies= async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
 
   const ratedMoviesIDs = await UserService.getUserRatedMovies(+page, +pageSize, userID);
-  let ratedMovies = [];
+  const ratedMovies = [];
 
-  for(let i=0; i<ratedMoviesIDs.length;i++){
-    ratedMovies[i]=(await MovieService.getMovieWithImdbID(ratedMoviesIDs[i]));
+  for (let i = 0; i < ratedMoviesIDs.length; i++) {
+    ratedMovies[i] = (await MovieService.getMovieWithImdbID(ratedMoviesIDs[i]));
   }
 
-  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+  const totalPages = Math.ceil(ratedMoviesIDs.length / pageSize);
   const data = { page: +page, totalPages, totalResults: ratedMoviesIDs.length, results: ratedMovies };
 
   res.send(data);

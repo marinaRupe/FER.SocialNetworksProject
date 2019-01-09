@@ -56,7 +56,7 @@ const crewSchema = new Schema({
 const videoSchema = new Schema({
   name: String,
   key: String,
-  url: String,  // `https://www.youtube.com/watch?v=${key}`
+  url: String, // `https://www.youtube.com/watch?v=${key}`
 });
 
 const movieSchema = new Schema({
@@ -100,7 +100,7 @@ const movieSchema = new Schema({
     type: [String],
   },
 
-  poster: String,        // poster URL
+  poster: String, // poster URL
   videos: [videoSchema], // filter Youtube videos
   website: String,
 
