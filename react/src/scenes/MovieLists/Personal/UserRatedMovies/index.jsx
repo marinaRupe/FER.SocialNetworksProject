@@ -27,7 +27,7 @@ class UserRatedMovies extends Component {
         isLoading: false,
       });
     });
-  }
+  };
 
   renderMovieList = () => {
     const { isLoading } = this.state;
