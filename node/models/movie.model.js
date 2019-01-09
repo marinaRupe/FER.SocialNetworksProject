@@ -64,8 +64,12 @@ const movieSchema = new Schema({
     type: String,
     required: [true, 'IMDb ID is required.'],
     trim: true,
+    index: true,
   },
-  tmdbID: String,
+  tmdbID: {
+    type: String,
+    index: true,
+  },
   facebookID: {
     type: String,
   },

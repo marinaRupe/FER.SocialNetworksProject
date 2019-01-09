@@ -8,17 +8,17 @@ class MovieListItem extends Component {
 
   };
 
-
   render() {
     const { movie } = this.props;
+    const stars = [];
 
-    let stars=[];
-    if(movie.score){
-      for(let i=0; i<movie.score; i++){
+    if (movie.score) {
+      for (let i = 0; i < movie.score; i++) {
         stars.push(
-        <div className='star-div'>
-          <i className='material-icons' >star</i>
-        </div>)
+          <div className='star-div'>
+            <i className='material-icons'>star</i>
+          </div>
+        );
       }
     }
 
