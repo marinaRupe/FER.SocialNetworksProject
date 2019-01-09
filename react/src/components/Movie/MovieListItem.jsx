@@ -31,8 +31,21 @@ class MovieListItem extends Component {
             </span>
           </div>
           <div>
-            Rating: {movie.imdbRating || '-'}
+            <div className='rating-div'>
+              Rating: {movie.imdbRating || '-'}
+            </div>
+            {movie.score &&
+            <div className='score-star-div'>
+              <div className='score-div'>
+                Your score: {movie.score}
+
+              </div>
+              <div className='star-div'>
+                <i className='material-icons' >star</i>
+              </div>
+            </div>}
           </div>
+
         </div>
       </div>
     );
