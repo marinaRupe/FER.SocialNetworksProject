@@ -42,7 +42,7 @@ const getRecommendedMovies = async (req, res) => {
   res.send(data);
 };
 
-const getUserWatchedMovies= async (req, res) => {
+const getUserWatchedMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
 
   const watchedMoviesIDs = await UserService.getUserWatchedMovies(+page, +pageSize, userID);
@@ -58,7 +58,7 @@ const getUserWatchedMovies= async (req, res) => {
   res.send(data);
 };
 
-const getUserSavedMovies= async (req, res) => {
+const getUserSavedMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
 
   const savedMoviesIDs = await UserService.getUserSavedMovies(+page, +pageSize, userID);
@@ -124,8 +124,8 @@ const addUserWatchedMovie = async (req, res) => {
   res.send(response);
 };
 
-const addUserRatedMovie= async (req, res) => {
-  const { userID, movieID , score } = req.query;
+const addUserRatedMovie = async (req, res) => {
+  const { userID, movieID, score } = req.query;
   const response = await UserService.addUserRatedMovie(userID, movieID, score);
 
   res.send(response);
