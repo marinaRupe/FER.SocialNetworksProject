@@ -133,6 +133,7 @@ const movieSchema = new Schema({
 
   adult: Boolean,
   rated: String, // e.g. PG
+  score: String, //ocjena za film --> koju je dao korisnik (rated movies)
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

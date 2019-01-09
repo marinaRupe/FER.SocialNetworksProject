@@ -76,18 +76,59 @@ const getUserSavedMovies= async (req, res) => {
 
 const getUserRatedMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID } = req.query;
-
-  const ratedMoviesIDs = await UserService.getUserRatedMovies(+page, +pageSize, userID);
+  const ratedMoviesList = await UserService.getUserRatedMovies(+page, +pageSize, userID);
   const ratedMovies = [];
 
-  for (let i = 0; i < ratedMoviesIDs.length; i++) {
-    ratedMovies[i] = (await MovieService.getMovieWithImdbID(ratedMoviesIDs[i]));
+  for (let i = 0; i < ratedMoviesList.length; i++) {
+    const currentMovie = (await MovieService.getMovieWithImdbID(ratedMoviesList[i].movieId));
+    currentMovie['score'] = ratedMoviesList[i].score;
+    ratedMovies[i] = currentMovie;
   }
 
-  const totalPages = Math.ceil(ratedMoviesIDs.length / pageSize);
-  const data = { page: +page, totalPages, totalResults: ratedMoviesIDs.length, results: ratedMovies };
-
+  const totalPages = Math.ceil(ratedMoviesList.length / pageSize);
+  const data = { page: +page, totalPages, totalResults: ratedMoviesList.length, results: ratedMovies };
   res.send(data);
+};
+
+const deleteUserSavedMovie = async (req, res) => {
+  const { userID, movieID } = req.query;
+  const response = await UserService.deleteUserSavedMovie(userID, movieID);
+
+  res.send(response);
+};
+
+const deleteUserWatchedMovie = async (req, res) => {
+  const { userID, movieID } = req.query;
+  const response = await UserService.deleteUserWatchedMovie(userID, movieID);
+  res.send(response);
+};
+
+const deleteUserRatedMovie = async (req, res) => {
+  const { userID, movieID } = req.query;
+  const response = await UserService.deleteUserRatedMovie(userID, movieID);
+
+  res.send(response);
+};
+
+const addUserSavedMovie = async (req, res) => {
+  const { userID, movieID } = req.query;
+  const response = await UserService.addUserSavedMovie(userID, movieID);
+
+  res.send(response);
+};
+
+const addUserWatchedMovie = async (req, res) => {
+  const { userID, movieID } = req.query;
+  const response = await UserService.addUserWatchedMovie(userID, movieID);
+
+  res.send(response);
+};
+
+const addUserRatedMovie= async (req, res) => {
+  const { userID, movieID , score } = req.query;
+  const response = await UserService.addUserRatedMovie(userID, movieID, score);
+
+  res.send(response);
 };
 
 module.exports = {
@@ -97,4 +138,10 @@ module.exports = {
   getUserWatchedMovies,
   getUserSavedMovies,
   getUserRatedMovies,
+  deleteUserSavedMovie,
+  deleteUserWatchedMovie,
+  deleteUserRatedMovie,
+  addUserSavedMovie,
+  addUserRatedMovie,
+  addUserWatchedMovie,
 };

@@ -16,4 +16,16 @@ router.get('/user-saved', asyncWrap(MovieController.getUserSavedMovies));
 
 router.get('/user-rated', asyncWrap(MovieController.getUserRatedMovies));
 
+router.delete('/user-saved', asyncWrap(MovieController.deleteUserSavedMovie));
+
+router.delete('/user-rated', asyncWrap(MovieController.deleteUserRatedMovie));
+
+router.delete('/user-watched', asyncWrap(MovieController.deleteUserWatchedMovie));
+
+router.post('/user-watched', asyncWrap(MovieController.addUserWatchedMovie));
+
+router.post('/user-saved', asyncWrap(MovieController.addUserSavedMovie));
+
+router.post('/user-rated', asyncWrap(MovieController.addUserRatedMovie));
+
 module.exports = router;

@@ -45,7 +45,7 @@ export function fetchTopMovies(page = 1, pageSize = 5) {
   const action = async (dispatch) => {
     const resp = await axios.get(API.MOVIE.FETCH_MOST_POPULAR_MOVIES(page, pageSize));
     if (resp.status === 200) {
-      await dispatch(actionCreators.fetchTopMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data })); // TODO: change
+      await dispatch(actionCreators.fetchTopMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
   };
   return actionWrapper(action);
