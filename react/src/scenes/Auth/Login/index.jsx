@@ -1,17 +1,12 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { MDBJumbotron, MDBContainer, MDBRow, MDBCol } from 'mdbreact';
+import { MDBJumbotron, MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 import { APP } from '../../../constants/routes';
-import { facebookJSSDKSetup, checkLoginState, getToken } from '../../../utils/auth.utils';
-import { buttonTypes } from '../../../enums/buttonTypes.enum';
-import ButtonComponent from '../../../components/ButtonComponent';
+import { checkLoginState, getToken } from '../../../utils/auth.utils';
+import facebookLogo from '../../../images/logo.png';
 
 class Login extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    facebookJSSDKSetup(dispatch);
-  }
 
   handleClickOnLoginButton = () => {
     const { dispatch } = this.props;
@@ -20,7 +15,7 @@ class Login extends Component {
       checkLoginState(dispatch);
     },
     {
-      scope: 'email,user_gender,user_likes,user_location,user_birthday,user_age_range',
+      scope: 'email,user_gender,user_likes,user_location,user_age_range',
     });
   };
 
@@ -40,7 +35,7 @@ class Login extends Component {
                   If you enjoy watching movies, this is the app for you.
                 </p>
                 <p>
-                  Login with Facebook and explore movies.
+                  Login and explore movies.
                 </p>
                 <div className='lead'>
                   <div
@@ -53,11 +48,11 @@ class Login extends Component {
                     data-use-continue-as='false'
                     onClick={this.handleClickOnLoginButton}
                   >
-                    <ButtonComponent
-                      action={() => null}
-                      text='Login with Facebook'
-                      type={buttonTypes.primary}
-                    />
+                    <button className = 'facebook-color btn'>
+                      <img src={facebookLogo} className="facebook-logo" alt="Facebook logo" />
+                      Login with Facebook
+                    </button>
+
                   </div>
                 </div>
               </MDBJumbotron>

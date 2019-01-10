@@ -25,7 +25,7 @@ class PrivacyPolicy extends Component {
           <ul>
             <li>your contact information, such as full name and email address;</li>
             <li>your Facebook public profile information, such as name and profile picture;</li>
-            <li>other information from your Facebook profile, such as birthday, location and liked pages</li>
+            <li>other information from your Facebook profile, such as location and liked pages</li>
             <li>
               the content, communications and other information you provide when you use the Service,
               including when you sign up for an account, create or share content.
@@ -124,7 +124,7 @@ class PrivacyPolicy extends Component {
 
           <br />
           <p>
-            Effective Date: 24 Dec 2018
+            Effective Date: 04 Jan 2019
           </p>
         </div>
       </div>

@@ -1,22 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardBody, CardImage, CardTitle, CardText, Col, Row } from 'mdbreact';
-import * as userActions from '../../redux/actions/user.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
 import backgroundImage from '../../images/popcorn.jpg';
-import { facebookJSSDKSetup } from '../../utils/auth.utils';
+import { logout } from '../../utils/auth.utils';
 
 class Profile extends Component {
-  componentDidMount() {
-    facebookJSSDKSetup();
-  }
 
   logout = () => {
-    const { logout } = this.props;
-    window.FB.logout(response => {
-      logout();
-    });
+    logout(this.props.dispatch);
   }
 
   renderProfileData = () => {
@@ -50,10 +43,10 @@ class Profile extends Component {
                         {currentUser.email}
                       </span>
                     }
-                    { currentUser.birthday &&
+                    { currentUser.ageRange &&
                       <span className='profile__user-info--item'>
                         <i className='material-icons'>cake</i>
-                        <span>{currentUser.birthday}</span>
+                        <span>{currentUser.ageRange.min} - {currentUser.ageRange.max}</span>
                       </span>
                     }
                     { currentUser.gender &&
@@ -97,8 +90,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = {
-  logout: userActions.logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps)(Profile);

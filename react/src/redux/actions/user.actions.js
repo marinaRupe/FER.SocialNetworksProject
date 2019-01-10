@@ -6,12 +6,12 @@ import { deleteToken, setToken } from '../../utils/auth.utils';
 import { actionWrapper } from '../../utils/redux.utils';
 import * as actionCreators from '../actionCreators/user.actionCreators';
 
-export function login(user, fbResponse) {
+export function login(user, authResponse) {
   const action = async (dispatch) => {
     const resp = await axios.post(API.AUTH.LOGIN, { user });
     if (resp.status === 200) {
       await dispatch(actionCreators.login({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
-      setToken(fbResponse.authResponse.accessToken, fbResponse.authResponse.expiresIn);
+      setToken(authResponse.accessToken, authResponse.expiresIn);
       history.push(APP.ROOT);
     }
   };

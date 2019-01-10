@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import axios from 'axios';
-import history from '../history';
-import { APP, API } from '../constants/routes';
+import { API } from '../constants/routes';
 import * as values from '../constants/values';
 import * as userActions from '../redux/actions/user.actions';
 
@@ -33,7 +32,7 @@ export const getLocation = async (res) => {
 };
 
 export const facebookJSSDKSetup = dispatch => {
-  //console.log('facebookJSSDKSetup');
+  // console.log('facebookJSSDKSetup');
   window.fbAsyncInit = () => {
     window.FB.init({
       appId      : process.env.REACT_APP_FACEBOOK_APP_ID,
@@ -44,7 +43,7 @@ export const facebookJSSDKSetup = dispatch => {
 
     window.FB.getLoginStatus(response => {
       statusChangeCallback(response, dispatch);
-    });
+    }, true);
   };
 
   (function(d, s, id) {
@@ -57,61 +56,66 @@ export const facebookJSSDKSetup = dispatch => {
 };
 
 export const checkLoginState = dispatch => {
-  //console.log('checkLoginState');
+  // console.log('checkLoginState');
   window.FB.getLoginStatus(response => {
     statusChangeCallback(response, dispatch);
-    window.location.reload(true);
-  });
+  }, true);
 };
 
 const statusChangeCallback = (response, dispatch) => {
-  //console.log('statusChangeCallback');
-  //console.log(response);
+  // console.log('statusChangeCallback');
+  // console.log(response);
 
   if (response.status === 'connected') {
-    //console.log('Fetching user data...');
+    if (!getToken()) {
+      login(response, dispatch);
+    }
+  } else {
+    dispatch(userActions.logout());
+  }
+};
 
-    window.FB.api('/me', {
-      fields: 'name,first_name,last_name,birthday,age_range,email,gender,location,likes',
-    },
-    async res => {
-      //console.log('Successful login for: ' + res.name);
+const login = (response, dispatch) => {
+  window.FB.api('/me', {
+    fields: 'name,first_name,last_name,age_range,email,gender,location,likes',
+  },
+  async res => {
+    const location = await getLocation(res);
 
+    const likedPages = {
+      pages: (res.likes && res.likes.data) || [],
+      paging: res.likes && res.likes.paging,
+    };
 
-      const location = await getLocation(res);
-
-      const likedPages = {
-        pages: (res.likes && res.likes.data) || [],
-        paging: res.likes && res.likes.paging,
+    window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
+      const user = {
+        token: response.authResponse.accessToken,
+        firstName: res.first_name,
+        lastName: res.last_name,
+        name: res.name,
+        email: res.email,
+        userID: res.id,
+        picture: imageResponse.data ? imageResponse.data.url : res.data.url,
+        gender: res.gender,
+        ageRange: res.age_range,
+        location,
+        likedPages,
       };
 
-      window.FB.api(`/${res.id}/picture`, 'GET', { redirect: false, type: 'large'}, (imageResponse) => {
-        const user = {
-          token: response.authResponse.accessToken,
-          firstName: res.first_name,
-          lastName: res.last_name,
-          name: res.name,
-          email: res.email,
-          userID: res.id,
-          picture: imageResponse.data ? imageResponse.data.url : res.data.url,
-          gender: res.gender,
-          birthday: res.birthday,
-          ageRange: res.age_range,
-          location,
-          likedPages,
-        };
-
-        if (dispatch) {
-          //console.log('dispatch');
-          dispatch(userActions.login(user, response));
-        } else {
-          //console.log('NO dispatch');
-        }
-      });
+      dispatch(userActions.login(user, response.authResponse));
     });
-  } else if (response.status === 'not_authorized') {
-    history.push(APP.AUTH.LOGIN);
-  } else {
-    history.push(APP.AUTH.LOGIN);
-  }
+  });
+};
+
+export const logout = dispatch => {
+  window.FB.getLoginStatus(response => {
+    // console.log('getLoginStatus', response);
+    if (response.status === 'connected') {
+      window.FB.logout(_ => {
+        dispatch(userActions.logout());
+      });
+    } else {
+      dispatch(userActions.logout());
+    }
+  }, true);
 };

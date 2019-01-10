@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { APP } from '../../constants/routes';
+import { DEFAULT_MOVIE_POSTER } from '../../constants/values';
 
 class MovieListItem extends Component {
 
@@ -22,13 +23,16 @@ class MovieListItem extends Component {
       }
     }
 
+    const poster = !movie.poster || movie.poster === 'N/A' ? DEFAULT_MOVIE_POSTER : movie.poster;
+
     return (
       <div
         className='movie__list-item'
       >
         <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
           <img
-            src={movie.poster} alt=''
+            src={poster}
+            alt=''
             className='movie__list-item__image--size-m'
             onClick={this.openMovieDetails}
           />
@@ -43,7 +47,7 @@ class MovieListItem extends Component {
           <div>
             Genres:&nbsp;
             <span>
-              {movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))}
+              {movie.genres && movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))}
             </span>
           </div>
           <div>

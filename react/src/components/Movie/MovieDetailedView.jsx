@@ -6,6 +6,7 @@ import { APP } from '../../constants/routes';
 import * as movieActions from '../../redux/actions/movie.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
+import { DEFAULT_MOVIE_POSTER } from '../../constants/values';
 
 class MovieDetailedView extends Component {
   addMovieToWatchedList = async () => {
@@ -40,6 +41,7 @@ class MovieDetailedView extends Component {
 
   render() {
     const { movie, movieUserStatus } = this.props;
+    const poster = !movie.poster || movie.poster === 'N/A' ? DEFAULT_MOVIE_POSTER : movie.poster;
 
     return (
       <div
@@ -47,7 +49,8 @@ class MovieDetailedView extends Component {
       >
         <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
           <img
-            src={movie.poster} alt=''
+            src={poster}
+            alt=''
             className='movie__detailed__image--size-l'
             onClick={this.openMovieDetails}
           />

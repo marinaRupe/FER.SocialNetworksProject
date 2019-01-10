@@ -56,7 +56,6 @@ const userSchema = new Schema({
     required: [true, 'Name is required.'],
   },
   picture: String,
-  birthday: Date,
   ageRange: Object,
   gender: String,
   location: Object,

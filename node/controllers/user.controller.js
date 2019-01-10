@@ -14,7 +14,6 @@ const loginWithFacebook = async (req, res) => {
     lastName,
     name,
     picture,
-    birthday,
     ageRange,
     gender,
     location,
@@ -29,9 +28,9 @@ const loginWithFacebook = async (req, res) => {
     });
   }
 
-  if (!await UserService.existsEmail(email)) {
+  if (!await UserService.existsUserId(userID)) {
     await UserService.createUser(
-      userID, email, token, firstName, lastName, name, picture, birthday, ageRange, gender, location, likedPages);
+      userID, email, token, firstName, lastName, name, picture, ageRange, gender, location, likedPages);
   }
 
   res.json(new UserLoginViewModel(user));
