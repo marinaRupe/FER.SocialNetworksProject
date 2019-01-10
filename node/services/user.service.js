@@ -82,7 +82,6 @@ const changePassword = async (user, newPassword) => {
   return User.findByIdAndUpdate(user._id, user, { new: true });
 };
 
-
 const updateUser = async (user, id) => await User.findByIdAndUpdate(
   id, user, { new: true },
 ).exec();

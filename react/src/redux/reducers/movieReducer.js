@@ -101,6 +101,14 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.UPDATE_USER_MOVIE_STATUS:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        activeMovieStatus: { ...state.activeMovieStatus, ...action.data },
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }
