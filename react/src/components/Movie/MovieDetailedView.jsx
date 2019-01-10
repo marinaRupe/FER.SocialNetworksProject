@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import StarRatings from 'react-star-ratings';
 import { APP } from '../../constants/routes';
 import * as movieActions from '../../redux/actions/movie.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
@@ -59,7 +60,7 @@ class MovieDetailedView extends Component {
             <div className='movie__detailed__description'>{movie.plot}</div>
           </Link>
 
-          <div>
+          <div className='movie__detailed__actions'>
             {
               movieUserStatus.isWatched ?
                 <ButtonComponent
@@ -88,6 +89,24 @@ class MovieDetailedView extends Component {
                   type={buttonTypes.primary}
                 />
             }
+            <div className='movie__detailed__rating'>
+              <StarRatings
+                rating={movieUserStatus.rating || 0}
+                starRatedColor='yellow'
+                changeRating={this.rateMovie}
+                numberOfStars={5}
+                starDimension='40px'
+                name='rating'
+              />
+              {
+                movieUserStatus.isRated &&
+                <div
+                  className='movie__detailed__btn--remove-rated'
+                  onClick={this.removeMovieFromRatedList}>
+                  Remove rating
+                </div>
+              }
+            </div>
           </div>
 
           <div>Release date: {movie.releaseDate}</div>

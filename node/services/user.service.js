@@ -194,7 +194,7 @@ const addUserRatedMovie = async (userID, movieID, score) => {
   const user = await User.findOne({ 'userID': userID }, { 'userMovies.ratedMovies': 1 });
   const { ratedMovies } = user.userMovies;
 
-  const movieIndex = ratedMovies.findIndex(m => m.movieID === movieID);
+  const movieIndex = ratedMovies.findIndex(m => m.movieId === movieID);
 
   if (movieIndex >= 0) {
     ratedMovies[movieIndex].score = score;

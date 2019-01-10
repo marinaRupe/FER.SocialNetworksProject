@@ -30,7 +30,7 @@ export const API = {
       `${API_URL}/movie/user-watched/?userID=${userID}&movieID=${movieID}`,
     REMOVE_FROM_SAVED_LIST: (userID, movieID) =>
       `${API_URL}/movie/user-saved/?userID=${userID}&movieID=${movieID}`,
-    REMOVE_FROM__RATED_LIST: (userID, movieID, score) =>
+    REMOVE_FROM_RATED_LIST: (userID, movieID, score) =>
       `${API_URL}/movie/user-rated/?userID=${userID}&movieID=${movieID}&score=${score}`,
 
     FETCH_MOVIE_DETAILS: (movieID) => `${API_URL}/movie/${movieID}`,

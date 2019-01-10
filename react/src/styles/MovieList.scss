@@ -37,6 +37,9 @@
 
 .star-div{
   margin-left: 5px;
+  .material-icons {
+    color: $col-rating;
+  }
 }
 
 .all-stars-div{

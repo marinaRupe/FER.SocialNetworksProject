@@ -53,7 +53,7 @@ const getMovieStatus = async (req, res) => {
   const isWatched = watchedMovies.includes(movieID);
   const isSaved = savedMovies.includes(movieID);
 
-  const movieIndex = ratedMovies.findIndex(m => m.movieID === movieID);
+  const movieIndex = ratedMovies.findIndex(m => m.movieId === movieID);
   const isRated = movieIndex >= 0;
   const rating = isRated ? ratedMovies[movieIndex].score : null;
 
