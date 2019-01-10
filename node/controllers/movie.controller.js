@@ -126,6 +126,7 @@ const addUserWatchedMovie = async (req, res) => {
 
 const addUserRatedMovie = async (req, res) => {
   const { userID, movieID, score } = req.query;
+
   const response = await UserService.addUserRatedMovie(userID, movieID, score);
 
   res.send(response);

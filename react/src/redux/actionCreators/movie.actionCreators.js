@@ -63,3 +63,27 @@ export const fetchUserSavedMovies = ({ status, data }) => {
     type: types.FETCH_USER_SAVED_MOVIES,
   };
 };
+
+export const addMovieToWatchedList = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.ADD_MOVIE_TO_WATCHED_LIST,
+  };
+};
+
+export const addMovieToSavedList = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.ADD_MOVIE_TO_SAVED_LIST,
+  };
+};
+
+export const addMovieToRatedList = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.ADD_MOVIE_TO_RATED_LIST,
+  };
+};

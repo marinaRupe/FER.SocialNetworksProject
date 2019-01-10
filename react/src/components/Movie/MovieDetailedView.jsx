@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { APP } from '../../constants/routes';
+import * as movieActions from '../../redux/actions/movie.actions';
+import { buttonTypes } from '../../enums/buttonTypes.enum';
+import ButtonComponent from '../../components/ButtonComponent';
 
 class MovieDetailedView extends Component {
+  addMovieToWatchList = async () => {
+    const { addToWatchedList, currentUser, movie } = this.props;
+    await addToWatchedList(currentUser.userID, movie.imdbID);
+  }
+
+  saveMovie = async () => {
+    const { addToSavedList, currentUser, movie } = this.props;
+    await addToSavedList(currentUser.userID, movie.imdbID);
+  }
+
+  rateMovie = async (score) => {
+    const { addToRatedList, currentUser, movie } = this.props;
+    await addToRatedList(currentUser.userID, movie.imdbID, score);
+  }
+
   render() {
     const { movie } = this.props;
 
@@ -24,6 +43,37 @@ class MovieDetailedView extends Component {
           <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
             <div className='movie__detailed__description'>{movie.plot}</div>
           </Link>
+
+          <div>
+            {
+              movie.watched ?
+                <ButtonComponent
+                  action={this.addMovieToWatchList}
+                  text='Remove from watched'
+                  type={buttonTypes.secondary}
+                />
+                :
+                <ButtonComponent
+                  action={this.addMovieToWatchList}
+                  text='Add to watched'
+                  type={buttonTypes.primary}
+                />
+            }
+            {
+              movie.saved ?
+                <ButtonComponent
+                  action={this.saveMovie}
+                  text='Remove from saved'
+                  type={buttonTypes.secondary}
+                />
+                :
+                <ButtonComponent
+                  action={this.saveMovie}
+                  text='Save movie'
+                  type={buttonTypes.primary}
+                />
+            }
+          </div>
 
           <div>Release date: {movie.releaseDate}</div>
 
@@ -87,4 +137,16 @@ class MovieDetailedView extends Component {
   }
 }
 
-export default MovieDetailedView;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.users.currentUser,
+  };
+};
+
+const mapDispatchToProps = {
+  addToWatchedList: movieActions.addToWatchedList,
+  addToSavedList: movieActions.addToSavedList,
+  addToRatedList: movieActions.addToRatedList,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetailedView);

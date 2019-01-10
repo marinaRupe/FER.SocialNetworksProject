@@ -98,3 +98,36 @@ export function fetchUserRatedMovies(page = 1, pageSize = 30, user) {
   };
   return actionWrapper(action);
 }
+
+export function addToWatchedList(userID, movieID) {
+  const action = async (dispatch) => {
+    const resp = await axios.post(API.MOVIE.ADD_MOVIE_TO_WATCHED_LIST(userID, movieID));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.addMovieToWatchedList({ status: ACTION_STATUS.SUCCESS, data: { movieID } }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function addToSavedList(userID, movieID) {
+  const action = async (dispatch) => {
+    const resp = await axios.post(API.MOVIE.ADD_MOVIE_TO_SAVED_LIST(userID, movieID));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.addMovieToSavedList({ status: ACTION_STATUS.SUCCESS, data: { movieID } }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function addToRatedList(userID, movieID, score) {
+  const action = async (dispatch) => {
+    const resp = await axios.post(API.MOVIE.ADD_MOVIE_TO_RATED_LIST(userID, movieID, score));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.addMovieToRatedList({ status: ACTION_STATUS.SUCCESS, data: { movieID, score } }));
+    }
+  };
+  return actionWrapper(action);
+}

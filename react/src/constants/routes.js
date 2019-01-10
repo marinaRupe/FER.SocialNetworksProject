@@ -19,6 +19,12 @@ export const API = {
       `${API_URL}/movie/user-rated/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
     FETCH_USER_SAVED_MOVIES: (page, pageSize, userID) =>
       `${API_URL}/movie/user-saved/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
+    ADD_MOVIE_TO_WATCHED_LIST: (userID, movieID) =>
+      `${API_URL}/movie/user-watched/?userID=${userID}&movieID=${movieID}`,
+    ADD_MOVIE_TO_SAVED_LIST: (userID, movieID) =>
+      `${API_URL}/movie/user-saved/?userID=${userID}&movieID=${movieID}`,
+    ADD_MOVIE_TO_RATED_LIST: (userID, movieID, score) =>
+      `${API_URL}/movie/user-rated/?userID=${userID}&movieID=${movieID}&score=${score}`,
   },
   REVIEWS: {
     MOVIE: {

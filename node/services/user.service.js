@@ -109,7 +109,7 @@ const getUserWatchedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_
 );
 
 const getUserSavedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
-  await User.findOne({'userID':userID},{'userMovies.savedMovies':1})
+  await User.findOne({ 'userID': userID }, { 'userMovies.savedMovies': 1 })
     .map((user) => {
       let { savedMovies } = user.userMovies;
 
@@ -145,83 +145,70 @@ const getUserRatedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SI
 );
 
 const deleteUserSavedMovie = async (userID, movieID) => {
-
-  const user = await User.findOne({'userID':userID},{'userMovies.savedMovies':1});
-  let savedMovies = user.userMovies.savedMovies;
-  console.log(savedMovies);
+  const user = await User.findOne({ 'userID':userID }, { 'userMovies.savedMovies': 1 });
+  const { savedMovies } = user.userMovies;
   const index = savedMovies.indexOf(movieID);
-  if( index > -1) {
-
+  if (index > -1) {
     savedMovies.splice(index, 1);
-    console.log(savedMovies);
-
-    await User.updateOne({'userID': userID}, {$set: {'userMovies.savedMovies': savedMovies}});
+    await User.updateOne({ 'userID': userID }, { $set: { 'userMovies.savedMovies': savedMovies } });
   }
 };
 
 const deleteUserWatchedMovie = async (userID, movieID) => {
-  const user = await User.findOne({'userID':userID},{'userMovies.watchedMovies':1});
-  let watchedMovies = user.userMovies.watchedMovies;
-  console.log(watchedMovies);
+  const user = await User.findOne({ 'userID': userID }, { 'userMovies.watchedMovies': 1 });
+  const { watchedMovies } = user.userMovies;
   const index = watchedMovies.indexOf(movieID);
   if( index > -1) {
 
     watchedMovies.splice(index, 1);
-    console.log(watchedMovies);
-
-    await User.updateOne({'userID': userID}, {$set: {'userMovies.watchedMovies': watchedMovies}});
+    await User.updateOne({ 'userID': userID }, { $set: { 'userMovies.watchedMovies': watchedMovies } });
   }
 };
 
 const deleteUserRatedMovie = async (userID, movieID) => {
-  const user = await User.findOne({'userID':userID},{'userMovies.ratedMovies':1});
-  let ratedMovies = user.userMovies.ratedMovies;
-  console.log(ratedMovies);
+  const user = await User.findOne({ 'userID': userID }, { 'userMovies.ratedMovies': 1 });
+  const { ratedMovies } = user.userMovies;
   let index = -1;
 
-  for(let i=0; i<ratedMovies.length; i++){
-    if(ratedMovies[i].movieId === movieID){
+  for (let i = 0; i < ratedMovies.length; i++) {
+    if (ratedMovies[i].movieId === movieID) {
       index = i;
       break;
     }
   }
 
-  if( index > -1) {
+  if (index > -1) {
     ratedMovies.splice(index, 1);
-    console.log(ratedMovies);
-
-    await User.updateOne({'userID': userID}, {$set: {'userMovies.ratedMovies': ratedMovies}});
+    await User.updateOne({ 'userID': userID }, { $set: { 'userMovies.ratedMovies': ratedMovies } });
   }
 };
 
 const addUserWatchedMovie = async (userID, movieID) => {
+  const user = await User.findOne({ 'userID': userID }, { 'userMovies.watchedMovies': 1 });
+  const { watchedMovies } = user.userMovies;
+  watchedMovies[watchedMovies.length] = movieID;
 
-  const user = await User.findOne({'userID':userID},{'userMovies.watchedMovies':1});
-  let watchedMovies = user.userMovies.watchedMovies;
-  watchedMovies[watchedMovies.length]=movieID;
-
-  await User.updateOne({'userID': userID}, {$set: {'userMovies.watchedMovies': watchedMovies}});
+  await User.updateOne({ 'userID': userID }, { $set: { 'userMovies.watchedMovies': watchedMovies } });
 };
 
 const addUserRatedMovie = async (userID, movieID, score) => {
-  const user = await User.findOne({'userID':userID},{'userMovies.ratedMovies':1});
-  let ratedMovies = user.userMovies.ratedMovies;
+  const user = await User.findOne({ 'userID': userID }, { 'userMovies.ratedMovies': 1 });
+  const { ratedMovies } = user.userMovies;
 
-  ratedMovies[ratedMovies.length]={
+  ratedMovies[ratedMovies.length] = {
     'movieId' : movieID,
-    'score' : score
+    'score' : score,
   };
 
-  await User.updateOne({'userID': userID}, {$set: {'userMovies.ratedMovies': ratedMovies}});
+  await User.updateOne({ 'userID': userID }, {$set: { 'userMovies.ratedMovies': ratedMovies } });
 };
 
 const addUserSavedMovie = async (userID, movieID) => {
+  const user = await User.findOne({ 'userID': userID }, { 'userMovies.savedMovies': 1 });
+  const { savedMovies } = user.userMovies;
+  savedMovies[savedMovies.length] = movieID;
 
-  const user = await User.findOne({'userID':userID},{'userMovies.savedMovies':1});
-  let savedMovies = user.userMovies.savedMovies;
-  savedMovies[savedMovies.length]=movieID;
-
-  await User.updateOne({'userID': userID}, {$set: {'userMovies.savedMovies': savedMovies}});
+  await User.updateOne({ 'userID': userID}, { $set: { 'userMovies.savedMovies': savedMovies } });
 };
 
 module.exports = {
