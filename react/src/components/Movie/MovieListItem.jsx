@@ -4,11 +4,6 @@ import { APP } from '../../constants/routes';
 import { DEFAULT_MOVIE_POSTER } from '../../constants/values';
 
 class MovieListItem extends Component {
-
-  addStars = score => {
-
-  };
-
   render() {
     const { movie } = this.props;
     const stars = [];
