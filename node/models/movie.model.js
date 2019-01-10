@@ -79,6 +79,7 @@ const movieSchema = new Schema({
   },
   alternativeTitles: {
     type: [String],
+    index: true,
   },
   year: {
     type: Number,
@@ -87,6 +88,7 @@ const movieSchema = new Schema({
   releaseDate: {
     type: Date,
     required: [true, 'Release date is required.'],
+    index: true,
   },
   plot: {
     type: String,
@@ -95,9 +97,11 @@ const movieSchema = new Schema({
   genres: {
     type: [String],
     required: [true, 'Genres are required.'],
+    index: true,
   },
   keywords: {
     type: [String],
+    index: true,
   },
 
   poster: String,        // poster URL
@@ -137,8 +141,7 @@ const movieSchema = new Schema({
 
 movieSchema.index(
   { title: 'text', plot: 'text' },
-  { weights: { title: 10, plot: 1 } },
-  { name: 'movie_text_index_1' }
+  { weights: { title: 10, plot: 1 } }
 );
 
 module.exports = mongoose.model('Movie', movieSchema);

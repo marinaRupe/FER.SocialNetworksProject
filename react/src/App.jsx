@@ -26,6 +26,7 @@ import { APP } from './constants/routes';
 import history from './history';
 
 import 'leaflet/dist/leaflet.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import './styles/App.css';
 
 class App extends Component {

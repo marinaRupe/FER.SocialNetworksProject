@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Row, Col, FormControl, Button } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
 
 import * as movieActions from '../../../redux/actions/movie.actions';
 
 import MovieListItem from '../../../components/Movie/MovieListItem';
 import PaginationComponent from '../../../components/PaginationComponent';
-import ButtonComponent from '../../../components/ButtonComponent';
-
-import { buttonTypes } from '../../../enums/buttonTypes.enum';
-
 
 class MovieSearch extends Component {
+  static defaultProps = {
+    movies: [],
+    page: 1,
+    totalPages: 1,
+  }
+
   constructor(props) {
     super(props);
 
     this.state = {
       isLoading: false,
       input: '',
+      fromDate: null,
+      toDate: null,
     };
   }
 
@@ -35,13 +41,19 @@ class MovieSearch extends Component {
 
   onInputChange = (e) => this.setState({ input: e.target.value });
 
+  onInputKeyDown = (e) => e.key === 'Enter' && this.search();
+
+  onFromDateChange = (date) => this.setState({ fromDate: date });
+
+  onToDateChange = (date) => this.setState({ toDate: date });
+
   search = () => {
     this.setState({
       isLoading: true,
     }, async () => {
       const { searchMovies } = this.props;
-      const { input } = this.state;
-      await searchMovies(input);
+      const { input, fromDate, toDate } = this.state;
+      await searchMovies(input, fromDate, toDate);
       this.setState({
         isLoading: false,
       });
@@ -81,23 +93,36 @@ class MovieSearch extends Component {
     return (
       <div className='page'>
         <div className='movie-list__title'>Search For Movies</div>
-        <form>
-          <label htmlFor="searchField">
-            Search termn:
-          </label>
-          <input
-            type="text"
-            id="searchField"
-            className="form-control"
-            value={this.state.input}
-            onChange={this.onInputChange}
-          />
-          <ButtonComponent
-            action={this.search}
-            text='Search'
-            type={buttonTypes.primary}
-          />
-        </form>
+        <Row>
+          <Col sm={2}>
+            From:&nbsp;
+            <DatePicker
+              selected={this.state.fromDate}
+              onChange={this.onFromDateChange}
+              dateFormat="dd.MM.yyyy."
+            />
+          </Col>
+          <Col sm={2}>
+            To:&nbsp;
+            <DatePicker
+              selected={this.state.toDate}
+              onChange={this.onToDateChange}
+              dateFormat="dd.MM.yyyy."
+            />
+          </Col>
+          <Col sm={6}>
+            <FormControl
+              type="text"
+              id="searchField"
+              value={this.state.input}
+              onChange={this.onInputChange}
+              onKeyDown={this.onInputKeyDown}
+            />
+          </Col>
+          <Col sm={2}>
+            <Button onClick={this.search}>Search</Button>
+          </Col>
+        </Row>
         <hr />
         {this.renderMovieList()}
         <PaginationComponent

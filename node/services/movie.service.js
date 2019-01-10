@@ -111,32 +111,35 @@ const makeFilter = (gender, age=0, likes = []) =>{
   return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
 };
 
-const findMovies = async (text, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
-  const count = await Movie.countDocuments({
+const findMovies = async (text, fromDate, toDate, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
+  const filter = {
     $or: [
       { genres: { $regex: `^${text}`, $options: 'i' } },
       { keywords: { $regex: `^${text}`, $options: 'i' } },
       { alternativeTitles: { $regex: `^${text}`, $options: 'i' } },
       { $text: { $search: text } },
     ],
-  });
+  };
+  if (!!fromDate && !!toDate) {
+    console.log(fromDate, toDate, !!fromDate, !!toDate);
+    filter.releaseDate = { $gte: fromDate, $lte: toDate };
+  } else if (fromDate) {
+    filter.releaseDate = { $gte: fromDate };
+  } else if (toDate) {
+    filter.releaseDate = { $lte: toDate };
+  }
+
+  const count = await Movie.countDocuments(filter);
 
   const movies = await Movie
-    .find({
-      $or: [
-        { genres: { $regex: `^${text}`, $options: 'i' } },
-        { keywords: { $regex: `^${text}`, $options: 'i' } },
-        { alternativeTitles: { $regex: `^${text}`, $options: 'i' } },
-        { $text: { $search: text } },
-      ],
-    }, { score: { $meta: 'textScore' } })
+    .find(filter, { score: { $meta: 'textScore' } })
     .sort({ score: { $meta: 'textScore' }, tmdbPopularity: 'desc' })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .exec();
 
   return {
-    pagesCount: count / pageSize,
+    pagesCount: Math.ceil(count / pageSize),
     movies,
   };
 };
