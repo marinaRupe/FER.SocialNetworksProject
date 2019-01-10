@@ -56,7 +56,7 @@ export default function movieReducer(state = initialState.movies, action) {
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {
         ...state,
-        activeMovie: { ...state.list.find(m => m.imdbID.toString() === action.data) },
+        activeMovie: { ...action.data },
       };
     }
     return { ...state };
@@ -90,6 +90,14 @@ export default function movieReducer(state = initialState.movies, action) {
         page: action.data.page,
         totalPages: action.data.totalPages,
         totalResults: action.data.totalResults,
+      };
+    }
+    return { ...state };
+  case types.FETCH_USER_MOVIE_STATUS:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        activeMovieStatus: { ...action.data },
       };
     }
     return { ...state };

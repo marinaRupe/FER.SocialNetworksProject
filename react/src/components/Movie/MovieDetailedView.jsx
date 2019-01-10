@@ -7,9 +7,14 @@ import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
 
 class MovieDetailedView extends Component {
-  addMovieToWatchList = async () => {
+  addMovieToWatchedList = async () => {
     const { addToWatchedList, currentUser, movie } = this.props;
     await addToWatchedList(currentUser.userID, movie.imdbID);
+  }
+
+  removeMovieFromWatchedList = async () => {
+    const { removeFromWatchedList, currentUser, movie } = this.props;
+    await removeFromWatchedList(currentUser.userID, movie.imdbID);
   }
 
   saveMovie = async () => {
@@ -17,13 +22,23 @@ class MovieDetailedView extends Component {
     await addToSavedList(currentUser.userID, movie.imdbID);
   }
 
+  removeMovieFromSavedList = async () => {
+    const { removeFromSavedList, currentUser, movie } = this.props;
+    await removeFromSavedList(currentUser.userID, movie.imdbID);
+  }
+
   rateMovie = async (score) => {
     const { addToRatedList, currentUser, movie } = this.props;
     await addToRatedList(currentUser.userID, movie.imdbID, score);
   }
 
+  removeMovieFromRatedList = async () => {
+    const { removeFromRatedList, currentUser, movie } = this.props;
+    await removeFromRatedList(currentUser.userID, movie.imdbID);
+  }
+
   render() {
-    const { movie } = this.props;
+    const { movie, movieUserStatus } = this.props;
 
     return (
       <div
@@ -46,23 +61,23 @@ class MovieDetailedView extends Component {
 
           <div>
             {
-              movie.watched ?
+              movieUserStatus.isWatched ?
                 <ButtonComponent
-                  action={this.addMovieToWatchList}
+                  action={this.removeMovieFromWatchedList}
                   text='Remove from watched'
                   type={buttonTypes.secondary}
                 />
                 :
                 <ButtonComponent
-                  action={this.addMovieToWatchList}
+                  action={this.addMovieToWatchedList}
                   text='Add to watched'
                   type={buttonTypes.primary}
                 />
             }
             {
-              movie.saved ?
+              movieUserStatus.isSaved ?
                 <ButtonComponent
-                  action={this.saveMovie}
+                  action={this.removeMovieFromSavedList}
                   text='Remove from saved'
                   type={buttonTypes.secondary}
                 />
@@ -82,8 +97,8 @@ class MovieDetailedView extends Component {
             {
               movie.cast && movie.cast.length > 0 ?
                 <ul>
-                  {movie.cast.map((castMember) =>
-                    <li key={castMember.id}>{castMember.name} (as {castMember.characterName})</li>
+                  {movie.cast.map((castMember, index) =>
+                    <li key={index}>{castMember.name} (as {castMember.characterName})</li>
                   )}
                 </ul>
                 :
@@ -147,6 +162,9 @@ const mapDispatchToProps = {
   addToWatchedList: movieActions.addToWatchedList,
   addToSavedList: movieActions.addToSavedList,
   addToRatedList: movieActions.addToRatedList,
+  removeFromWatchedList: movieActions.removeFromWatchedList,
+  removeFromSavedList: movieActions.removeFromSavedList,
+  removeFromRatedList: movieActions.removeFromRatedList,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieDetailedView);

@@ -89,6 +89,9 @@ const updateUser = async (user, id) => await User.findByIdAndUpdate(
 
 const deleteUser = async email => await User.deleteOne({ email });
 
+const getUserMovieLists = async userID => (
+  await User.findOne({ 'userID': userID }, { 'userMovies': 1 }).exec()
+);
 
 const getUserWatchedMovies = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, userID) => (
   await User.findOne({ 'userID': userID }, { 'userMovies.watchedMovies': 1 })
@@ -148,6 +151,7 @@ const deleteUserSavedMovie = async (userID, movieID) => {
   const user = await User.findOne({ 'userID':userID }, { 'userMovies.savedMovies': 1 });
   const { savedMovies } = user.userMovies;
   const index = savedMovies.indexOf(movieID);
+
   if (index > -1) {
     savedMovies.splice(index, 1);
     await User.updateOne({ 'userID': userID }, { $set: { 'userMovies.savedMovies': savedMovies } });
@@ -158,8 +162,8 @@ const deleteUserWatchedMovie = async (userID, movieID) => {
   const user = await User.findOne({ 'userID': userID }, { 'userMovies.watchedMovies': 1 });
   const { watchedMovies } = user.userMovies;
   const index = watchedMovies.indexOf(movieID);
-  if( index > -1) {
 
+  if (index > -1) {
     watchedMovies.splice(index, 1);
     await User.updateOne({ 'userID': userID }, { $set: { 'userMovies.watchedMovies': watchedMovies } });
   }
@@ -220,6 +224,7 @@ module.exports = {
   updateUser,
   deleteUser,
   existsUserId,
+  getUserMovieLists,
   getUserRatedMovies,
   getUserSavedMovies,
   getUserWatchedMovies,

@@ -6,7 +6,20 @@ import * as actionCreators from '../actionCreators/movie.actionCreators';
 
 export function fetchActiveMovie(movieId) {
   const action = async (dispatch) => {
-    await dispatch(actionCreators.fetchActiveMovie({ status: ACTION_STATUS.SUCCESS, data: movieId }));
+    const resp = await axios.get(API.MOVIE.FETCH_MOVIE_DETAILS(movieId));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchActiveMovie({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function fetchUserMovieStatus(userID, movieId) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.USER.FETCH_USER_MOVIE_STATUS(userID, movieId));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchUserMovieStatus({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
   };
   return actionWrapper(action);
 }
@@ -101,7 +114,7 @@ export function fetchUserRatedMovies(page = 1, pageSize = 30, user) {
 
 export function addToWatchedList(userID, movieID) {
   const action = async (dispatch) => {
-    const resp = await axios.post(API.MOVIE.ADD_MOVIE_TO_WATCHED_LIST(userID, movieID));
+    const resp = await axios.post(API.MOVIE.ADD_TO_WATCHED_LIST(userID, movieID));
 
     if (resp.status === 200) {
       await dispatch(actionCreators.addMovieToWatchedList({ status: ACTION_STATUS.SUCCESS, data: { movieID } }));
@@ -112,7 +125,7 @@ export function addToWatchedList(userID, movieID) {
 
 export function addToSavedList(userID, movieID) {
   const action = async (dispatch) => {
-    const resp = await axios.post(API.MOVIE.ADD_MOVIE_TO_SAVED_LIST(userID, movieID));
+    const resp = await axios.post(API.MOVIE.ADD_TO_SAVED_LIST(userID, movieID));
 
     if (resp.status === 200) {
       await dispatch(actionCreators.addMovieToSavedList({ status: ACTION_STATUS.SUCCESS, data: { movieID } }));
@@ -123,10 +136,44 @@ export function addToSavedList(userID, movieID) {
 
 export function addToRatedList(userID, movieID, score) {
   const action = async (dispatch) => {
-    const resp = await axios.post(API.MOVIE.ADD_MOVIE_TO_RATED_LIST(userID, movieID, score));
+    const resp = await axios.post(API.MOVIE.ADD_TO_RATED_LIST(userID, movieID, score));
 
     if (resp.status === 200) {
       await dispatch(actionCreators.addMovieToRatedList({ status: ACTION_STATUS.SUCCESS, data: { movieID, score } }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function removeFromWatchedList(userID, movieID) {
+  const action = async (dispatch) => {
+    const resp = await axios.delete(API.MOVIE.REMOVE_FROM_WATCHED_LIST(userID, movieID));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.removeMovieFromWatchedList({ status: ACTION_STATUS.SUCCESS, data: { movieID } }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function removeFromSavedList(userID, movieID) {
+  const action = async (dispatch) => {
+    const resp = await axios.delete(API.MOVIE.REMOVE_FROM_SAVED_LIST(userID, movieID));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.removeMovieFromSavedList({ status: ACTION_STATUS.SUCCESS, data: { movieID } }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function removeFromRatedList(userID, movieID, score) {
+  const action = async (dispatch) => {
+    const resp = await axios.delete(API.MOVIE.REMOVE_FROM_RATED_LIST(userID, movieID, score));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.removeMovieFromRatedList(
+        { status: ACTION_STATUS.SUCCESS, data: { movieID, score } }));
     }
   };
   return actionWrapper(action);

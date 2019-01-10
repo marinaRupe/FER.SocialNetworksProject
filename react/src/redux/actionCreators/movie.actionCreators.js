@@ -64,6 +64,14 @@ export const fetchUserSavedMovies = ({ status, data }) => {
   };
 };
 
+export const fetchUserMovieStatus = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_MOVIE_STATUS,
+  };
+};
+
 export const addMovieToWatchedList = ({ status, data }) => {
   return {
     data,
@@ -85,5 +93,29 @@ export const addMovieToRatedList = ({ status, data }) => {
     data,
     status,
     type: types.ADD_MOVIE_TO_RATED_LIST,
+  };
+};
+
+export const removeMovieFromWatchedList = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.REMOVE_MOVIE_FROM_WATCHED_LIST,
+  };
+};
+
+export const removeMovieFromSavedList = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.REMOVE_MOVIE_FROM_SAVED_LIST,
+  };
+};
+
+export const removeMovieFromRatedList = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.REMOVE_MOVIE_FROM_RATED_LIST,
   };
 };

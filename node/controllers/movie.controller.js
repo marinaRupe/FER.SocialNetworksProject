@@ -3,6 +3,22 @@ const MovieService = require('../services/movie.service');
 const UserService = require('../services/user.service');
 const defaultValues = require('../constants/defaultValues.constants');
 
+const getMovieDetails = async (req, res) => {
+  const { movieID } = req.params;
+
+  if (!await MovieService.existsMovieWithImdbID(movieID)) {
+    throw new errors.BadRequestError({
+      info: {
+        email: 'Movie with given IMDb ID does not exist.',
+      },
+    });
+  }
+
+  const movie = (await MovieService.getMovieWithImdbID(movieID));
+
+  res.send(movie);
+};
+
 const getMostPopularMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE } = req.query;
 
@@ -139,6 +155,7 @@ module.exports = {
   getUserWatchedMovies,
   getUserSavedMovies,
   getUserRatedMovies,
+  getMovieDetails,
   deleteUserSavedMovie,
   deleteUserWatchedMovie,
   deleteUserRatedMovie,

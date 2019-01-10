@@ -18,8 +18,16 @@ class MovieDetails extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { fetchActiveMovie, match: { params: { movieId } } } = this.props;
+      const {
+        fetchActiveMovie,
+        fetchUserMovieStatus,
+        currentUser,
+        match: { params: { movieId } }
+      } = this.props;
+
       await fetchActiveMovie(movieId);
+      await fetchUserMovieStatus(currentUser.userID, movieId);
+
       this.setState({
         isLoading: false,
       });
@@ -37,12 +45,12 @@ class MovieDetails extends Component {
   }
 
   renderMovieDetails = () => {
-    const { movie } = this.props;
+    const { movie, movieUserStatus } = this.props;
 
-    if (movie) {
+    if (movie && movieUserStatus) {
       return (
         <div className='movie__details'>
-          <MovieDetailedView movie={movie} />
+          <MovieDetailedView movie={movie} movieUserStatus={movieUserStatus} />
         </div>
       );
     }
@@ -132,13 +140,16 @@ class MovieDetails extends Component {
 const mapStateToProps = state => {
   return {
     movie: state.movies.activeMovie,
+    movieUserStatus: state.movies.activeMovieStatus,
     reviews: state.reviews.activeMovieReviews,
+    currentUser: state.users.currentUser,
   };
 };
 
 const mapDispatchToProps = {
   fetchReviewsForMovie: movieReviewActions.fetchReviewsForMovie,
   fetchActiveMovie: movieActions.fetchActiveMovie,
+  fetchUserMovieStatus: movieActions.fetchUserMovieStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MovieDetails));

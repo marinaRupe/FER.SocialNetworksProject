@@ -16,6 +16,8 @@ router.get('/user-saved', asyncWrap(MovieController.getUserSavedMovies));
 
 router.get('/user-rated', asyncWrap(MovieController.getUserRatedMovies));
 
+router.get('/:movieID', asyncWrap(MovieController.getMovieDetails));
+
 router.delete('/user-saved', asyncWrap(MovieController.deleteUserSavedMovie));
 
 router.delete('/user-rated', asyncWrap(MovieController.deleteUserRatedMovie));
