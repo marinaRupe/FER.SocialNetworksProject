@@ -78,12 +78,12 @@ const mapStateToProps = state => {
     movies: state.movies.recommendedMovies.list,
     page: state.movies.recommendedMovies.page,
     totalPages: state.movies.recommendedMovies.totalPages,
-    currentUser: state.users.currentUser
+    currentUser: state.users.currentUser,
   };
 };
 
 const mapDispatchToProps = {
-  fetchRecommendedMovies: movieActions.fetchRecommendedMovies, // TODO: change action
+  fetchRecommendedMovies: movieActions.fetchRecommendedMovies,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecommendedMovies);

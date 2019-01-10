@@ -57,6 +57,25 @@
         }
       }
     }
+    &__actions {
+      display: flex;
+      flex-direction: row;
+    }
+    &__rating {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-left: 20px;
+    }
+    &__btn {
+      &--remove-rated {
+        color: $col-rating;
+        margin-left: 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
   }
   &__details {
     display: flex;

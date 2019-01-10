@@ -56,7 +56,7 @@ const crewSchema = new Schema({
 const videoSchema = new Schema({
   name: String,
   key: String,
-  url: String,  // `https://www.youtube.com/watch?v=${key}`
+  url: String, // `https://www.youtube.com/watch?v=${key}`
 });
 
 const movieSchema = new Schema({
@@ -64,8 +64,12 @@ const movieSchema = new Schema({
     type: String,
     required: [true, 'IMDb ID is required.'],
     trim: true,
+    index: true,
   },
-  tmdbID: String,
+  tmdbID: {
+    type: String,
+    index: true,
+  },
   facebookID: {
     type: String,
   },
@@ -100,7 +104,7 @@ const movieSchema = new Schema({
     type: [String],
   },
 
-  poster: String,        // poster URL
+  poster: String, // poster URL
   videos: [videoSchema], // filter Youtube videos
   website: String,
 
@@ -133,6 +137,7 @@ const movieSchema = new Schema({
 
   adult: Boolean,
   rated: String, // e.g. PG
+  score: String, //ocjena za film --> koju je dao korisnik (rated movies)
 });
 
 module.exports = mongoose.model('Movie', movieSchema);

@@ -2,7 +2,7 @@ const errors = require('restify-errors');
 const UserService = require('../services/user.service');
 const settings = require('../constants/constraints.constants');
 const UserLoginViewModel = require('../dataTransferObjects/viewModels/userLogin.viewModel');
-const userValidator = require('../validators/user.validator');
+const MovieStatusViewModel = require('../dataTransferObjects/viewModels/movieStatus.viewModel');
 
 const loginWithFacebook = async (req, res) => {
   const { user } = req.body;
@@ -36,59 +36,37 @@ const loginWithFacebook = async (req, res) => {
   res.json(new UserLoginViewModel(user));
 };
 
-const login = async (req, res) => {
-  const { email, password } = req.body;
+const getMovieStatus = async (req, res) => {
+  const { userID, movieID } = req.params;
 
-  if (!email.match(settings.EMAIL_REGEX)) {
+  if (!await UserService.existsUserId(userID)) {
     throw new errors.BadRequestError({
       info: {
-        email: 'Email is invalid.',
+        userID: 'User with given ID does not exist.',
       },
     });
   }
 
-  const user = await UserService.findByEmail(email);
-  const isCorrectPassword = user.validatePassword(password);
-  if (!isCorrectPassword) {
-    throw new errors.NotAuthorizedError({
-      info: {
-        message: 'Incorrect email or password.',
-      },
-    });
-  }
+  const { watchedMovies, savedMovies, ratedMovies } = (await UserService.getUserMovieLists(userID)).userMovies;
 
-  res.json(new UserLoginViewModel(user));
-};
+  const isWatched = watchedMovies.includes(movieID);
+  const isSaved = savedMovies.includes(movieID);
 
-const register = async (req, res) => {
-  const {
-    email,
-    firstName,
-    lastName,
-    name,
-    password,
-  } = req.body;
+  const movieIndex = ratedMovies.findIndex(m => m.movieId === movieID);
+  const isRated = movieIndex >= 0;
+  const rating = isRated ? ratedMovies[movieIndex].score : null;
 
-  const validation = userValidator.isValidUserObject(req.body);
-  if (!validation.isValid) {
-    throw new errors.BadRequestError({ info: validation.errors });
-  }
+  const movieStatusForUser = {
+    isWatched,
+    isSaved,
+    isRated,
+    rating,
+  };
 
-  if (await UserService.existsEmail(email)) {
-    throw new errors.ConflictError({
-      info: {
-        email: `User with email ${email} already exists.`,
-      },
-    });
-  }
-
-  const user = await UserService.add(email, password, firstName, lastName, name);
-
-  res.json(new UserLoginViewModel(user));
+  res.json(new MovieStatusViewModel(movieStatusForUser));
 };
 
 module.exports = {
-  login,
-  register,
   loginWithFacebook,
+  getMovieStatus,
 };
