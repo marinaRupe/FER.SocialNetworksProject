@@ -116,7 +116,7 @@ class MovieSearch extends Component {
             <DatePicker
               selected={this.state.fromDate}
               onChange={this.onFromDateChange}
-              dateFormat="dd.MM.yyyy."
+              dateFormat='dd.MM.yyyy.'
             />
           </Col>
           <Col sm={2}>
@@ -124,11 +124,16 @@ class MovieSearch extends Component {
             <DatePicker
               selected={this.state.toDate}
               onChange={this.onToDateChange}
-              dateFormat="dd.MM.yyyy."
+              dateFormat='dd.MM.yyyy.'
             />
           </Col>
           <Col sm={2}>
-            <FormControl componentClass="select" placeholder="genres" multiple={true} values={this.state.selectedGenres}>
+            <FormControl
+              componentClass='select'
+              placeholder='genres'
+              multiple={true}
+              values={this.state.selectedGenres}
+            >
               {genres && genres.map(genre => (
                 <option
                   key={genre}
@@ -142,8 +147,8 @@ class MovieSearch extends Component {
           </Col>
           <Col sm={4}>
             <FormControl
-              type="text"
-              id="searchField"
+              type='text'
+              id='searchField'
               value={this.state.input}
               onChange={this.onInputChange}
               onKeyDown={this.onInputKeyDown}

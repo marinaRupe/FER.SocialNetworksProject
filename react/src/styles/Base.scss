@@ -41,6 +41,14 @@ a {
   &:hover, :active, :focus {
     color: darken($col-primary, 5%);
   }
+  &.has-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    .material-icons {
+      margin-left: 5px;
+    }
+  }
 }
 
 .btn-primary {

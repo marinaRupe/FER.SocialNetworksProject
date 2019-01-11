@@ -13,7 +13,7 @@ export const API = {
     FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
     FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
 
-    SEARCH: (page, pageSize, parameters) => 
+    SEARCH: (page, pageSize, parameters) =>
       `${API_URL}/movie/search/?page=${page}&pageSize=${pageSize}${toQueryStringParameters(parameters)}`,
 
     GENRES: `${API_URL}/movie/genres`,

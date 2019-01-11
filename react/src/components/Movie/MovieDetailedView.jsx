@@ -6,7 +6,8 @@ import { APP } from '../../constants/routes';
 import * as movieActions from '../../redux/actions/movie.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
-import { DEFAULT_MOVIE_POSTER } from '../../constants/values';
+import { DEFAULT_MOVIE_POSTER, DEFAULT_PROFILE_IMAGE } from '../../constants/values';
+import { formatDate } from '../../utils/dateTime.utils';
 
 class MovieDetailedView extends Component {
   addMovieToWatchedList = async () => {
@@ -47,22 +48,83 @@ class MovieDetailedView extends Component {
       <div
         className='movie__detailed'
       >
-        <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
-          <img
-            src={poster}
-            alt=''
-            className='movie__detailed__image--size-l'
-            onClick={this.openMovieDetails}
-          />
-        </Link>
-        <div className='movie__detailed__details'>
-          <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
+        <div className='movie__detailed__heading'>
+          <div>
+            <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
+              <img
+                src={poster}
+                alt=''
+                className='movie__detailed__image--size-l'
+                onClick={this.openMovieDetails}
+              />
+            </Link>
+          </div>
+          <div className='movie__detailed__basic-info'>
             <div className='movie__detailed__title'>{movie.title}</div>
-          </Link>
-          <Link to={APP.MOVIE.DETAILS(movie.imdbID)}>
             <div className='movie__detailed__description'>{movie.plot}</div>
-          </Link>
 
+            <div className='movie__detailed__info'>
+              <label>Release date:</label>
+              <div>{formatDate(movie.releaseDate)}</div>
+            </div>
+
+            <div className='movie__detailed__info'>
+              <label>Runtime:</label>
+              <div>{movie.runtime}</div>
+            </div>
+
+            <div className='movie__detailed__info'>
+              <label>Genres:</label>
+              <div>
+                {movie.genres && movie.genres.length > 0
+                  ? movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  : 'unknown'
+                }
+              </div>
+            </div>
+
+            {
+              movie.website &&
+              <div className='movie__detailed__info'>
+                <label>Website:</label>
+                <div>
+                  <a
+                    href={movie.website}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='link has-icon'
+                  >
+                    <span>{movie.website}</span>
+                    <i className='material-icons'>open_in_new</i>
+                  </a>
+                </div>
+              </div>
+            }
+
+            <div className='movie__detailed__info'>
+              <label>Languages:</label>
+              <div>
+                {movie.languages && movie.languages.length > 0
+                  ? movie.languages.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  : 'unknown'
+                }
+              </div>
+            </div>
+
+            <div className='movie__detailed__info'>
+              <label>Translations:</label>
+              <div>
+                {movie.translations && movie.translations.length > 0
+                  ? movie.translations.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  : 'unknown'
+                }
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div className='movie__detailed__details'>
           <div className='movie__detailed__actions'>
             {
               movieUserStatus.isWatched ?
@@ -113,62 +175,61 @@ class MovieDetailedView extends Component {
             </div>
           </div>
 
-          <div>Release date: {movie.releaseDate}</div>
-
           <div>
-            Cast:&nbsp;
+            <h5 className='mb-20'>Cast:</h5>
             {
               movie.cast && movie.cast.length > 0 ?
-                <ul>
+                <div className='movie__detailed__cast'>
                   {movie.cast.map((castMember, index) =>
-                    <li key={index}>{castMember.name} (as {castMember.characterName})</li>
+                    <div key={index} className='movie__detailed__cast-member'>
+                      <div>
+                        <img
+                          className='movie__detailed__cast-member profile-image'
+                          src={castMember.profileImage || DEFAULT_PROFILE_IMAGE}
+                          alt=''
+                        />
+                      </div>
+                      <div className='movie__detailed__cast-member person'>
+                        {castMember.name}
+                      </div>
+                      <div className='movie__detailed__cast-member character'>
+                        (as {castMember.characterName})
+                      </div>
+                    </div>
                   )}
-                </ul>
+                </div>
                 :
                 <span>Unknown</span>
             }
           </div>
 
           <div>
-            Crew:&nbsp;
+            <h5 className='mb-20'>Crew:</h5>
             {
               movie.crew && movie.crew.length > 0 ?
-                <ul>
+                <div className='movie__detailed__crew'>
                   {movie.crew.map((crewMember, index) =>
-                    <li key={index}>{crewMember.name}</li>
+                    <div key={index} className='movie__detailed__crew-member'>
+                      <div>
+                        <img
+                          className='movie__detailed__crew-member profile-image'
+                          src={crewMember.profileImage || DEFAULT_PROFILE_IMAGE}
+                          alt=''
+                        />
+                      </div>
+                      <div className='movie__detailed__crew-member person'>
+                        {crewMember.name}
+                      </div>
+                      <div className='movie__detailed__crew-member job'>
+                        ({crewMember.job})
+                      </div>
+                    </div>
                   )}
-                </ul>
+                </div>
                 :
                 <span>Unknown</span>
             }
           </div>
-
-          <div>
-            Genres:
-            <ul>
-              {(movie.genres || []).map((g) =>
-                <li key={g}>{g}</li>
-              )}
-            </ul>
-          </div>
-
-          <div>
-            Languages:
-            <ul>
-              {(movie.languages || []).map((lang) =>
-                <li key={lang}>{lang}</li>
-              )}
-            </ul>
-          </div>
-
-          <div>Runtime: {movie.runtime}</div>
-          {
-            movie.website &&
-            <div>Website:&nbsp;
-              <Link className='link' to={movie.website}>{movie.website}</Link>
-            </div>
-          }
-
         </div>
       </div>
     );
