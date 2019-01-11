@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Row, Col, FormControl, Button } from 'react-bootstrap';
+import { Row, Col, FormControl } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
+import { buttonTypes } from '../../../enums/buttonTypes.enum';
+import ButtonComponent from '../../../components/ButtonComponent';
 
 import * as movieActions from '../../../redux/actions/movie.actions';
 
@@ -106,33 +108,40 @@ class MovieSearch extends Component {
 
   render() {
     const { page, totalPages, genres } = this.props;
+    const { fromDate, toDate, selectedGenres } = this.state;
 
     return (
       <div className='page'>
         <div className='movie-list__title'>Search For Movies</div>
-        <Row>
+        <Row className='search__row mb-20'>
           <Col sm={2}>
-            From:&nbsp;
+            <div>From date:</div>
             <DatePicker
-              selected={this.state.fromDate}
+              selected={fromDate}
               onChange={this.onFromDateChange}
               dateFormat='dd.MM.yyyy.'
             />
           </Col>
           <Col sm={2}>
-            To:&nbsp;
+            <div>To date:</div>
             <DatePicker
-              selected={this.state.toDate}
+              selected={toDate}
               onChange={this.onToDateChange}
               dateFormat='dd.MM.yyyy.'
             />
           </Col>
+        </Row>
+
+        <Row className='search__row mb-20'>
           <Col sm={2}>
+            <div>Genres:</div>
             <FormControl
               componentClass='select'
               placeholder='genres'
               multiple={true}
-              values={this.state.selectedGenres}
+              rows={3}
+              values={selectedGenres}
+              className='search__multi-select'
             >
               {genres && genres.map(genre => (
                 <option
@@ -145,7 +154,21 @@ class MovieSearch extends Component {
               ))}
             </FormControl>
           </Col>
-          <Col sm={4}>
+        </Row>
+
+        <Row className='search__selected'>
+          {
+            (selectedGenres && selectedGenres.length > 0) &&
+              <div>
+                <label>Selected genres:</label>
+                {selectedGenres.reduce((acc, curr) => (`${acc}, ${curr}`))}
+              </div>
+          }
+          {selectedGenres.red}
+        </Row>
+
+        <Row className='search__row'>
+          <div className='search__text-input'>
             <FormControl
               type='text'
               id='searchField'
@@ -153,10 +176,13 @@ class MovieSearch extends Component {
               onChange={this.onInputChange}
               onKeyDown={this.onInputKeyDown}
             />
-          </Col>
-          <Col sm={2}>
-            <Button onClick={this.search}>Search</Button>
-          </Col>
+            <ButtonComponent
+              action={this.search}
+              text='Search'
+              type={buttonTypes.primary}
+              icon='search'
+            />
+          </div>
         </Row>
         <hr />
         {this.renderMovieList()}
