@@ -251,22 +251,33 @@ class MovieDetailedView extends Component {
               <div className='movie__detailed__ratings'>
                 <div className='movie__detailed__info'>
                   <label>IMDb rating:</label>
-                  <div>{movie.imdbRating ? `${movie.imdbRating}/10` : 'unknown'}</div>
+                  <div>
+                    {(movie.imdbRating && movie.imdbRating !== 'N/A') ? `${movie.imdbRating}/10` : 'unknown'}
+                  </div>
                 </div>
 
                 <div className='movie__detailed__info'>
                   <label>Metascore rating:</label>
-                  <div>{movie.metascore ? `${movie.metascore}/100` : 'unknown'}</div>
+                  <div>
+                    {(movie.metascore && movie.metascore !== 'N/A') ? `${movie.metascore}/100` : 'unknown'}
+                  </div>
                 </div>
 
                 <div className='movie__detailed__info'>
                   <label>Rotten Tomatoes rating:</label>
-                  <div>{movie.rottenTomatoesRating || 'unknown'}</div>
+                  <div>
+                    {
+                      (movie.rottenTomatoesRating && movie.rottenTomatoesRating !== 'N/A')
+                        ? movie.rottenTomatoesRating : 'unknown'
+                    }
+                  </div>
                 </div>
 
                 <div className='movie__detailed__info'>
                   <label>TMDb popularity:</label>
-                  <div>{movie.tmdbPopularity || 'unknown'}</div>
+                  <div>
+                    {(movie.tmdbPopularity && movie.tmdbPopularity !== 'N/A') ? movie.tmdbPopularity : 'unknown'}
+                  </div>
                 </div>
               </div>
             </div>
