@@ -89,9 +89,10 @@ class MovieDetails extends Component {
                   href={review.link.url}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='link'
+                  className='link has-icon'
                 >
-                  {review.link.suggested_link_text}
+                  <span>{review.link.suggested_link_text}</span>
+                  <i className='material-icons'>open_in_new</i>
                 </a>
               </div>
             </div>
