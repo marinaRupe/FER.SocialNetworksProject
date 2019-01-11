@@ -59,11 +59,20 @@ const getRecommendedMovies = async (req, res) => {
 };
 
 const getMoviesForSearch = async (req, res) => {
-  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, searchString, fromDate, toDate, genres } = req.query;
+  const {
+    page = 1,
+    pageSize = defaultValues.DEFAULT_PAGE_SIZE,
+    searchString,
+    fromDate,
+    toDate,
+    genres,
+  } = req.query;
 
   const { pagesCount, movies } = await MovieService.findMovies(
     {
-      text: decodeURIComponent(searchString),
+      text: decodeURIComponent(
+        searchString === 'undefined' || searchString === 'null' ? '' : searchString
+      ),
       fromDate: JSON.parse(decodeURIComponent(fromDate)),
       toDate: JSON.parse(decodeURIComponent(toDate)),
       genres: JSON.parse(decodeURIComponent(genres)),

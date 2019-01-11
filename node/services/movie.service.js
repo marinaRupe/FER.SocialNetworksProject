@@ -137,8 +137,8 @@ const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT
   const count = await Movie.countDocuments(filter);
 
   const movies = await Movie
-    .find(filter, { score: { $meta: 'textScore' } })
-    .sort({ score: { $meta: 'textScore' }, tmdbPopularity: 'desc' })
+    .find(filter, { textScore: { $meta: 'textScore' } })
+    .sort({ textScore: { $meta: 'textScore' }, tmdbPopularity: 'desc' })
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .exec();
