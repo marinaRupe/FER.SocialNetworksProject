@@ -65,12 +65,12 @@ class MovieDetailedView extends Component {
 
             <div className='movie__detailed__info'>
               <label>Release date:</label>
-              <div>{formatDate(movie.releaseDate)}</div>
+              <div>{formatDate(movie.releaseDate) || 'unknown'}</div>
             </div>
 
             <div className='movie__detailed__info'>
               <label>Runtime:</label>
-              <div>{movie.runtime}</div>
+              <div>{movie.runtime || 'unknown'}</div>
             </div>
 
             <div className='movie__detailed__info'>
@@ -84,7 +84,7 @@ class MovieDetailedView extends Component {
             </div>
 
             {
-              movie.website &&
+              (movie.website && movie.website !== 'N/A') &&
               <div className='movie__detailed__info'>
                 <label>Website:</label>
                 <div>
@@ -95,6 +95,42 @@ class MovieDetailedView extends Component {
                     className='link has-icon'
                   >
                     <span>{movie.website}</span>
+                    <i className='material-icons'>open_in_new</i>
+                  </a>
+                </div>
+              </div>
+            }
+
+            {
+              movie.facebookID &&
+              <div className='movie__detailed__info'>
+                <label>Facebook page:</label>
+                <div>
+                  <a
+                    href={`https://www.facebook.com/${movie.facebookID}`}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='link has-icon'
+                  >
+                    <span>https://www.facebook.com/{movie.facebookID}</span>
+                    <i className='material-icons'>open_in_new</i>
+                  </a>
+                </div>
+              </div>
+            }
+
+            {
+              movie.twitterID &&
+              <div className='movie__detailed__info'>
+                <label>Twitter page:</label>
+                <div>
+                  <a
+                    href={`https://twitter.com/${movie.twitterID}`}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='link has-icon'
+                  >
+                    <span>https://twitter.com/{movie.twitterID}</span>
                     <i className='material-icons'>open_in_new</i>
                   </a>
                 </div>
@@ -175,6 +211,38 @@ class MovieDetailedView extends Component {
             </div>
           </div>
 
+          <div className='mb-30'>
+            <div className='movie__detailed__info'>
+              <label>Budget:</label>
+              <div>{movie.budget ? `$${movie.budget}` : 'unknown'}</div>
+            </div>
+
+            <div className='movie__detailed__info'>
+              <label>Revenue:</label>
+              <div>{movie.revenue ? `$${movie.revenue}` : 'unknown'}</div>
+            </div>
+
+            <div className='movie__detailed__info'>
+              <label>Production companies:</label>
+              <div>
+                {movie.productionCompanies && movie.productionCompanies.length > 0
+                  ? movie.productionCompanies.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  : 'unknown'
+                }
+              </div>
+            </div>
+
+            <div className='movie__detailed__info'>
+              <label>Production countries:</label>
+              <div>
+                {movie.productionCountries && movie.productionCountries.length > 0
+                  ? movie.productionCountries.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  : 'unknown'
+                }
+              </div>
+            </div>
+          </div>
+
           <div>
             <h5 className='mb-20'>Cast:</h5>
             {
@@ -203,7 +271,7 @@ class MovieDetailedView extends Component {
             }
           </div>
 
-          <div>
+          <div className='mb-30'>
             <h5 className='mb-20'>Crew:</h5>
             {
               movie.crew && movie.crew.length > 0 ?
@@ -228,6 +296,23 @@ class MovieDetailedView extends Component {
                 </div>
                 :
                 <span>Unknown</span>
+            }
+          </div>
+          <div>
+            {
+              (movie.videos && movie.videos.length > 0) &&
+                <div>
+                  <h5 className='mb-20'>Videos:</h5>
+                  <div className='movie__detailed__videos custom-scrollbar'>
+                    {movie.videos.map(video => (
+                      <iframe width='420' height='315' title={video.name}
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                      >
+                      </iframe>
+                    ))
+                    }
+                  </div>
+                </div>
             }
           </div>
         </div>

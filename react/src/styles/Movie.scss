@@ -49,6 +49,7 @@
     &__info {
       label {
         margin-right: 8px;
+        font-weight: $val-fontWeightBold;
       }
       display: flex;
       flex-direction: row;
@@ -142,6 +143,14 @@
           font-weight: normal;
         }
       }
+    }
+    &__videos {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      max-width: 90vw;
+      overflow-y: auto;
+      margin-bottom: 20px;
     }
     &__btn {
       &--remove-rated {
