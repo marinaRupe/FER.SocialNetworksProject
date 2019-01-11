@@ -22,7 +22,7 @@ class MovieDetails extends Component {
         fetchActiveMovie,
         fetchUserMovieStatus,
         currentUser,
-        match: { params: { movieId } }
+        match: { params: { movieId } },
       } = this.props;
 
       await fetchActiveMovie(movieId);

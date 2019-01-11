@@ -96,6 +96,7 @@ class MovieDetailedView extends Component {
               <StarRatings
                 rating={movieUserStatus.rating || 0}
                 starRatedColor='yellow'
+                starHoverColor='yellow'
                 changeRating={this.rateMovie}
                 numberOfStars={5}
                 starDimension='40px'
