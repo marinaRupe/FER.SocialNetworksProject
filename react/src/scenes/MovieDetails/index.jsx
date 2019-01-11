@@ -121,7 +121,7 @@ class MovieDetails extends Component {
 
     if (isLoading) {
       return (
-        <div className='movie__details loading'>
+        <div className='movie__details loading page'>
           <div className='loader border-top-info'></div>
         </div>
       );

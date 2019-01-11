@@ -42,7 +42,11 @@ class NowPlayingMovies extends Component {
     const { cinemas , currentUser} = this.props;
 
     if (isLoading) {
-      return;
+      return (
+        <div className='cinema-list loading'>
+          <div className='loader border-top-info' />
+        </div>
+      );
     }
 
     if (cinemas.length > 0) {
