@@ -111,7 +111,9 @@ const makeFilter = (gender, age=0, likes = []) =>{
   return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
 };
 
-const findMovies = async (text, fromDate, toDate, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
+const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
+  const { text, fromDate, toDate, genres } = parameters;
+
   const filter = {
     $or: [
       { genres: { $regex: `^${text}`, $options: 'i' } },
@@ -121,12 +123,14 @@ const findMovies = async (text, fromDate, toDate, page = 1, pageSize = defaultVa
     ],
   };
   if (!!fromDate && !!toDate) {
-    console.log(fromDate, toDate, !!fromDate, !!toDate);
     filter.releaseDate = { $gte: fromDate, $lte: toDate };
   } else if (fromDate) {
     filter.releaseDate = { $gte: fromDate };
   } else if (toDate) {
     filter.releaseDate = { $lte: toDate };
+  }
+  if (genres && genres.length > 0) {
+    filter.genres = { $in: genres };
   }
 
   const count = await Movie.countDocuments(filter);
@@ -144,6 +148,11 @@ const findMovies = async (text, fromDate, toDate, page = 1, pageSize = defaultVa
   };
 };
 
+const getAllGenres = async () => ((await Movie.aggregate([
+  { $unwind: '$genres' },
+  { $group: { _id: 0, genres: { $addToSet: '$genres' } } },
+]).exec())[0] || {}).genres || [];
+
 module.exports = {
   existsMovieWithImdbID,
   existsMovieWithTmdbID,
@@ -160,4 +169,5 @@ module.exports = {
   getMoviesByFilter,
   makeFilter,
   findMovies,
+  getAllGenres,
 };

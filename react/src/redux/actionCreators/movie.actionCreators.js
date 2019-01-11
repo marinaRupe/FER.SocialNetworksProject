@@ -47,3 +47,11 @@ export const searchMovies = ({ status, data }) => {
     type: types.SEARCH_MOVIES,
   };
 };
+
+export const getGenres = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.GET_GENRES,
+  };
+};

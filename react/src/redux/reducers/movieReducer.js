@@ -65,6 +65,14 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.GET_GENRES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        genres: action.data,
+      };
+    }
+    return { ...state };
   case types.FETCH_ACTIVE_MOVIE:
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {

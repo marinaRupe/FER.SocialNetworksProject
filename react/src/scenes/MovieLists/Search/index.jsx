@@ -13,6 +13,7 @@ class MovieSearch extends Component {
     movies: [],
     page: 1,
     totalPages: 1,
+    genres: [],
   }
 
   constructor(props) {
@@ -23,7 +24,12 @@ class MovieSearch extends Component {
       input: '',
       fromDate: null,
       toDate: null,
+      selectedGenres: [],
     };
+  }
+
+  async componentDidMount() {
+    await this.props.getGenres();
   }
 
   fetchMovies = page => {
@@ -39,6 +45,19 @@ class MovieSearch extends Component {
     });
   }
 
+  search = () => {
+    this.setState({
+      isLoading: true,
+    }, async () => {
+      const { searchMovies } = this.props;
+      const { input, fromDate, toDate, selectedGenres } = this.state;
+      await searchMovies(input, fromDate, toDate, selectedGenres);
+      this.setState({
+        isLoading: false,
+      });
+    });
+  }
+
   onInputChange = (e) => this.setState({ input: e.target.value });
 
   onInputKeyDown = (e) => e.key === 'Enter' && this.search();
@@ -47,17 +66,15 @@ class MovieSearch extends Component {
 
   onToDateChange = (date) => this.setState({ toDate: date });
 
-  search = () => {
-    this.setState({
-      isLoading: true,
-    }, async () => {
-      const { searchMovies } = this.props;
-      const { input, fromDate, toDate } = this.state;
-      await searchMovies(input, fromDate, toDate);
-      this.setState({
-        isLoading: false,
-      });
-    });
+  onGenreSelect = (e) => {
+    const { selectedGenres } = this.state;
+    e.preventDefault();
+    const genre = e.target.value;
+    if (selectedGenres.includes(genre)) {
+      this.setState({ selectedGenres: selectedGenres.filter(_genre => _genre !== genre ) });
+    } else {
+      this.setState({ selectedGenres: [ ...selectedGenres, genre ] });
+    }
   }
 
   renderMovieList = () => {
@@ -88,7 +105,7 @@ class MovieSearch extends Component {
   }
 
   render() {
-    const { page, totalPages } = this.props;
+    const { page, totalPages, genres } = this.props;
 
     return (
       <div className='page'>
@@ -110,7 +127,20 @@ class MovieSearch extends Component {
               dateFormat="dd.MM.yyyy."
             />
           </Col>
-          <Col sm={6}>
+          <Col sm={2}>
+            <FormControl componentClass="select" placeholder="genres" multiple={true} values={this.state.selectedGenres}>
+              {genres && genres.map(genre => (
+                <option
+                  key={genre}
+                  value={genre}
+                  onClick={this.onGenreSelect}
+                >
+                  {genre}
+                </option>
+              ))}
+            </FormControl>
+          </Col>
+          <Col sm={4}>
             <FormControl
               type="text"
               id="searchField"
@@ -140,11 +170,13 @@ const mapStateToProps = state => {
     movies: state.movies.foundMovies.list,
     page: state.movies.foundMovies.page,
     totalPages: state.movies.foundMovies.totalPages,
+    genres: state.movies.genres,
   };
 };
 
 const mapDispatchToProps = {
   searchMovies: movieActions.searchMovies,
+  getGenres: movieActions.getGenres,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieSearch);

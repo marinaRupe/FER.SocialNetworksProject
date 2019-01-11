@@ -13,7 +13,8 @@ export const API = {
     FETCH_MOST_POPULAR_MOVIES: (page, pageSize) => `${API_URL}/movie/most-popular/?page=${page}&pageSize=${pageSize}`,
     FETCH_MOST_RATED_MOVIES: (page, pageSize) => `${API_URL}/movie/most-rated/?page=${page}&pageSize=${pageSize}`,
     FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) => `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
-    SEARCH: (page, pageSize, searchString, fromDate, toDate) => `${API_URL}/movie/search/?page=${page}&pageSize=${pageSize}&searchString=${encodeURIComponent(searchString)}&fromDate=${encodeURIComponent(fromDate)}&toDate=${encodeURIComponent(toDate)}`,
+    SEARCH: (page, pageSize, parameters) => `${API_URL}/movie/search/?page=${page}&pageSize=${pageSize}${toQueryStringParameters(parameters)}`,
+    GENRES: `${API_URL}/movie/genres`,
   },
   REVIEWS: {
     FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`,
@@ -57,3 +58,6 @@ export const APP = {
   SERVER_ERROR: '/error/500',
   NOT_FOUND_ERROR: '/error/404',
 };
+
+const toQueryStringParameters = dict =>
+  Object.keys(dict).reduce((str, key) => `${str}&${key}=${encodeURIComponent(JSON.stringify(dict[key] || null))}`, '');

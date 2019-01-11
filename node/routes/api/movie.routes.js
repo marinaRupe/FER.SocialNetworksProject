@@ -12,4 +12,6 @@ router.get('/recommended', asyncWrap(MovieController.getRecommendedMovies));
 
 router.get('/search', asyncWrap(MovieController.getMoviesForSearch));
 
+router.get('/genres', asyncWrap(MovieController.getAllGenres));
+
 module.exports = router;

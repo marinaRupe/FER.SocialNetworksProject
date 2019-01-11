@@ -42,12 +42,15 @@ const getRecommendedMovies = async (req, res) => {
 };
 
 const getMoviesForSearch = async (req, res) => {
-  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, searchString, fromDate, toDate } = req.query;
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE, searchString, fromDate, toDate, genres } = req.query;
 
   const { pagesCount, movies } = await MovieService.findMovies(
-    decodeURIComponent(searchString),
-    decodeURIComponent(fromDate),
-    decodeURIComponent(toDate),
+    {
+      text: decodeURIComponent(searchString),
+      fromDate: JSON.parse(decodeURIComponent(fromDate)),
+      toDate: JSON.parse(decodeURIComponent(toDate)),
+      genres: JSON.parse(decodeURIComponent(genres)),
+    },
     +page,
     +pageSize
   );
@@ -56,9 +59,15 @@ const getMoviesForSearch = async (req, res) => {
   res.send(data);
 };
 
+const getAllGenres = async (req, res) => {
+  const data = await MovieService.getAllGenres();
+  res.send(data);
+};
+
 module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
   getRecommendedMovies,
   getMoviesForSearch,
+  getAllGenres,
 };
