@@ -66,6 +66,16 @@ a {
   }
 }
 
+button {
+  &.has-icon {
+    display: flex;
+    align-items: center;
+    .material-icons {
+      margin-left: 5px;
+    }
+  }
+}
+
 .btn-primary {
   padding: $val-spacing-xs $val-spacing-s;
   margin: $val-spacing-xxs;

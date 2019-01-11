@@ -100,7 +100,7 @@ class MovieDetails extends Component {
       });
 
       return(
-        <div className='mb-30'>
+        <div className='movie__reviews mb-30'>
           <div className='movie__reviews__title'>Reviews</div>
           <div className='movie__reviews__content'>
             {

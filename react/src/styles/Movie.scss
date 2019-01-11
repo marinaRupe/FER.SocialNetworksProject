@@ -46,6 +46,16 @@
       padding-left: $val-spacing-m;
       line-height: 30px;
     }
+    &__other-info {
+      display: flex;
+      flex-direction: row;
+      .block {
+        max-width: 40%;
+        &:not(:first-child) {
+          margin-left: 50px;
+        }
+      }
+    }
     &__info {
       label {
         margin-right: 8px;
@@ -88,7 +98,7 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-left: 20px;
+      margin-left: 40px;
     }
     &__cast {
       display: flex;
@@ -171,6 +181,7 @@
     }
   }
   &__reviews {
+    padding: 0 $val-spacing-xs;
     &__title {
       padding: $val-spacing-xs;
       color: $col-title--big;

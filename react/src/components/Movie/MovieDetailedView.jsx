@@ -168,12 +168,14 @@ class MovieDetailedView extends Component {
                   action={this.removeMovieFromWatchedList}
                   text='Remove from watched'
                   type={buttonTypes.secondary}
+                  icon='delete'
                 />
                 :
                 <ButtonComponent
                   action={this.addMovieToWatchedList}
                   text='Add to watched'
                   type={buttonTypes.primary}
+                  icon='movie'
                 />
             }
             {
@@ -182,12 +184,14 @@ class MovieDetailedView extends Component {
                   action={this.removeMovieFromSavedList}
                   text='Remove from saved'
                   type={buttonTypes.secondary}
+                  icon='delete'
                 />
                 :
                 <ButtonComponent
                   action={this.saveMovie}
                   text='Save movie'
                   type={buttonTypes.primary}
+                  icon='save'
                 />
             }
             <div className='movie__detailed__rating'>
@@ -211,34 +215,59 @@ class MovieDetailedView extends Component {
             </div>
           </div>
 
-          <div className='mb-30'>
-            <div className='movie__detailed__info'>
-              <label>Budget:</label>
-              <div>{movie.budget ? `$${movie.budget}` : 'unknown'}</div>
-            </div>
+          <div className='movie__detailed__other-info mb-30'>
+            <div className='block'>
+              <div className='movie__detailed__info'>
+                <label>Budget:</label>
+                <div>{movie.budget ? `$${movie.budget}` : 'unknown'}</div>
+              </div>
 
-            <div className='movie__detailed__info'>
-              <label>Revenue:</label>
-              <div>{movie.revenue ? `$${movie.revenue}` : 'unknown'}</div>
-            </div>
+              <div className='movie__detailed__info'>
+                <label>Revenue:</label>
+                <div>{movie.revenue ? `$${movie.revenue}` : 'unknown'}</div>
+              </div>
 
-            <div className='movie__detailed__info'>
-              <label>Production companies:</label>
-              <div>
-                {movie.productionCompanies && movie.productionCompanies.length > 0
-                  ? movie.productionCompanies.reduce((acc, curr) => (`${acc}, ${curr}`))
-                  : 'unknown'
-                }
+              <div className='movie__detailed__info'>
+                <label>Production companies:</label>
+                <div>
+                  {movie.productionCompanies && movie.productionCompanies.length > 0
+                    ? movie.productionCompanies.reduce((acc, curr) => (`${acc}, ${curr}`))
+                    : 'unknown'
+                  }
+                </div>
+              </div>
+
+              <div className='movie__detailed__info'>
+                <label>Production countries:</label>
+                <div>
+                  {movie.productionCountries && movie.productionCountries.length > 0
+                    ? movie.productionCountries.reduce((acc, curr) => (`${acc}, ${curr}`))
+                    : 'unknown'
+                  }
+                </div>
               </div>
             </div>
+            <div className='block'>
+              <div className='movie__detailed__ratings'>
+                <div className='movie__detailed__info'>
+                  <label>IMDb rating:</label>
+                  <div>{movie.imdbRating ? `${movie.imdbRating}/10` : 'unknown'}</div>
+                </div>
 
-            <div className='movie__detailed__info'>
-              <label>Production countries:</label>
-              <div>
-                {movie.productionCountries && movie.productionCountries.length > 0
-                  ? movie.productionCountries.reduce((acc, curr) => (`${acc}, ${curr}`))
-                  : 'unknown'
-                }
+                <div className='movie__detailed__info'>
+                  <label>Metascore rating:</label>
+                  <div>{movie.metascore ? `${movie.metascore}/100` : 'unknown'}</div>
+                </div>
+
+                <div className='movie__detailed__info'>
+                  <label>Rotten Tomatoes rating:</label>
+                  <div>{movie.rottenTomatoesRating || 'unknown'}</div>
+                </div>
+
+                <div className='movie__detailed__info'>
+                  <label>TMDb popularity:</label>
+                  <div>{movie.tmdbPopularity || 'unknown'}</div>
+                </div>
               </div>
             </div>
           </div>
@@ -298,14 +327,14 @@ class MovieDetailedView extends Component {
                 <span>Unknown</span>
             }
           </div>
-          <div>
+          <div className='mb-30'>
             {
               (movie.videos && movie.videos.length > 0) &&
                 <div>
                   <h5 className='mb-20'>Videos:</h5>
                   <div className='movie__detailed__videos custom-scrollbar'>
                     {movie.videos.map(video => (
-                      <iframe width='420' height='315' title={video.name}
+                      <iframe width='420' height='315' title={video.name} key={video.key}
                         src={`https://www.youtube.com/embed/${video.key}`}
                       >
                       </iframe>
@@ -315,6 +344,7 @@ class MovieDetailedView extends Component {
                 </div>
             }
           </div>
+
         </div>
       </div>
     );
