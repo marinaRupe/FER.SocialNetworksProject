@@ -179,7 +179,7 @@ class MovieDetailedView extends Component {
             <h5 className='mb-20'>Cast:</h5>
             {
               movie.cast && movie.cast.length > 0 ?
-                <div className='movie__detailed__cast'>
+                <div className='movie__detailed__cast custom-scrollbar'>
                   {movie.cast.map((castMember, index) =>
                     <div key={index} className='movie__detailed__cast-member'>
                       <div>
@@ -207,7 +207,7 @@ class MovieDetailedView extends Component {
             <h5 className='mb-20'>Crew:</h5>
             {
               movie.crew && movie.crew.length > 0 ?
-                <div className='movie__detailed__crew'>
+                <div className='movie__detailed__crew custom-scrollbar'>
                   {movie.crew.map((crewMember, index) =>
                     <div key={index} className='movie__detailed__crew-member'>
                       <div>
