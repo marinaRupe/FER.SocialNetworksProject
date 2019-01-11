@@ -31,7 +31,10 @@ const initialState = {
     },
   },
   reviews: {
-    activeMovieReviews: [],
+    activeMovieReviews: {
+      nyTimesReviews: [],
+      tmdbReviews: [],
+    },
   },
   cinemas: {
     list: [],

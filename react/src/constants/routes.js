@@ -47,7 +47,7 @@ export const API = {
       `${API_URL}/user/${userID}/movie/${movieID}`,
   },
   REVIEWS: {
-    FETCH_REVIEWS_FOR_MOVIE: (movieTitle) => `${API_URL}/movie-review/${movieTitle}`,
+    FETCH_REVIEWS_FOR_MOVIE: (movieTitle, tmdbId) => `${API_URL}/movie-review/?title=${movieTitle}&tmdbId=${tmdbId}`,
   },
   CINEMA: {
     FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`,

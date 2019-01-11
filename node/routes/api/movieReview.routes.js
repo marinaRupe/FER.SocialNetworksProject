@@ -4,6 +4,6 @@ const MovieReviewController = require('../../controllers/movieReview.controller'
 
 const router = express.Router();
 
-router.get('/:movieTitle', asyncWrap(MovieReviewController.getReviews));
+router.get('/', asyncWrap(MovieReviewController.getReviews));
 
 module.exports = router;

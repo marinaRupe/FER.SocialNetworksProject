@@ -11,8 +11,22 @@ const MOVIE_VIDEOS = tmdbMovieId => `/movie/${tmdbMovieId}/videos`;
 const MOVIE_TRANSLATIONS = tmdbMovieId => `/movie/${tmdbMovieId}/translations`;
 const MOVIE_CREDITS = tmdbMovieId => `/movie/${tmdbMovieId}/credits`;
 
+const MOVIE_REVIEWS_URL = tmdbMovieId => `/movie/${tmdbMovieId}/reviews`;
+
 const TMDB_IMAGES_URL = 'https://image.tmdb.org/t/p/';
 const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/watch';
+
+const getMovieReviews = async tmdbMovieId => {
+  const response = axios.get(`${MOVIE_API_URL}${MOVIE_REVIEWS_URL(tmdbMovieId)}`, {
+    params: {
+      'api_key': process.env.TMDB_API_KEY2,
+      'page': 1,
+      'language': 'en-US',
+    },
+  });
+
+  return response;
+};
 
 const getMovieDetails = async tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}/movie/${tmdbMovieId}`, {
@@ -256,4 +270,5 @@ module.exports = {
   mapMovie,
   saveMovieList,
   fetchMovies,
+  getMovieReviews,
 };
