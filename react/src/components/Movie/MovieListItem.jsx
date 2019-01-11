@@ -50,7 +50,7 @@ class MovieListItem extends Component {
           </div>
           <div>
             <div className='rating-div'>
-              Rating: {movie.imdbRating || '-'}
+              IMDb rating: {movie.imdbRating ? `${movie.imdbRating}/10` : 'unknown'}
             </div>
             {movie.score &&
               <div className='score-star-div'>

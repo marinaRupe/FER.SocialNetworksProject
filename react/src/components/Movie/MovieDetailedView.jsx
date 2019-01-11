@@ -345,10 +345,12 @@ class MovieDetailedView extends Component {
                   <h5 className='mb-20'>Videos:</h5>
                   <div className='movie__detailed__videos custom-scrollbar'>
                     {movie.videos.map(video => (
-                      <iframe width='420' height='315' title={video.name} key={video.key}
-                        src={`https://www.youtube.com/embed/${video.key}`}
-                      >
-                      </iframe>
+                      <div key={video.key}>
+                        <iframe width='420' height='315' title={video.name}
+                          src={`https://www.youtube.com/embed/${video.key}`}
+                        >
+                        </iframe>
+                      </div>
                     ))
                     }
                   </div>
