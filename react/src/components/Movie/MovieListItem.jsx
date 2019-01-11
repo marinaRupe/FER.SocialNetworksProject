@@ -42,7 +42,10 @@ class MovieListItem extends Component {
           <div>
             Genres:&nbsp;
             <span>
-              {movie.genres && movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))}
+              {movie.genres && movie.genres.length > 0
+                ? movie.genres.reduce((acc, curr) => (`${acc}, ${curr}`))
+                : 'unknown'
+              }
             </span>
           </div>
           <div>

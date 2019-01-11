@@ -10,6 +10,10 @@ router.get('/most-rated', asyncWrap(MovieController.getMostRatedMovies));
 
 router.get('/recommended', asyncWrap(MovieController.getRecommendedMovies));
 
+router.get('/search', asyncWrap(MovieController.getMoviesForSearch));
+
+router.get('/genres', asyncWrap(MovieController.getAllGenres));
+
 router.get('/user-watched', asyncWrap(MovieController.getUserWatchedMovies));
 
 router.get('/user-saved', asyncWrap(MovieController.getUserSavedMovies));

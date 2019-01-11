@@ -40,6 +40,22 @@ export const fetchRecommendedMovies = ({ status, data }) => {
   };
 };
 
+export const searchMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.SEARCH_MOVIES,
+  };
+};
+
+export const getGenres = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.GET_GENRES,
+  };
+};
+
 export const fetchUserRatedMovies = ({ status, data }) => {
   return {
     data,

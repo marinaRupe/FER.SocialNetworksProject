@@ -11,6 +11,7 @@ import UserRatedMovies from './scenes/MovieLists/Personal/UserRatedMovies';
 import UserSavedMovies from './scenes/MovieLists/Personal/UserSavedMovies';
 import UserWatchedMovies from './scenes/MovieLists/Personal/UserWatchedMovies';
 import RecommendedMovies from './scenes/MovieLists/Personal/RecommendedMovies';
+import Search from './scenes/MovieLists/Search';
 import MovieDetails from './scenes/MovieDetails';
 import Error404 from './scenes/Error/Error404';
 import Error500 from './scenes/Error/Error500';
@@ -25,6 +26,7 @@ import { APP } from './constants/routes';
 import history from './history';
 
 import 'leaflet/dist/leaflet.css';
+import 'react-datepicker/dist/react-datepicker.css';
 import './styles/App.css';
 
 class App extends Component {
@@ -52,6 +54,8 @@ class App extends Component {
             <PrivateRoute path={APP.MOVIE.PERSONAL.USER_WATCHED_MOVIES} component={UserWatchedMovies} />
             <PrivateRoute path={APP.MOVIE.PERSONAL.USER_SAVED_MOVIES} component={UserSavedMovies} />
             <PrivateRoute path={APP.MOVIE.PERSONAL.RECOMMENDED_MOVIES} component={RecommendedMovies} />
+
+            <PrivateRoute path={APP.MOVIE.SEARCH} component={Search} />
 
             <PrivateRoute path={APP.MOVIE.DETAILS()} component={MovieDetails} />
             <PrivateRoute path={APP.PROFILE} component={Profile} />

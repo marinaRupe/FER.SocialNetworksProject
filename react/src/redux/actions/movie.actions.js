@@ -64,6 +64,32 @@ export function fetchTopMovies(page = 1, pageSize = 5) {
   return actionWrapper(action);
 }
 
+export function searchMovies(searchString, fromDate, toDate, genres, page = 1, pageSize = 30) {
+  const action = async (dispatch) => {
+    const parameters = {
+      searchString,
+      fromDate,
+      toDate,
+      genres,
+    };
+    const resp = await axios.get(API.MOVIE.SEARCH(page, pageSize, parameters));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.searchMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function getGenres() {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.MOVIE.GENRES);
+    if (resp.status === 200) {
+      await dispatch(actionCreators.getGenres({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
 export function fetchRecommendedMovies(page = 1, pageSize = 5, user) {
   const action = async (dispatch) => {
     const names = [];
