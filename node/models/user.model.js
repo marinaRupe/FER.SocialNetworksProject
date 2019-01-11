@@ -4,6 +4,29 @@ const settings = require('../constants/constraints.constants');
 
 const { Schema } = mongoose;
 
+
+const ratedMoviesSchema = new Schema({
+  movieId: {
+    type: String,
+  },
+  score: {
+    type: Number,
+  },
+});
+
+const userMoviesSchema = new Schema({
+  watchedMovies: {
+    type: [String],
+  },
+  ratedMovies: {
+    type: [ratedMoviesSchema],
+  },
+  savedMovies: {
+    type: [String],
+  },
+
+});
+
 const userSchema = new Schema({
   email: {
     type: String,
@@ -28,9 +51,16 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Last name is required.'],
   },
+  name: {
+    type: String,
+    required: [true, 'Name is required.'],
+  },
   picture: String,
-  birthday: Date,
-  gender: String
+  ageRange: Object,
+  gender: String,
+  location: Object,
+  likedPages: Object,
+  userMovies: userMoviesSchema,
 });
 
 userSchema.methods.setPassword = function setPassword(newPassword) {

@@ -12,6 +12,17 @@
     font-size: $val-fontSizeXBig;
     padding: $val-spacing-s;
   }
+  &__jumbotron {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(".../../../images/popcorn.jpg");
+  }
+}
+
+.logout-link {
+  padding: 10px;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  color: black;
+  cursor: pointer;
 }
 
 .register-page {
@@ -25,4 +36,13 @@
     font-size: $val-fontSizeXBig;
     padding: $val-spacing-s;
   }
+}
+
+.facebook-color{
+  background-color: $col-btn-facebook;
+}
+
+.facebook-logo{
+  width: 20%;
+  padding-right: 10px;
 }

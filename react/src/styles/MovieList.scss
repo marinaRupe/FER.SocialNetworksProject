@@ -11,4 +11,38 @@
     font-size: $val-fontSizeXBig;
     font-weight: $val-fontWeightBold;
   }
+  &.loading {
+    padding-bottom: 50px;
+  }
+  &.small {
+    .movie__list-item {
+      width: 90%;
+    }
+  }
+
+}
+
+.rating-div {
+  display: inline-flex;
+}
+
+.score-div{
+  margin-left: 10px;
+  margin-top: 2px;
+}
+
+.score-star-div{
+  display: inline-flex;
+}
+
+.star-div{
+  margin-left: 5px;
+  .material-icons {
+    color: $col-rating;
+  }
+}
+
+.all-stars-div{
+  display: inline-flex;
+  margin-top: 1px;
 }

@@ -10,6 +10,7 @@
       display: flex;
       flex-direction: column;
       padding: $val-spacing-xxs;
+      width: 100%;
     }
     &__title {
       font-size: $val-fontSizeBig;
@@ -18,6 +19,10 @@
     &__description {
       font-size: $val-fontSizeRegular;
       color: $col-movie-description;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 80vw;
     }
     &__image {
       &--size {
@@ -29,20 +34,52 @@
     }
   }
   &__detailed {
+    &__heading {
+      display: flex;
+      flex-direction: row;
+      padding: $val-spacing-s;
+    }
+    &__basic-info {
+      display: flex;
+      flex-direction: column;
+      padding: $val-spacing-xs;
+      padding-left: $val-spacing-m;
+      line-height: 30px;
+    }
+    &__other-info {
+      display: flex;
+      flex-direction: row;
+      .block {
+        max-width: 40%;
+        &:not(:first-child) {
+          margin-left: 50px;
+        }
+      }
+    }
+    &__info {
+      label {
+        margin-right: 8px;
+        font-weight: $val-fontWeightBold;
+      }
+      display: flex;
+      flex-direction: row;
+    }
     &__details {
       display: flex;
       flex-direction: column;
-      padding: $val-spacing-xxs;
+      padding: $val-spacing-s;
     }
     &__title {
       font-size: $val-fontSizeBig;
       color: $col-movie-title;
-      padding: $val-spacing-xs;
+      padding-bottom: $val-spacing-xs;
+      line-height: 25px;
     }
     &__description {
       font-size: $val-fontSizeRegular;
       color: $col-movie-description;
-      padding: $val-spacing-xs;
+      padding-bottom: $val-spacing-xs;
+      line-height: 22px;
     }
     &__image {
       &--size {
@@ -52,13 +89,99 @@
         }
       }
     }
+    &__actions {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 30px;
+    }
+    &__rating {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-left: 40px;
+    }
+    &__cast {
+      display: flex;
+      flex-direction: row;
+      max-width: 90vw;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      &-member {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        &:not(:first-child) {
+          margin-left: 5px;
+          min-width: 150px;
+        }
+        &.profile-image {
+          height: 75px;
+          width: auto;
+        }
+        &.person {
+          font-weight: $val-fontWeightBold;
+        }
+        &.character {
+          font-weight: normal;
+        }
+      }
+    }
+    &__crew {
+      display: flex;
+      flex-direction: row;
+      max-width: 90vw;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      &-member {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        &:not(:first-child) {
+          margin-left: 5px;
+          min-width: 150px;
+        }
+        &.profile-image {
+          height: 75px;
+          width: auto;
+        }
+        &.person {
+          font-weight: $val-fontWeightBold;
+        }
+        &.job {
+          font-weight: normal;
+        }
+      }
+    }
+    &__videos {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      max-width: 90vw;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    &__btn {
+      &--remove-rated {
+        color: $col-rating;
+        margin-left: 15px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+      }
+    }
   }
   &__details {
     display: flex;
     flex-direction: column;
     padding: $val-spacing-xxs;
+    &.loading {
+      padding-top: 30px;
+    }
   }
   &__reviews {
+    padding: 0 $val-spacing-xs;
     &__title {
       padding: $val-spacing-xs;
       color: $col-title--big;

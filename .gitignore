@@ -88,3 +88,12 @@ dist-react/
 
 # CSS files
 *.css
+
+#Idea files - Intellij
+.idea*
+
+#Iml files - Intelij
+FER.SocialNetworksProject.iml
+
+logs
+sslcert

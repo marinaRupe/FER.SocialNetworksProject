@@ -1,34 +1,72 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { facebookJSSDKSetup } from '../../utils/auth.utils';
-import userActions from '../../redux/actionCreators/userActionCreator';
+import { Card, CardBody, CardImage, CardTitle, CardText, Col, Row } from 'mdbreact';
+import { buttonTypes } from '../../enums/buttonTypes.enum';
+import ButtonComponent from '../../components/ButtonComponent';
+import backgroundImage from '../../images/popcorn.jpg';
+import { logout } from '../../utils/auth.utils';
 
 class Profile extends Component {
-  componentDidMount() {
-    facebookJSSDKSetup();
-  }
 
   logout = () => {
-    const { dispatch } = this.props;
-    window.FB.logout(response => {
-      dispatch(userActions.logout());
-    });
+    logout(this.props.dispatch);
   }
 
   renderProfileData = () => {
     const { currentUser } = this.props;
 
     if (currentUser) {
+      //console.log("user id is: " + currentUser.userID);
       return (
         <div className='profile__user-info'>
-          {currentUser.picture &&
-            <img src={currentUser.picture} alt='' />
-          }
-          <div>First name: {currentUser.firstName}</div>
-          <div>Last name: {currentUser.lastName}</div>
-          <div>Email: {currentUser.email}</div>
-          <div>Birthday: {currentUser.birthday || '-'}</div>
-          <div>Gender: {currentUser.gender || '-'}</div>
+          <Row>
+            <Col md='3' className='offset-md-3'>
+              <Card style={{ width: '35rem' }}>
+                <CardImage
+                  className='img-fluid'
+                  src={backgroundImage}
+                  waves
+                />
+                <div className='profile__image-container'>
+                  <img
+                    className='profile__image'
+                    src={currentUser.picture}
+                    alt=''
+                  />
+                </div>
+                <CardBody>
+                  <CardTitle>{currentUser.name}</CardTitle>
+                  <CardText>
+                    { currentUser.email &&
+                      <span className='profile__user-info--item'>
+                        <i className='material-icons'>email</i>
+                        {currentUser.email}
+                      </span>
+                    }
+                    { currentUser.ageRange &&
+                      <span className='profile__user-info--item'>
+                        <i className='material-icons'>cake</i>
+                        <span>{currentUser.ageRange.min} - {currentUser.ageRange.max}</span>
+                      </span>
+                    }
+                    { currentUser.gender &&
+                      <span className='profile__user-info--item'>
+                        <i className='material-icons'>accessibility</i>
+                        <span>{currentUser.gender}</span>
+                      </span>
+                    }
+                  </CardText>
+                  <div className='profile__btn-container'>
+                    <ButtonComponent
+                      action={this.logout}
+                      text='Logout'
+                      type={buttonTypes.secondary}
+                    />
+                  </div>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
         </div>
       );
     }
@@ -38,17 +76,9 @@ class Profile extends Component {
 
   render() {
     return (
-      <div className='profile'>
+      <div className='profile page'>
         <div className='profile__title'>Profile</div>
         {this.renderProfileData()}
-        <div>
-          <button
-            onClick={this.logout}
-            className='btn-primary'
-          >
-            Logout
-          </button>
-        </div>
       </div>
     );
   }
