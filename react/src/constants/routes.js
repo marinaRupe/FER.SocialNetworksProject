@@ -90,4 +90,6 @@ export const APP = {
 };
 
 const toQueryStringParameters = dict =>
-  Object.keys(dict).reduce((str, key) => `${str}&${key}=${encodeURIComponent(JSON.stringify(dict[key] || null))}`, '');
+  Object.keys(dict)
+    .filter((key) => !!dict[key])
+    .reduce((str, key) => `${str}&${key}=${encodeURIComponent(JSON.stringify(dict[key]))}`, '');
