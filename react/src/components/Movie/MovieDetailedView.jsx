@@ -7,6 +7,8 @@ import * as movieActions from '../../redux/actions/movie.actions';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
 import { DEFAULT_MOVIE_POSTER, DEFAULT_PROFILE_IMAGE } from '../../constants/values';
+import { countryCodes } from '../../constants/countryCodes';
+import { languageCodes } from '../../constants/languageCodes';
 import { formatDate } from '../../utils/dateTime.utils';
 
 class MovieDetailedView extends Component {
@@ -141,7 +143,8 @@ class MovieDetailedView extends Component {
               <label>Languages:</label>
               <div>
                 {movie.languages && movie.languages.length > 0
-                  ? movie.languages.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  ? movie.languages.reduce((acc, curr) =>
+                    (`${acc ? `${acc},` : ''} ${languageCodes[curr.split('-')[0]].name}`), '')
                   : 'unknown'
                 }
               </div>
@@ -151,7 +154,8 @@ class MovieDetailedView extends Component {
               <label>Translations:</label>
               <div>
                 {movie.translations && movie.translations.length > 0
-                  ? movie.translations.reduce((acc, curr) => (`${acc}, ${curr}`))
+                  ? movie.translations.reduce((acc, curr) =>
+                    (`${acc ? `${acc},` : ''} ${languageCodes[curr.split('-')[0]].name} (${countryCodes[curr.split('-')[1]]})`), '')
                   : 'unknown'
                 }
               </div>
@@ -231,7 +235,7 @@ class MovieDetailedView extends Component {
                 <label>Production companies:</label>
                 <div>
                   {movie.productionCompanies && movie.productionCompanies.length > 0
-                    ? movie.productionCompanies.reduce((acc, curr) => (`${acc}, ${curr}`))
+                    ? movie.productionCompanies.reduce((acc, curr) => (`${acc ? `${acc},` : ''} ${curr}`), '')
                     : 'unknown'
                   }
                 </div>
@@ -241,7 +245,7 @@ class MovieDetailedView extends Component {
                 <label>Production countries:</label>
                 <div>
                   {movie.productionCountries && movie.productionCountries.length > 0
-                    ? movie.productionCountries.reduce((acc, curr) => (`${acc}, ${curr}`))
+                    ? movie.productionCountries.reduce((acc, curr) => (`${acc ? `${acc},` : ''} ${countryCodes[curr]}`), '')
                     : 'unknown'
                   }
                 </div>
