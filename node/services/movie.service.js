@@ -102,6 +102,7 @@ const makeFilter = (gender, age=0, likes = []) =>{
       { 'genres': filter['genres'] },
       { 'title': filter['title'] },
     ]};
+
     if (filter['adult']) {
       orFilter['adult'] = filter['adult'];
     }

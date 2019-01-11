@@ -9,6 +9,7 @@ const initialState = {
     totalPages: 1,
     totalResults: 0,
     activeMovie: null,
+    activeMovieStatus: null,
     genres: [],
     topMovies: {
       list: [],

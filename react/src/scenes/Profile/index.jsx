@@ -16,6 +16,7 @@ class Profile extends Component {
     const { currentUser } = this.props;
 
     if (currentUser) {
+      //console.log("user id is: " + currentUser.userID);
       return (
         <div className='profile__user-info'>
           <Row>
@@ -46,6 +47,12 @@ class Profile extends Component {
                       <span className='profile__user-info--item'>
                         <i className='material-icons'>cake</i>
                         <span>{currentUser.ageRange.min} - {currentUser.ageRange.max}</span>
+                      </span>
+                    }
+                    { currentUser.gender &&
+                      <span className='profile__user-info--item'>
+                        <i className='material-icons'>accessibility</i>
+                        <span>{currentUser.gender}</span>
                       </span>
                     }
                   </CardText>

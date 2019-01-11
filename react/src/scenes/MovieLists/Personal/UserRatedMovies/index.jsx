@@ -21,13 +21,13 @@ class UserRatedMovies extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { fetchMostRatedMovies } = this.props;
-      await fetchMostRatedMovies(page); // TODO: change action
+      const { fetchUserRatedMovies, currentUser } = this.props;
+      await fetchUserRatedMovies(page, 30, currentUser); // TODO: change action
       this.setState({
         isLoading: false,
       });
     });
-  }
+  };
 
   renderMovieList = () => {
     const { isLoading } = this.state;
@@ -78,11 +78,12 @@ const mapStateToProps = state => {
     movies: state.movies.list,
     page: state.movies.page,
     totalPages: state.movies.totalPages,
+    currentUser: state.users.currentUser,
   };
 };
 
 const mapDispatchToProps = {
-  fetchMostRatedMovies: movieActions.fetchMostRatedMovies, // TODO: change action
+  fetchUserRatedMovies: movieActions.fetchUserRatedMovies, // TODO: change action
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRatedMovies);
