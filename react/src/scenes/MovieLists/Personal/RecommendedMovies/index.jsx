@@ -22,7 +22,7 @@ class RecommendedMovies extends Component {
       isLoading: true,
     }, async () => {
       const { fetchRecommendedMovies, currentUser } = this.props;
-      await fetchRecommendedMovies(page,5,currentUser);
+      await fetchRecommendedMovies(page, 30, currentUser);
       this.setState({
         isLoading: false,
       });

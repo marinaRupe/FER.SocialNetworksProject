@@ -7,7 +7,6 @@ import * as movieActions from '../../../redux/actions/movie.actions';
 import * as cinemaActions from '../../../redux/actions/cinema.actions';
 
 import MovieListItem from '../../../components/Movie/MovieListItem';
-import PaginationComponent from '../../../components/PaginationComponent';
 import CinemaMarker from '../../../components/Home/CinemaMarker';
 
 import * as values from '../../../constants/values';
@@ -35,7 +34,7 @@ class NowPlayingMovies extends Component {
       const { fetchNowPlayingMovies,fetchCinemasByCenterLocation, currentUser } = this.props;
       const userLocation = await getLocation(currentUser);
 
-      await fetchNowPlayingMovies(page);
+      await fetchNowPlayingMovies(page, 15);
       await fetchCinemasByCenterLocation(userLocation);
 
       this.setState({
@@ -133,11 +132,6 @@ class NowPlayingMovies extends Component {
             </MDBCol>
           </MDBRow>
         </MDBContainer>
-        <PaginationComponent
-          current={page}
-          total={totalPages}
-          action={this.fetchMovies}
-        />
       </div>
     );
   }
