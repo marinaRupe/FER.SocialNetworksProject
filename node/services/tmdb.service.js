@@ -12,6 +12,7 @@ const MOVIE_TRANSLATIONS = tmdbMovieId => `/movie/${tmdbMovieId}/translations`;
 const MOVIE_CREDITS = tmdbMovieId => `/movie/${tmdbMovieId}/credits`;
 
 const MOVIE_REVIEWS_URL = tmdbMovieId => `/movie/${tmdbMovieId}/reviews`;
+const PERSON_DETAILS_URL = personId => `/person/${personId}`;
 
 const TMDB_IMAGES_URL = 'https://image.tmdb.org/t/p/';
 const YOUTUBE_VIDEOS_URL = 'https://www.youtube.com/watch';
@@ -28,10 +29,23 @@ const getMovieReviews = async tmdbMovieId => {
   return response;
 };
 
+const getPersonDetails = async personId => {
+  const response = axios.get(`${MOVIE_API_URL}${PERSON_DETAILS_URL(personId)}`, {
+    params: {
+      'api_key': process.env.TMDB_API_KEY2,
+      'page': 1,
+      'language': 'en-US',
+    },
+  });
+
+  return response;
+};
+
 const getMovieDetails = async tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}/movie/${tmdbMovieId}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
+      'append_to_response': 'credits,external_ids,alternative_titles,keywords,videos,translations',
     },
   });
 
@@ -191,37 +205,39 @@ const mapMovie = async movie => {
     return movie;
   }
 
+  /*
   const externalIds = (await getMovieExternalIds(movieTmdbId)).data || {};
   const alternativeTitles = (await getMovieAlternativeTitles(movieTmdbId)).data || {};
   const keywords = (await getMovieKeywords(movieTmdbId)).data || {};
   const videos = (await getMovieVideos(movieTmdbId)).data || {};
   const translations = (await getMovieTranslations(movieTmdbId)).data || {};
   const credits = (await getMovieCredits(movieTmdbId)).data || {};
+  */
 
   const genders = ['unknown', 'female', 'male'];
 
   const newMovie = {
     imdbID: movie.imdb_id,
     tmdbID: movie.id,
-    facebookID: externalIds.facebook_id || null,
-    twitterID: externalIds.twitter_id || null,
+    facebookID: (movie.external_ids || {}).facebook_id || null,
+    twitterID: (movie.external_ids || {}).twitter_id || null,
     title: movie.title,
-    alternativeTitles: (alternativeTitles.titles || []).map(t => t.title),
+    alternativeTitles: ((movie.alternative_titles.titles || {}) || []).map(t => t.title),
     year: movie.release_date ? new Date(movie.release_date).getFullYear() : null,
     releaseDate: movie.release_date || null,
     plot: movie.overview || null,
     genres: (movie.genres || []).map(genre => genre.name.trim().toLowerCase()),
-    keywords: (keywords.keywords || []).map(k => k.name),
+    keywords: ((movie.keywords || {}).keywords || []).map(k => k.name),
 
     poster: movie.poster_path ? `${TMDB_IMAGES_URL}${defaultPosterSize}${movie.poster_path}` : null,
-    videos: (videos.results || []).filter(v => v.site === 'YouTube').map(v => ({
+    videos: ((movie.videos || {}).results || []).filter(v => v.site === 'YouTube').map(v => ({
       name: v.name,
       key: v.key,
       url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`,
     })),
     website: movie.homepage || null,
 
-    cast: (credits.cast || []).map(c => ({
+    cast: ((movie.credits || {}).cast || []).map(c => ({
       cast_id: c.cast_id,
       credit_id: c.credit_id,
       personId: c.id,
@@ -232,7 +248,7 @@ const mapMovie = async movie => {
       profileImage: c.profile_path ? `${TMDB_IMAGES_URL}${defaultPosterSize}${c.profile_path}` : null,
     })),
 
-    crew: (credits.crew || []).map(c => ({
+    crew: ((movie.credits || {}).crew || []).map(c => ({
       credit_id: c.credit_id,
       personId: c.id,
       name: c.name,
@@ -249,7 +265,7 @@ const mapMovie = async movie => {
     productionCountries: (movie.production_countries || []).map(country => country.iso_3166_1),
 
     languages: (movie.spoken_languages || []).map(lang => lang.iso_639_1),
-    translations: (translations.translations || []).map(t => `${t.iso_639_1}-${t.iso_3166_1}`),
+    translations: ((movie.translations || {}).translations || []).map(t => `${t.iso_639_1}-${t.iso_3166_1}`),
 
     tmdbPopularity: movie.popularity || null,
     tmdbVoteAverage: movie.vote_average || null,
@@ -271,4 +287,5 @@ module.exports = {
   saveMovieList,
   fetchMovies,
   getMovieReviews,
+  getPersonDetails,
 };

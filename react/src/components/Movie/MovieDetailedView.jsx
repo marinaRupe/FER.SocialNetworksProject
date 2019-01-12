@@ -302,21 +302,29 @@ class MovieDetailedView extends Component {
               movie.cast && movie.cast.length > 0 ?
                 <div className='movie__detailed__cast custom-scrollbar'>
                   {movie.cast.map((castMember, index) =>
-                    <div key={index} className='movie__detailed__cast-member'>
-                      <div>
-                        <img
-                          className='movie__detailed__cast-member profile-image'
-                          src={castMember.profileImage || DEFAULT_PROFILE_IMAGE}
-                          alt=''
-                        />
+                    <Link
+                      to={APP.PERSON.DETAILS(castMember.personId)}
+                      className='person-link'
+                      key={index}
+                    >
+                      <div
+                        className='movie__detailed__cast-member'
+                      >
+                        <div>
+                          <img
+                            className='movie__detailed__cast-member profile-image'
+                            src={castMember.profileImage || DEFAULT_PROFILE_IMAGE}
+                            alt=''
+                          />
+                        </div>
+                        <div className='movie__detailed__cast-member person'>
+                          {castMember.name}
+                        </div>
+                        <div className='movie__detailed__cast-member character'>
+                          (as {castMember.characterName})
+                        </div>
                       </div>
-                      <div className='movie__detailed__cast-member person'>
-                        {castMember.name}
-                      </div>
-                      <div className='movie__detailed__cast-member character'>
-                        (as {castMember.characterName})
-                      </div>
-                    </div>
+                    </Link>
                   )}
                 </div>
                 :
@@ -330,21 +338,29 @@ class MovieDetailedView extends Component {
               movie.crew && movie.crew.length > 0 ?
                 <div className='movie__detailed__crew custom-scrollbar'>
                   {movie.crew.map((crewMember, index) =>
-                    <div key={index} className='movie__detailed__crew-member'>
-                      <div>
-                        <img
-                          className='movie__detailed__crew-member profile-image'
-                          src={crewMember.profileImage || DEFAULT_PROFILE_IMAGE}
-                          alt=''
-                        />
+                    <Link
+                      to={APP.PERSON.DETAILS(crewMember.personId)}
+                      className='person-link'
+                      key={index}
+                    >
+                      <div
+                        className='movie__detailed__crew-member'
+                      >
+                        <div>
+                          <img
+                            className='movie__detailed__crew-member profile-image'
+                            src={crewMember.profileImage || DEFAULT_PROFILE_IMAGE}
+                            alt=''
+                          />
+                        </div>
+                        <div className='movie__detailed__crew-member person'>
+                          {crewMember.name}
+                        </div>
+                        <div className='movie__detailed__crew-member job'>
+                          ({crewMember.job})
+                        </div>
                       </div>
-                      <div className='movie__detailed__crew-member person'>
-                        {crewMember.name}
-                      </div>
-                      <div className='movie__detailed__crew-member job'>
-                        ({crewMember.job})
-                      </div>
-                    </div>
+                    </Link>
                   )}
                 </div>
                 :
@@ -390,6 +406,7 @@ const mapDispatchToProps = {
   removeFromWatchedList: movieActions.removeFromWatchedList,
   removeFromSavedList: movieActions.removeFromSavedList,
   removeFromRatedList: movieActions.removeFromRatedList,
+  fetchPersonDetails: movieActions.fetchActivePerson,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MovieDetailedView);

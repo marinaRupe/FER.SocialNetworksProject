@@ -209,3 +209,15 @@ export function removeFromRatedList(userID, movieID, score) {
   };
   return actionWrapper(action);
 }
+
+export function fetchActivePerson(personId) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.PERSON.FETCH_DETAILS(personId));
+
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchActivePerson(
+        { status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}

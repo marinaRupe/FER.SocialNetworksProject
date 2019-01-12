@@ -24,6 +24,15 @@ export const fetchActiveMovie = ({ status, data }) => {
   };
 };
 
+export const fetchActivePerson = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_ACTIVE_PERSON,
+  };
+};
+
+
 export const fetchTopMovies = ({ status, data }) => {
   return {
     data,

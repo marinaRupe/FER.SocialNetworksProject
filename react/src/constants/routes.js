@@ -49,6 +49,9 @@ export const API = {
   REVIEWS: {
     FETCH_REVIEWS_FOR_MOVIE: (movieTitle, tmdbId) => `${API_URL}/movie-review/?title=${movieTitle}&tmdbId=${tmdbId}`,
   },
+  PERSON: {
+    FETCH_DETAILS: (personId) => `${API_URL}/person/${personId}`,
+  },
   CINEMA: {
     FETCH_CINEMAS_BY_CENTER_LOCATION: (location) => `${API_URL}/cinema/all/${location}`,
   },
@@ -83,6 +86,9 @@ export const APP = {
       USER_SAVED_MOVIES: '/movies/saved',
       RECOMMENDED_MOVIES: '/movies/recommended',
     },
+  },
+  PERSON: {
+    DETAILS: (personId = ':personId') => `/person/${personId}/details`,
   },
   PROFILE: '/profile',
   SERVER_ERROR: '/error/500',

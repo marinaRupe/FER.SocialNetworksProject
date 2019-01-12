@@ -130,6 +130,14 @@ export default function movieReducer(state = initialState.movies, action) {
       };
     }
     return { ...state };
+  case types.FETCH_ACTIVE_PERSON:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+        activePerson: { ...state.activePerson, ...action.data },
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }

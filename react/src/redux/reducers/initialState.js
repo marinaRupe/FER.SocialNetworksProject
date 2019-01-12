@@ -10,6 +10,7 @@ const initialState = {
     totalResults: 0,
     activeMovie: null,
     activeMovieStatus: null,
+    activePerson: null,
     genres: [],
     topMovies: {
       list: [],
