@@ -45,7 +45,7 @@ const getMovieDetails = async tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}/movie/${tmdbMovieId}`, {
     params: {
       'api_key': process.env.TMDB_API_KEY,
-      'append_to_response': 'credits,external_ids,alternative_titles,keywords,videos,translations',
+      // 'append_to_response': 'credits,external_ids,alternative_titles,keywords,videos,translations',
     },
   });
 
@@ -205,39 +205,37 @@ const mapMovie = async movie => {
     return movie;
   }
 
-  /*
   const externalIds = (await getMovieExternalIds(movieTmdbId)).data || {};
   const alternativeTitles = (await getMovieAlternativeTitles(movieTmdbId)).data || {};
   const keywords = (await getMovieKeywords(movieTmdbId)).data || {};
   const videos = (await getMovieVideos(movieTmdbId)).data || {};
   const translations = (await getMovieTranslations(movieTmdbId)).data || {};
   const credits = (await getMovieCredits(movieTmdbId)).data || {};
-  */
 
   const genders = ['unknown', 'female', 'male'];
 
   const newMovie = {
     imdbID: movie.imdb_id,
     tmdbID: movie.id,
-    facebookID: (movie.external_ids || {}).facebook_id || null,
-    twitterID: (movie.external_ids || {}).twitter_id || null,
+    facebookID: externalIds.facebook_id || null,
+    twitterID: externalIds.twitter_id || null,
     title: movie.title,
-    alternativeTitles: ((movie.alternative_titles.titles || {}) || []).map(t => t.title),
+    alternativeTitles: (alternativeTitles.titles || []).map(t => t.title),
     year: movie.release_date ? new Date(movie.release_date).getFullYear() : null,
     releaseDate: movie.release_date || null,
     plot: movie.overview || null,
     genres: (movie.genres || []).map(genre => genre.name.trim().toLowerCase()),
-    keywords: ((movie.keywords || {}).keywords || []).map(k => k.name),
+    keywords: (keywords.keywords || []).map(k => k.name),
 
     poster: movie.poster_path ? `${TMDB_IMAGES_URL}${defaultPosterSize}${movie.poster_path}` : null,
-    videos: ((movie.videos || {}).results || []).filter(v => v.site === 'YouTube').map(v => ({
+    videos: (videos.results || []).filter(v => v.site === 'YouTube').map(v => ({
       name: v.name,
       key: v.key,
       url: `${YOUTUBE_VIDEOS_URL}?v=${v.key}`,
     })),
     website: movie.homepage || null,
 
-    cast: ((movie.credits || {}).cast || []).map(c => ({
+    cast: (credits.cast || []).map(c => ({
       cast_id: c.cast_id,
       credit_id: c.credit_id,
       personId: c.id,
@@ -248,7 +246,7 @@ const mapMovie = async movie => {
       profileImage: c.profile_path ? `${TMDB_IMAGES_URL}${defaultPosterSize}${c.profile_path}` : null,
     })),
 
-    crew: ((movie.credits || {}).crew || []).map(c => ({
+    crew: (credits.crew || []).map(c => ({
       credit_id: c.credit_id,
       personId: c.id,
       name: c.name,
@@ -265,7 +263,7 @@ const mapMovie = async movie => {
     productionCountries: (movie.production_countries || []).map(country => country.iso_3166_1),
 
     languages: (movie.spoken_languages || []).map(lang => lang.iso_639_1),
-    translations: ((movie.translations || {}).translations || []).map(t => `${t.iso_639_1}-${t.iso_3166_1}`),
+    translations: (translations.translations || []).map(t => `${t.iso_639_1}-${t.iso_3166_1}`),
 
     tmdbPopularity: movie.popularity || null,
     tmdbVoteAverage: movie.vote_average || null,

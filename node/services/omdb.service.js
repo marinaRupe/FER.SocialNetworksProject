@@ -83,7 +83,7 @@ const expandMovie = async movie => {
   const newMovie = {
     ...movie,
 
-    plot: movie.plot || omdbMovie.Plot || null,
+    plot: movie.plot || omdbMovie.Plot || 'N/A',
     genres: [...movie.genres, ...newGenres],
 
     poster: movie.poster || omdbMovie.Poster || null,
