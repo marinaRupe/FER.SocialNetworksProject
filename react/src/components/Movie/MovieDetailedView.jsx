@@ -154,8 +154,8 @@ class MovieDetailedView extends Component {
               <label>Translations:</label>
               <div>
                 {movie.translations && movie.translations.length > 0
-                  ? movie.translations.reduce((acc, curr) =>
-                    (`${acc ? `${acc},` : ''} ${languageCodes[curr.split('-')[0]].name} (${countryCodes[curr.split('-')[1]]})`), '')
+                  ? movie.translations.reduce((acc, curr) => (`${acc ? `${acc},` : ''} ${
+                    languageCodes[curr.split('-')[0]].name} (${countryCodes[curr.split('-')[1]]})`), '')
                   : 'unknown'
                 }
               </div>
@@ -245,7 +245,8 @@ class MovieDetailedView extends Component {
                 <label>Production countries:</label>
                 <div>
                   {movie.productionCountries && movie.productionCountries.length > 0
-                    ? movie.productionCountries.reduce((acc, curr) => (`${acc ? `${acc},` : ''} ${countryCodes[curr]}`), '')
+                    ? movie.productionCountries.reduce(
+                      (acc, curr) => (`${acc ? `${acc},` : ''} ${countryCodes[curr]}`), '')
                     : 'unknown'
                   }
                 </div>
@@ -282,6 +283,14 @@ class MovieDetailedView extends Component {
                   <div>
                     {(movie.tmdbPopularity && movie.tmdbPopularity !== 'N/A') ? movie.tmdbPopularity : 'unknown'}
                   </div>
+                </div>
+              </div>
+            </div>
+            <div className='block'>
+              <div className='movie__detailed__info'>
+                <label>Awards:</label>
+                <div>
+                  {movie.awards || 'unknown'}
                 </div>
               </div>
             </div>
