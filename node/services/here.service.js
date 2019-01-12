@@ -3,9 +3,7 @@ const axios = require('axios');
 const CINEMAS_API_URL = 'https://places.cit.api.here.com/places/v1/discover/explore';
 
 const getCinemas = async (location='') => {
-  console.info('Fetching all cinemas...');
-
-  const response = axios.get(CINEMAS_API_URL, {
+  const response = await axios.get(CINEMAS_API_URL, {
     params: {
       'cat':'cinema',
       'at': location,

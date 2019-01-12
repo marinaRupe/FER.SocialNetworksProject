@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as movieActions from '../../../redux/actions/movie.actions';
-import MovieListItem from '../../../components/Movie/MovieListItem';
-import PaginationComponent from '../../../components/PaginationComponent';
 import { MDBContainer, MDBRow, MDBCol} from 'mdbreact';
 import { Map, TileLayer} from 'react-leaflet';
 
-import * as values from '../../../constants/values';
+import * as movieActions from '../../../redux/actions/movie.actions';
 import * as cinemaActions from '../../../redux/actions/cinema.actions';
+
+import MovieListItem from '../../../components/Movie/MovieListItem';
+import PaginationComponent from '../../../components/PaginationComponent';
 import CinemaMarker from '../../../components/Home/CinemaMarker';
+
+import * as values from '../../../constants/values';
+
+import { getBrowserLocation } from '../../../utils/location.utils';
 
 class NowPlayingMovies extends Component {
   constructor(props) {
@@ -16,6 +20,7 @@ class NowPlayingMovies extends Component {
 
     this.state = {
       isLoading: false,
+      userLocation: null,
     };
   }
 
@@ -28,18 +33,21 @@ class NowPlayingMovies extends Component {
       isLoading: true,
     }, async () => {
       const { fetchNowPlayingMovies,fetchCinemasByCenterLocation, currentUser } = this.props;
+      const userLocation = await getLocation(currentUser);
+
       await fetchNowPlayingMovies(page);
-      await fetchCinemasByCenterLocation(coordinates(currentUser));
+      await fetchCinemasByCenterLocation(userLocation);
 
       this.setState({
         isLoading: false,
+        userLocation,
       });
     });
   }
 
   renderCinemaMapWithMarkers = () => {
-    const { isLoading } = this.state;
-    const { cinemas , currentUser} = this.props;
+    const { isLoading, userLocation } = this.state;
+    const { cinemas } = this.props;
 
     if (isLoading) {
       return (
@@ -49,7 +57,7 @@ class NowPlayingMovies extends Component {
       );
     }
 
-    if (cinemas.length > 0) {
+    if (userLocation && cinemas.length > 0) {
       return (
         <div className='cinema-list'>
           <div className='home-page__cinemas-map--heading'>
@@ -58,7 +66,7 @@ class NowPlayingMovies extends Component {
           <MDBRow>
             <MDBCol className='offset-md-1'>
               <Map
-                center={coordinates(currentUser)}
+                center={userLocation}
                 zoom='13'
                 className='home-page__cinemas-map'
               >
@@ -135,6 +143,18 @@ class NowPlayingMovies extends Component {
   }
 }
 
+const getLocation = async (currentUser) => {
+  try {
+    const { latitude, longitude } = await getBrowserLocation();
+    return [latitude, longitude];
+  } catch {
+    const { currentUser } = this.props;
+    return (currentUser && currentUser.location && currentUser.location.coordinates
+      && [currentUser.location.coordinates.latitude, currentUser.location.coordinates.longitude])
+      || values.CURRENT_LOCATION;
+  }
+};
+
 const mapStateToProps = state => {
   return {
     movies: state.movies.list,
@@ -148,12 +168,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   fetchNowPlayingMovies: movieActions.fetchNowPlayingMovies,
   fetchCinemasByCenterLocation: cinemaActions.fetchCinemasByCenterLocation,
-};
-
-const coordinates = (currentUser) =>{
-  return (currentUser && currentUser.location && currentUser.location.coordinates
-    && [currentUser.location.coordinates.latitude, currentUser.location.coordinates.longitude])
-    || values.CURRENT_LOCATION;
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NowPlayingMovies);
