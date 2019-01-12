@@ -43,10 +43,18 @@ class Profile extends Component {
                         {currentUser.email}
                       </span>
                     }
+                    { currentUser.location &&
+                      <span className='profile__user-info--item'>
+                        <i className='material-icons'>home</i>
+                        <span>{currentUser.location.name}</span>
+                      </span>
+                    }
                     { currentUser.ageRange &&
                       <span className='profile__user-info--item'>
                         <i className='material-icons'>cake</i>
-                        <span>{currentUser.ageRange.min} - {currentUser.ageRange.max}</span>
+                        <span>
+                          {currentUser.ageRange.min}{currentUser.ageRange.max ? ` - ${currentUser.ageRange.max}` : '+'}
+                        </span>
                       </span>
                     }
                     { currentUser.gender &&
