@@ -236,7 +236,6 @@ const getLocation = async (currentUser) => {
     const { latitude, longitude } = await getBrowserLocation();
     return [latitude, longitude];
   } catch {
-    const { currentUser } = this.props;
     return (currentUser && currentUser.location && currentUser.location.coordinates
       && [currentUser.location.coordinates.latitude, currentUser.location.coordinates.longitude])
       || values.CURRENT_LOCATION;
