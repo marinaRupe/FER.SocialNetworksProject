@@ -157,7 +157,7 @@ class NowPlayingMovies extends Component {
       <div className='page'>
         <div className='movie-list__title'>Now playing movies</div>
         <MDBContainer>
-          <MDBRow className='search__row mb-20'>
+          <MDBRow className='search__row mb-40'>
             <MDBCol sm='2'>
               <div>From date:</div>
               <DatePicker
@@ -205,7 +205,7 @@ class NowPlayingMovies extends Component {
             </MDBCol>
           </MDBRow>
 
-          <MDBRow className='search__selected'>
+          <MDBRow className='search__selected mb-40'>
             {
               (selectedGenres && selectedGenres.length > 0) &&
                 <div>
