@@ -1,6 +1,19 @@
 const errors = require('restify-errors');
 const User = require('../models/user.model');
 const defaultValues = require('../constants/defaultValues.constants');
+const axios = require('axios');
+
+const FACEBOOK_GRAPH_LIKES_API_URL = userID => `https://graph.facebook.com/v3.2/${userID}/likes`;
+
+
+const findByUserID = async userID => {
+  const user = await User.findOne({ userID }).exec();
+  if (!user) {
+    throw new errors.NotFoundError();
+  }
+
+  return user;
+};
 
 const findByEmail = async email => {
   const user = await User.findOne({ email }).exec();
@@ -245,4 +258,5 @@ module.exports = {
   addUserWatchedMovie,
   addPreferredGenres,
   getPreferredGenres,
+  findByUserID,
 };

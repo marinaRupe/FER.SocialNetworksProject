@@ -76,7 +76,7 @@ const addPreferredGenres = async (req, res) => {
 const getPreferredGenres = async (req, res) => {
   const { userID } = req.params;
   const response = await UserService.getPreferredGenres(userID);
-  console.log(response);
+
   res.send(response);
 };
 

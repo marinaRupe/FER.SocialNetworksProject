@@ -18,8 +18,8 @@ export const API = {
 
     GENRES: `${API_URL}/movie/genres`,
 
-    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) =>
-      `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
+    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, userID) =>
+      `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&userID=${userID}`,
     FETCH_USER_WATCHED_MOVIES: (page, pageSize, userID) =>
       `${API_URL}/movie/user-watched/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
     FETCH_USER_RATED_MOVIES: (page, pageSize, userID) =>

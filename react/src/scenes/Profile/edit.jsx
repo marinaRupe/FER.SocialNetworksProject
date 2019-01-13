@@ -59,8 +59,9 @@ class ProfileEdit extends Component {
   render() {
     const { genres } = this.props;
     const { selectedGenres } = this.state;
+
     if (this.state.redirect){
-      return <Redirect to={APP.PROFILE} />
+      return <Redirect to={APP.PROFILE} />;
     }else{
       return (
         <div className='page'>
