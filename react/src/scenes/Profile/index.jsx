@@ -74,7 +74,7 @@ class Profile extends Component {
                         <span>{currentUser.gender}</span>
                       </span>
                     }
-                    { preferred_genres.length > 0 &&
+                    { preferred_genres && preferred_genres.length > 0 &&
                       <span className='profile__user-info--item'>
                         <b>Preferred genres:&nbsp;</b>
                         <span>{preferred_genres.join(', ')}</span>
