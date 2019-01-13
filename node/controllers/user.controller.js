@@ -66,7 +66,23 @@ const getMovieStatus = async (req, res) => {
   res.json(new MovieStatusViewModel(movieStatusForUser));
 };
 
+const addPreferredGenres = async (req, res) => {
+  const { userID , genres} = req.params;
+  const response = await UserService.addPreferredGenres(userID, genres.split(','));
+
+  res.send(response);
+};
+
+const getPreferredGenres = async (req, res) => {
+  const { userID } = req.params;
+  const response = await UserService.getPreferredGenres(userID);
+  console.log(response);
+  res.send(response);
+};
+
 module.exports = {
   loginWithFacebook,
   getMovieStatus,
+  addPreferredGenres,
+  getPreferredGenres,
 };

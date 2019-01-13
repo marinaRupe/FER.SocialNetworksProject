@@ -45,6 +45,10 @@ export const API = {
   USER: {
     FETCH_USER_MOVIE_STATUS: (userID, movieID) =>
       `${API_URL}/user/${userID}/movie/${movieID}`,
+    ADD_PREFERRED_GENRES: (userID, genres) =>
+      `${API_URL}/user/${userID}/preferred_genres/${genres}`,
+    FETCH_PREFERRED_GENRES: (userID) =>
+      `${API_URL}/user/${userID}/preferred_genres`
   },
   REVIEWS: {
     FETCH_REVIEWS_FOR_MOVIE: (movieTitle, tmdbId) => `${API_URL}/movie-review/?title=${movieTitle}&tmdbId=${tmdbId}`,
@@ -91,6 +95,7 @@ export const APP = {
     DETAILS: (personId = ':personId') => `/person/${personId}/details`,
   },
   PROFILE: '/profile',
+  PROFILE_EDIT: (userID = ':userID') => `/profile_edit/${userID}`,
   SERVER_ERROR: '/error/500',
   NOT_FOUND_ERROR: '/error/404',
 };

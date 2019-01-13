@@ -60,6 +60,9 @@ const userSchema = new Schema({
   gender: String,
   location: Object,
   likedPages: Object,
+  preferredGenres: {
+    type: [String],
+  },
   userMovies: userMoviesSchema,
 });
 

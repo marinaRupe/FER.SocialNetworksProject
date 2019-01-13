@@ -45,7 +45,7 @@ const add = async (email, password, firstName, lastName, name) => {
 };
 
 const createUser = async (
-  userID, email, token, firstName, lastName, name, picture, ageRange, gender, location, likedPages) => {
+  userID, email, token, firstName, lastName, name, picture, ageRange, gender, location, likedPages, preferred_genres) => {
   const user = new User({
     userID,
     email,
@@ -63,6 +63,7 @@ const createUser = async (
       ratedMovies: [],
       savedMovies: [],
     },
+    preferred_genres,
   });
 
   await user.save();
@@ -211,6 +212,16 @@ const addUserSavedMovie = async (userID, movieID) => {
   await User.updateOne({ 'userID': userID }, { $addToSet: { 'userMovies.savedMovies': movieID } });
 };
 
+const addPreferredGenres = async (userID, genres) => {
+  await User.updateOne({ 'userID': userID }, { $set: { 'preferredGenres': genres } });
+};
+
+const getPreferredGenres = async (userID) => {
+  const user = await User.findOne( {'userID': userID }).exec();
+
+  return user.preferredGenres;
+};
+
 module.exports = {
   findByEmail,
   findByToken,
@@ -232,4 +243,6 @@ module.exports = {
   addUserRatedMovie,
   addUserSavedMovie,
   addUserWatchedMovie,
+  addPreferredGenres,
+  getPreferredGenres,
 };

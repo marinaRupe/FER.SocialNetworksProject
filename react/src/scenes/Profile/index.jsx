@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardBody, CardImage, CardTitle, CardText, Col, Row } from 'mdbreact';
+import {Link} from 'react-router-dom';
+import { Card, CardBody, CardImage, CardTitle, CardText, Col, Row} from 'mdbreact';
 import { buttonTypes } from '../../enums/buttonTypes.enum';
 import ButtonComponent from '../../components/ButtonComponent';
 import backgroundImage from '../../images/popcorn.jpg';
 import { logout } from '../../utils/auth.utils';
+import { APP } from '../../constants/routes';
+import * as userActions from '../../redux/actions/user.actions';
 
 class Profile extends Component {
+
+  async componentDidMount() {
+    const { currentUser } = this.props;
+    await this.props.fetchUserPreferredGenres(currentUser);
+  }
 
   logout = () => {
     logout(this.props.dispatch);
@@ -14,9 +22,9 @@ class Profile extends Component {
 
   renderProfileData = () => {
     const { currentUser } = this.props;
+    const { preferred_genres } = this.props;
 
     if (currentUser) {
-      //console.log("user id is: " + currentUser.userID);
       return (
         <div className='profile__user-info'>
           <Row>
@@ -63,6 +71,12 @@ class Profile extends Component {
                         <span>{currentUser.gender}</span>
                       </span>
                     }
+                    { preferred_genres &&
+                      <span className='profile__user-info--item'>
+                        <b>Preferred genres:&nbsp;</b>
+                        <span>{preferred_genres.join(', ')}</span>
+                      </span>
+                    }
                   </CardText>
                   <div className='profile__btn-container'>
                     <ButtonComponent
@@ -71,6 +85,8 @@ class Profile extends Component {
                       type={buttonTypes.secondary}
                     />
                   </div>
+                  <Link to={APP.PROFILE_EDIT(currentUser.userID)}>Edit profile</Link>
+
                 </CardBody>
               </Card>
             </Col>
@@ -95,7 +111,12 @@ class Profile extends Component {
 const mapStateToProps = state => {
   return {
     currentUser: state.users.currentUser,
+    preferred_genres: state.users.preferred_genres,
   };
 };
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = {
+  fetchUserPreferredGenres : userActions.fetchUserPreferredGenres,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

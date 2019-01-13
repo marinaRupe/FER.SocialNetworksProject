@@ -22,6 +22,22 @@ export default function userReducer(state = initialState.users, action) {
       };
     }
     return { ...state };
+  case types.USER_UPDATE_PREFERRED_GENRES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+      return {
+        ...state,
+      };
+    }
+    return { ...state };
+  case types.FETCH_PREFERRED_GENRES:
+    if (action.status === ACTION_STATUS.SUCCESS) {
+
+      return {
+        ...state,
+        preferred_genres: action.data ,
+      };
+    }
+    return { ...state };
   default:
     return { ...state };
   }
