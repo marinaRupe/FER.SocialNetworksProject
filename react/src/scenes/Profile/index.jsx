@@ -7,6 +7,9 @@ import backgroundImage from '../../images/popcorn.jpg';
 import { logout } from '../../utils/auth.utils';
 
 class Profile extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
 
   logout = () => {
     logout(this.props.dispatch);

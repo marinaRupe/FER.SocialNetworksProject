@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class ContactUs extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
+
   render() {
     const email = 'fer.socialnetworksproject@gmail.com';
 
