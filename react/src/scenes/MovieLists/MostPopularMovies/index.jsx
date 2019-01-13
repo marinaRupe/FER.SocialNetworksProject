@@ -21,7 +21,10 @@ class MostPopularMovies extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { getGenres } = this.props;
+    await getGenres();
+
     this.fetchMovies();
   }
 
@@ -29,10 +32,10 @@ class MostPopularMovies extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { fetchMostPopularMovies, getGenres, genres } = this.props;
+      const { fetchMostPopularMovies } = this.props;
+      const { fromDate, toDate, selectedGenres } = this.state;
 
-      if (!genres) await getGenres();
-      await fetchMostPopularMovies(page);
+      await fetchMostPopularMovies(page, DEFAULT_PAGE_SIZE, fromDate, toDate, selectedGenres);
 
       this.setState({
         isLoading: false,
@@ -56,17 +59,7 @@ class MostPopularMovies extends Component {
   }
 
   search = () => {
-    this.setState({
-      isLoading: true,
-    }, async () => {
-      const { fetchMostPopularMovies } = this.props;
-      const { fromDate, toDate, selectedGenres } = this.state;
-      const page = 1;
-      await fetchMostPopularMovies(page, DEFAULT_PAGE_SIZE, fromDate, toDate, selectedGenres);
-      this.setState({
-        isLoading: false,
-      });
-    });
+    this.fetchMovies(1);
   }
 
   renderMovieList = () => {

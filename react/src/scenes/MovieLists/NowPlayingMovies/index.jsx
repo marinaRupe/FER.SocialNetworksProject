@@ -30,7 +30,10 @@ class NowPlayingMovies extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const { getGenres } = this.props;
+    await getGenres();
+
     this.fetchMovies();
   }
 
@@ -42,14 +45,11 @@ class NowPlayingMovies extends Component {
         fetchNowPlayingMovies,
         fetchCinemasByCenterLocation,
         currentUser,
-        getGenres,
-        genres,
       } = this.props;
+      const { fromDate, toDate, selectedGenres } = this.state;
       const userLocation = await getLocation(currentUser);
 
-      if (!genres) await getGenres();
-
-      await fetchNowPlayingMovies(page, 15);
+      await fetchNowPlayingMovies(page, 15, fromDate, toDate, selectedGenres);
       await fetchCinemasByCenterLocation(userLocation);
 
       this.setState({
@@ -75,17 +75,7 @@ class NowPlayingMovies extends Component {
   }
 
   search = () => {
-    this.setState({
-      isLoading: true,
-    }, async () => {
-      const { fetchNowPlayingMovies } = this.props;
-      const { fromDate, toDate, selectedGenres } = this.state;
-      const page = 1;
-      await fetchNowPlayingMovies(page, 15, fromDate, toDate, selectedGenres);
-      this.setState({
-        isLoading: false,
-      });
-    });
+    this.fetchMovies(1);
   }
 
   renderCinemaMapWithMarkers = () => {

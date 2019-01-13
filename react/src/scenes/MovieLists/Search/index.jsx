@@ -31,8 +31,8 @@ class MovieSearch extends Component {
   }
 
   async componentDidMount() {
-    const { getGenres, genres} = this.props;
-    if (!genres) await getGenres();
+    const { getGenres} = this.props;
+    await getGenres();
   }
 
   fetchMovies = page => {
@@ -40,8 +40,8 @@ class MovieSearch extends Component {
       isLoading: true,
     }, async () => {
       const { searchMovies } = this.props;
-      const { input } = this.state;
-      await searchMovies(input, page);
+      const { input, fromDate, toDate, selectedGenres } = this.state;
+      await searchMovies(input, fromDate, toDate, selectedGenres, page);
       this.setState({
         isLoading: false,
       });
@@ -49,16 +49,7 @@ class MovieSearch extends Component {
   }
 
   search = () => {
-    this.setState({
-      isLoading: true,
-    }, async () => {
-      const { searchMovies } = this.props;
-      const { input, fromDate, toDate, selectedGenres } = this.state;
-      await searchMovies(input, fromDate, toDate, selectedGenres);
-      this.setState({
-        isLoading: false,
-      });
-    });
+    this.fetchMovies(1);
   }
 
   onInputChange = (e) => this.setState({ input: e.target.value });
