@@ -47,13 +47,25 @@ class PaginationComponent extends Component {
           </PageLink>
         </PageItem>
 
-        {shownPages.map(p => (
-          <PageItem key={p} active={p === current}>
-            <PageLink className='page-link' onClick={action.bind(null, p)}>
-              {p} {(p === current) && (<span className='sr-only'>(current)</span>)}
-            </PageLink>
-          </PageItem>
-        ))}
+        {shownPages.map((p, index) => {
+          if (p === '...') {
+            const newPage = Math.round((shownPages[index - 1] + shownPages[index + 1]) / 2);
+            return (
+              <PageItem key={p}>
+                <PageLink className='page-link' onClick={action.bind(null, newPage)}>
+                  {p}
+                </PageLink>
+              </PageItem>
+            );
+          }
+          return (
+            <PageItem key={p} active={p === current}>
+              <PageLink className='page-link' onClick={action.bind(null, p)}>
+                {p} {(p === current) && (<span className='sr-only'>(current)</span>)}
+              </PageLink>
+            </PageItem>
+          );
+        })}
 
         <PageItem disabled={current === total}>
           <PageLink className='page-link' onClick={action.bind(null, current + 1)}>
