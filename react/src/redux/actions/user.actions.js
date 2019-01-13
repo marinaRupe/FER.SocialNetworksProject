@@ -26,3 +26,24 @@ export function logout() {
   };
   return actionWrapper(action);
 }
+
+export function savePreferredGenres(userID,genres) {
+  const action = async (dispatch) => {
+    const resp = await axios.post(API.USER.ADD_PREFERRED_GENRES(userID, genres));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.updateUserPreferredGenres(
+        { status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}
+
+export function fetchUserPreferredGenres(user) {
+  const action = async (dispatch) => {
+    const resp = await axios.get(API.USER.FETCH_PREFERRED_GENRES ( user.userID));
+    if (resp.status === 200) {
+      await dispatch(actionCreators.fetchUserPreferredGenres({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
+    }
+  };
+  return actionWrapper(action);
+}

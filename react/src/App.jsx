@@ -19,6 +19,7 @@ import Error500 from './scenes/Error/Error500';
 import PrivacyPolicy from './scenes/PrivacyPolicy';
 import ContactUs from './scenes/ContactUs';
 import Profile from './scenes/Profile';
+import ProfileEdit from './scenes/Profile/edit';
 
 import NavigationBar from './components/NavigationBar';
 import PrivateRoute from './components/Auth/PrivateRoute';
@@ -61,6 +62,7 @@ class App extends Component {
             <PrivateRoute path={APP.MOVIE.DETAILS()} component={MovieDetails} />
             <PrivateRoute path={APP.PERSON.DETAILS()} component={PersonDetails} />
             <PrivateRoute path={APP.PROFILE} component={Profile} />
+            <PrivateRoute path={APP.PROFILE_EDIT()} component={ProfileEdit} />
 
             <Route path='*' component={Error404} />
           </Switch>

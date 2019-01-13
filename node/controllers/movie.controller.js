@@ -123,17 +123,27 @@ const getMostRecentMovies = async (req, res) => {
 };
 
 const getRecommendedMovies = async (req, res) => {
-  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, likes} = req.query;
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, userID} = req.query;
 
-  const filter = MovieService.makeFilter(gender, age, likes);
-  const movies = await MovieService.getMoviesByFilter(+page, +pageSize, filter);
+  const filter = await MovieService.makeFilter(gender, age, userID);
 
-  const totalPages = Math.ceil(
-    await MovieService.getMoviesCount(filter) / pageSize
-  );
+  let data = {};
 
-  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+  if (Object.keys(filter).length === 0){
+    const movies = await MovieService.getMoviesByPopularity(+page, +pageSize);
+    const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
 
+    data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  }else {
+    const movies = await MovieService.getMoviesByFilter(+page, +pageSize, filter);
+
+    const totalPages = Math.ceil(
+      await MovieService.getMoviesCount(filter) / pageSize
+    );
+
+    data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+  }
   res.send(data);
 };
 

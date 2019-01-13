@@ -22,3 +22,18 @@ export const logout = ({ status }) => {
     type: types.USER_LOGOUT,
   };
 };
+
+export const updateUserPreferredGenres = ({status}) =>{
+  return {
+    status,
+    type: types.USER_UPDATE_PREFERRED_GENRES,
+  };
+};
+
+export const fetchUserPreferredGenres = ({status, data}) =>{
+  return {
+    data,
+    status,
+    type: types.FETCH_PREFERRED_GENRES,
+  };
+};

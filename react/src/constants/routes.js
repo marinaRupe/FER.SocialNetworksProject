@@ -19,8 +19,8 @@ export const API = {
 
     GENRES: `${API_URL}/movie/genres`,
 
-    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, likes) =>
-      `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&likes=${likes}`,
+    FETCH_RECOMMENDED_MOVIES: (page, pageSize, gender, age, userID) =>
+      `${API_URL}/movie/recommended/?page=${page}&pageSize=${pageSize}&gender=${gender}&age=${age}&userID=${userID}`,
     FETCH_USER_WATCHED_MOVIES: (page, pageSize, userID) =>
       `${API_URL}/movie/user-watched/?page=${page}&pageSize=${pageSize}&userID=${userID}`,
     FETCH_USER_RATED_MOVIES: (page, pageSize, userID) =>
@@ -46,6 +46,10 @@ export const API = {
   USER: {
     FETCH_USER_MOVIE_STATUS: (userID, movieID) =>
       `${API_URL}/user/${userID}/movie/${movieID}`,
+    ADD_PREFERRED_GENRES: (userID, genres) =>
+      `${API_URL}/user/${userID}/preferred_genres/${genres}`,
+    FETCH_PREFERRED_GENRES: (userID) =>
+      `${API_URL}/user/${userID}/preferred_genres`
   },
   REVIEWS: {
     FETCH_REVIEWS_FOR_MOVIE: (movieTitle, tmdbId) => `${API_URL}/movie-review/?title=${movieTitle}&tmdbId=${tmdbId}`,
@@ -92,6 +96,7 @@ export const APP = {
     DETAILS: (personId = ':personId') => `/person/${personId}/details`,
   },
   PROFILE: '/profile',
+  PROFILE_EDIT: (userID = ':userID') => `/profile_edit/${userID}`,
   SERVER_ERROR: '/error/500',
   NOT_FOUND_ERROR: '/error/404',
 };
