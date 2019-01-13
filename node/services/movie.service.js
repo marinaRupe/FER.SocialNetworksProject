@@ -221,19 +221,32 @@ const makeFilter = async (gender, age, userID) =>{
     filter['genres'] = {'$in': sorted_genres.slice(-3).map(m => m[0])};
   }
 
-  console.log(filter['genres']);
+  const selected_movies = userMoviesLists.userMovies.savedMovies.concat(
+    userMoviesLists.userMovies.watchedMovies).concat(
+    userMoviesLists.userMovies.ratedMovies.map(m => m.movieId));
+
+  let ninFilter;
+  if (selected_movies){
+    ninFilter = {'$nin': selected_movies};
+  }
 
   if (Object.keys(filter).length == 0){
     return {};
   }
 
+  console.log(filter['genres']);
   const orFilter = { '$or': [
     { 'genres': filter['genres'] },
     { 'title': filter['title'] },
     { 'imdbID': filter['imdbID']}
   ]};
 
-  return {...orFilter, 'imdbRating': { '$nin': [null, 'N/A'] }};
+  const andFilter = { '$and': [
+    orFilter,
+    { 'imdbID': ninFilter}
+  ]};
+
+  return {...andFilter, 'imdbRating': { '$nin': [null, 'N/A'] }};
 };
 
 const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
