@@ -42,6 +42,30 @@ class MovieDetailedView extends Component {
     await removeFromRatedList(currentUser.userID, movie.imdbID);
   }
 
+  renderLanguage = (acc, curr) => {
+    const newLanguage = languageCodes[curr.split('-')[0]];
+    const languages = acc
+      ? (newLanguage ? `${acc}, ` : acc)
+      : '';
+
+    if (!newLanguage) return languages;
+
+    return `${languages}${newLanguage.name}`;
+  }
+
+  renderTranslation = (acc, curr) => {
+    const language = languageCodes[curr.split('-')[0]];
+    const country = countryCodes[curr.split('-')[1]];
+
+    const translations = acc
+      ? ((language && country) ? `${acc}, ` : acc)
+      : '';
+
+    if (!language || !country) return translations;
+
+    return `${translations}${language.name} (${country})`;
+  }
+
   render() {
     const { movie, movieUserStatus } = this.props;
     const poster = !movie.poster || movie.poster === 'N/A' ? DEFAULT_MOVIE_POSTER : movie.poster;
@@ -143,8 +167,7 @@ class MovieDetailedView extends Component {
               <label>Languages:</label>
               <div>
                 {movie.languages && movie.languages.length > 0
-                  ? movie.languages.reduce((acc, curr) =>
-                    (`${acc ? `${acc},` : ''} ${languageCodes[curr.split('-')[0]].name}`), '')
+                  ? movie.languages.reduce((acc, curr) => this.renderLanguage(acc, curr), '')
                   : 'unknown'
                 }
               </div>
@@ -154,8 +177,7 @@ class MovieDetailedView extends Component {
               <label>Translations:</label>
               <div>
                 {movie.translations && movie.translations.length > 0
-                  ? movie.translations.reduce((acc, curr) => (`${acc ? `${acc},` : ''} ${
-                    languageCodes[curr.split('-')[0]].name} (${countryCodes[curr.split('-')[1]]})`), '')
+                  ? movie.translations.reduce((acc, curr) => this.renderTranslation(acc, curr), '')
                   : 'unknown'
                 }
               </div>
