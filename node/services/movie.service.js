@@ -243,7 +243,6 @@ const makeFilter = async (gender, age, userID) =>{
     return {};
   }
 
-  console.log(filter['genres']);
   const orFilter = { '$or': [
     { 'genres': filter['genres'] },
     { 'title': filter['title'] },
