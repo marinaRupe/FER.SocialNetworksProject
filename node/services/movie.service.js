@@ -40,12 +40,21 @@ const getMoviesByImdbRating = async (page, pageSize = defaultValues.DEFAULT_PAGE
   );
 };
 
-const getMoviesByReleaseDate = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => (await Movie.find()
-  .skip((page - 1) * pageSize)
-  .limit(pageSize)
-  .sort({ 'releaseDate' : 'desc' })
-  .exec()
-);
+const getMoviesByReleaseDate = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, filter) => {
+  if (!filter) {
+    filter = {
+      'releaseDate': { '$nin': [null], '$lte': new Date() },
+    };
+  }
+
+  return (
+    await Movie.find(filter)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .sort({ 'releaseDate' : 'desc' })
+      .exec()
+  );
+};
 
 const getMoviesByFilter = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, filter) =>
   (await Movie.find(filter)

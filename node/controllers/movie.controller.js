@@ -95,6 +95,33 @@ const getMostRatedMovies = async (req, res) => {
   res.send(data);
 };
 
+const getMostRecentMovies = async (req, res) => {
+  const {
+    page = 1,
+    pageSize = defaultValues.DEFAULT_PAGE_SIZE,
+    genres = '[]',
+  } = req.query;
+
+  const genresParam = JSON.parse(decodeURIComponent(genres));
+
+  const filter = {
+    'releaseDate': { '$nin': [null], '$lte': new Date() },
+  };
+
+  if (genresParam && genresParam.length > 0) {
+    filter.genres = { $in: genresParam };
+  }
+
+  const movies = await MovieService.getMoviesByReleaseDate(+page, +pageSize, filter);
+  const totalPages = Math.ceil(
+    await MovieService.getMoviesCount(filter) / pageSize
+  );
+
+  const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  res.send(data);
+};
+
 const getRecommendedMovies = async (req, res) => {
   const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, userID} = req.query;
 
@@ -244,6 +271,7 @@ module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
   getRecommendedMovies,
+  getMostRecentMovies,
   getMoviesForSearch,
   getAllGenres,
   getUserWatchedMovies,
