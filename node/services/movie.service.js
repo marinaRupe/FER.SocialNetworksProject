@@ -161,7 +161,7 @@ const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT
     .exec();
 
   return {
-    pagesCount: Math.ceil(count / pageSize),
+    pagesCount: Math.min(Math.ceil(count / pageSize), 10),
     movies,
   };
 };
