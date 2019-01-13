@@ -8,7 +8,7 @@ const getAppInfo = async (req, res) => {
   const response = {
     movies_count: movies,
     users_count: users.length,
-    api_count: 7,
+    api_count: 8,
   };
 
   res.send(response);
