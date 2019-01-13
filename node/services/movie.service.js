@@ -102,6 +102,7 @@ const makeFilter = (gender, age=0, likes = []) =>{
       { 'genres': filter['genres'] },
       { 'title': filter['title'] },
     ]};
+
     if (filter['adult']) {
       orFilter['adult'] = filter['adult'];
     }
@@ -110,6 +111,48 @@ const makeFilter = (gender, age=0, likes = []) =>{
 
   return {...filter, 'imdbRating': { '$nin': [null, 'N/A'] }};
 };
+
+const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => {
+  const { text, fromDate, toDate, genres } = parameters;
+
+  const filter = {
+    $or: [
+      { genres: { $regex: `^${text}`, $options: 'i' } },
+      { keywords: { $regex: `^${text}`, $options: 'i' } },
+      { alternativeTitles: { $regex: `^${text}`, $options: 'i' } },
+      { $text: { $search: text } },
+    ],
+  };
+  if (!!fromDate && !!toDate) {
+    filter.releaseDate = { $gte: fromDate, $lte: toDate };
+  } else if (fromDate) {
+    filter.releaseDate = { $gte: fromDate };
+  } else if (toDate) {
+    filter.releaseDate = { $lte: toDate };
+  }
+  if (genres && genres.length > 0) {
+    filter.genres = { $in: genres };
+  }
+
+  const count = await Movie.countDocuments(filter);
+
+  const movies = await Movie
+    .find(filter, { textScore: { $meta: 'textScore' } })
+    .sort({ textScore: { $meta: 'textScore' }, tmdbPopularity: 'desc' })
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .exec();
+
+  return {
+    pagesCount: Math.ceil(count / pageSize),
+    movies,
+  };
+};
+
+const getAllGenres = async () => ((await Movie.aggregate([
+  { $unwind: '$genres' },
+  { $group: { _id: 0, genres: { $addToSet: '$genres' } } },
+]).exec())[0] || {}).genres || [];
 
 module.exports = {
   existsMovieWithImdbID,
@@ -126,4 +169,6 @@ module.exports = {
   getMoviesCount,
   getMoviesByFilter,
   makeFilter,
+  findMovies,
+  getAllGenres,
 };

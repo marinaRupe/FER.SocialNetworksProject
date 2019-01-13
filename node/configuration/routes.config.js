@@ -8,6 +8,7 @@ const movieRouter = require('../routes/api/movie.routes');
 const cinemaRouter = require('../routes/api/cinema.routes');
 const weatherRouter = require('../routes/api/weather.routes');
 const locationRouter = require('../routes/api/location.routes');
+const personRouter = require('../routes/api/person.routes');
 const infoRouter = require('../routes/api/info.routes');
 
 const useProductionRoutes = app => {
@@ -28,6 +29,7 @@ const configure = app => {
   app.use(`${apiConstants.API_PATH}/cinema`, cinemaRouter);
   app.use(`${apiConstants.API_PATH}/weather`, weatherRouter);
   app.use(`${apiConstants.API_PATH}/location`, locationRouter);
+  app.use(`${apiConstants.API_PATH}/person`, personRouter);
   app.use(`${apiConstants.API_PATH}/app`, infoRouter);
 
   if (expressConfig.isProduction()) {

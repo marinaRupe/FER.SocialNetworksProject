@@ -114,6 +114,7 @@ const getMovieDetailsTmdb = async tmdbMovieId => {
   const response = axios.get(`${MOVIE_API_URL}/movie/${tmdbMovieId}`, {
     params: {
       'api_key': apiKey,
+      //'append_to_response': 'credits,external_ids,alternative_titles,keywords,videos,translations,reviews',
     }
   });
 
@@ -236,7 +237,7 @@ const expandMovie = async movie => {
   const newMovie = {
     ...movie,
 
-    plot: movie.plot || omdbMovie.Plot || null,
+    plot: movie.plot || omdbMovie.Plot || 'N/A',
     genres: [...movie.genres, ...newGenres],
 
     poster: movie.poster || omdbMovie.Poster || null,

@@ -24,6 +24,15 @@ export const fetchActiveMovie = ({ status, data }) => {
   };
 };
 
+export const fetchActivePerson = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_ACTIVE_PERSON,
+  };
+};
+
+
 export const fetchTopMovies = ({ status, data }) => {
   return {
     data,
@@ -37,5 +46,61 @@ export const fetchRecommendedMovies = ({ status, data }) => {
     data,
     status,
     type: types.FETCH_RECOMMENDED_MOVIES,
+  };
+};
+
+export const searchMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.SEARCH_MOVIES,
+  };
+};
+
+export const getGenres = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.GET_GENRES,
+  };
+};
+
+export const fetchUserRatedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_RATED_MOVIES,
+  };
+};
+
+export const fetchUserWatchedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_WATCHED_MOVIES,
+  };
+};
+
+export const fetchUserSavedMovies = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_SAVED_MOVIES,
+  };
+};
+
+export const fetchUserMovieStatus = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.FETCH_USER_MOVIE_STATUS,
+  };
+};
+
+export const updateUserMovieStatus = ({ status, data }) => {
+  return {
+    data,
+    status,
+    type: types.UPDATE_USER_MOVIE_STATUS,
   };
 };

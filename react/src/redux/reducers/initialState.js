@@ -9,6 +9,9 @@ const initialState = {
     totalPages: 1,
     totalResults: 0,
     activeMovie: null,
+    activeMovieStatus: null,
+    activePerson: null,
+    genres: [],
     topMovies: {
       list: [],
       page: 1,
@@ -21,9 +24,18 @@ const initialState = {
       totalPages: 1,
       totalResults: 0,
     },
+    foundMovies: {
+      list: [],
+      page: 1,
+      totalPages: 1,
+      totalResults: 0,
+    },
   },
   reviews: {
-    activeMovieReviews: [],
+    activeMovieReviews: {
+      nyTimesReviews: [],
+      tmdbReviews: [],
+    },
   },
   cinemas: {
     list: [],

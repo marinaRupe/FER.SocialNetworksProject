@@ -8,7 +8,7 @@ export default function movieReviewReducer(state = initialState.reviews, action)
     if (action.status === ACTION_STATUS.SUCCESS) {
       return {
         ...state,
-        activeMovieReviews: action.data.results,
+        activeMovieReviews: action.data,
       };
     }
     return { ...state };

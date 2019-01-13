@@ -6,7 +6,7 @@ import { buttonTypes } from '../../enums/buttonTypes.enum';
 
 class ButtonComponent extends Component {
   render() {
-    const { type, text, action } = this.props;
+    const { type, text, action, icon } = this.props;
 
     let color = appColors.btnSecondary;
 
@@ -18,8 +18,12 @@ class ButtonComponent extends Component {
       <MDBBtn
         color={color}
         onClick={action}
+        className='has-icon'
       >
         {text}
+        {icon &&
+          <i className='material-icons'>{icon}</i>
+        }
       </MDBBtn>
     );
   }
@@ -29,6 +33,7 @@ ButtonComponent.propTypes = {
   type: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
   action: PropTypes.func.isRequired,
+  icon: PropTypes.string,
 };
 
 export default ButtonComponent;

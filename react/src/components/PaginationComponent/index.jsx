@@ -33,8 +33,10 @@ class PaginationComponent extends Component {
   }
 
   render() {
-    const { current = 1, total = 20, action } = this.props;
+    const { current = 1, total = 0, action } = this.props;
     const shownPages = this.pagination(current, total);
+
+    if (total === 0) return null;
 
     return (
       <Pagination className='pg-red'>

@@ -1,9 +1,9 @@
 const express = require('express');
 const asyncWrap = require('express-async-wrap');
-const MovieReviewController = require('../../controllers/movieReview.controller');
+const PersonController = require('../../controllers/person.controller');
 
 const router = express.Router();
 
-router.get('/', asyncWrap(MovieReviewController.getReviews));
+router.get('/:personId', asyncWrap(PersonController.getPersonDetails));
 
 module.exports = router;

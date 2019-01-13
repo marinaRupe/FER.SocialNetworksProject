@@ -18,8 +18,16 @@ class MovieDetails extends Component {
     this.setState({
       isLoading: true,
     }, async () => {
-      const { fetchActiveMovie, match: { params: { movieId } } } = this.props;
+      const {
+        fetchActiveMovie,
+        fetchUserMovieStatus,
+        currentUser,
+        match: { params: { movieId } },
+      } = this.props;
+
       await fetchActiveMovie(movieId);
+      await fetchUserMovieStatus(currentUser.userID, movieId);
+
       this.setState({
         isLoading: false,
       });
@@ -33,16 +41,16 @@ class MovieDetails extends Component {
 
     if (prevProps.movie && (movie.imdbID === prevProps.movie.imdbID)) return;
 
-    await fetchReviewsForMovie(movie.title);
+    await fetchReviewsForMovie(movie.title, movie.tmdbID);
   }
 
   renderMovieDetails = () => {
-    const { movie } = this.props;
+    const { movie, movieUserStatus } = this.props;
 
-    if (movie) {
+    if (movie && movieUserStatus) {
       return (
         <div className='movie__details'>
-          <MovieDetailedView movie={movie} />
+          <MovieDetailedView movie={movie} movieUserStatus={movieUserStatus} />
         </div>
       );
     }
@@ -59,8 +67,9 @@ class MovieDetails extends Component {
 
     if (movie) {
       const movieYear = movie.releaseDate && movie.releaseDate.split('-')[0];
+
       // eslint-disable-next-line
-      const reviewsList = reviews.map((review, index) => {
+      const nyTimesReviewsList = reviews.nyTimesReviews.map((review, index) => {
         const year = review.opening_date && review.opening_date.split('-')[0];
         if (year === movieYear) {
           return (
@@ -81,9 +90,10 @@ class MovieDetails extends Component {
                   href={review.link.url}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='link'
+                  className='link has-icon'
                 >
-                  {review.link.suggested_link_text}
+                  <span>{review.link.suggested_link_text}</span>
+                  <i className='material-icons'>open_in_new</i>
                 </a>
               </div>
             </div>
@@ -91,14 +101,42 @@ class MovieDetails extends Component {
         }
       });
 
+      // eslint-disable-next-line
+      const tmdbReviewsList = reviews.tmdbReviews.map((review, index) => {
+        return (
+          <div
+            className='movie__reviews__item'
+            key={index}
+          >
+            <div className='movie__reviews__item__title'>
+              By {review.author} (TMDb user):
+            </div>
+            <div>{review.content}</div>
+            <br />
+            <div>
+              <a
+                href={review.url}
+                target='_blank'
+                rel='noopener noreferrer'
+                className='link has-icon'
+              >
+                <span>Read more: {review.url}</span>
+                <i className='material-icons'>open_in_new</i>
+              </a>
+            </div>
+          </div>
+        );
+      });
+
       return(
-        <div>
+        <div className='movie__reviews mb-30'>
           <div className='movie__reviews__title'>Reviews</div>
           <div className='movie__reviews__content'>
+            {nyTimesReviewsList.length > 0 && nyTimesReviewsList}
+            {tmdbReviewsList.length > 0 && tmdbReviewsList}
             {
-              reviews.length > 0
-                ? reviewsList
-                : <div>No reviews found</div>
+              (nyTimesReviewsList.length === 0 && tmdbReviewsList.length === 0) &&
+                <div>No reviews found</div>
             }
           </div>
         </div>
@@ -113,7 +151,7 @@ class MovieDetails extends Component {
 
     if (isLoading) {
       return (
-        <div className='movie__details loading'>
+        <div className='movie__details loading page'>
           <div className='loader border-top-info'></div>
         </div>
       );
@@ -132,13 +170,16 @@ class MovieDetails extends Component {
 const mapStateToProps = state => {
   return {
     movie: state.movies.activeMovie,
+    movieUserStatus: state.movies.activeMovieStatus,
     reviews: state.reviews.activeMovieReviews,
+    currentUser: state.users.currentUser,
   };
 };
 
 const mapDispatchToProps = {
   fetchReviewsForMovie: movieReviewActions.fetchReviewsForMovie,
   fetchActiveMovie: movieActions.fetchActiveMovie,
+  fetchUserMovieStatus: movieActions.fetchUserMovieStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MovieDetails));
