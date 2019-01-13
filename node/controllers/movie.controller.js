@@ -95,18 +95,55 @@ const getMostRatedMovies = async (req, res) => {
   res.send(data);
 };
 
-const getRecommendedMovies = async (req, res) => {
-  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, likes} = req.query;
+const getMostRecentMovies = async (req, res) => {
+  const {
+    page = 1,
+    pageSize = defaultValues.DEFAULT_PAGE_SIZE,
+    genres = '[]',
+  } = req.query;
 
-  const filter = MovieService.makeFilter(gender, age, likes);
-  const movies = await MovieService.getMoviesByFilter(+page, +pageSize, filter);
+  const genresParam = JSON.parse(decodeURIComponent(genres));
 
+  const filter = {
+    'releaseDate': { '$nin': [null], '$lte': new Date() },
+  };
+
+  if (genresParam && genresParam.length > 0) {
+    filter.genres = { $in: genresParam };
+  }
+
+  const movies = await MovieService.getMoviesByReleaseDate(+page, +pageSize, filter);
   const totalPages = Math.ceil(
     await MovieService.getMoviesCount(filter) / pageSize
   );
 
   const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
 
+  res.send(data);
+};
+
+const getRecommendedMovies = async (req, res) => {
+  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE ,gender, age, userID} = req.query;
+
+  const filter = await MovieService.makeFilter(gender, age, userID);
+
+  let data = {};
+
+  if (Object.keys(filter).length === 0){
+    const movies = await MovieService.getMoviesByPopularity(+page, +pageSize);
+    const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+
+    data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+
+  }else {
+    const movies = await MovieService.getMoviesByFilter(+page, +pageSize, filter);
+
+    const totalPages = Math.ceil(
+      await MovieService.getMoviesCount(filter) / pageSize
+    );
+
+    data = { page: +page, totalPages, totalResults: movies.length, results: movies };
+  }
   res.send(data);
 };
 
@@ -234,6 +271,7 @@ module.exports = {
   getMostPopularMovies,
   getMostRatedMovies,
   getRecommendedMovies,
+  getMostRecentMovies,
   getMoviesForSearch,
   getAllGenres,
   getUserWatchedMovies,

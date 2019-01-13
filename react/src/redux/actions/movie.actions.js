@@ -56,15 +56,13 @@ export function fetchMostRatedMovies(page = 1, pageSize = 30, fromDate, toDate, 
   return actionWrapper(action);
 }
 
-export function fetchNowPlayingMovies(page = 1, pageSize = 30, fromDate, toDate, genres) {
+export function fetchNowPlayingMovies(page = 1, pageSize = 30, genres) {
   const parameters = {
-    fromDate,
-    toDate,
     genres,
   };
 
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_MOST_POPULAR_MOVIES(page, pageSize, parameters));
+    const resp = await axios.get(API.MOVIE.FETCH_MOST_RECENT_MOVIES(page, pageSize, parameters));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchMostRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
@@ -116,7 +114,7 @@ export function fetchRecommendedMovies(page = 1, pageSize = 30, user) {
     });
 
     const resp = await axios.get(
-      API.MOVIE.FETCH_RECOMMENDED_MOVIES(page, pageSize, user.gender, user.ageRange.min, names)); // TODO: change
+      API.MOVIE.FETCH_RECOMMENDED_MOVIES(page, pageSize, user.gender, user.ageRange.min, user.userID)); // TODO: change
 
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchRecommendedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
