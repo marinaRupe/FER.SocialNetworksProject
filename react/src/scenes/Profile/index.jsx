@@ -10,6 +10,9 @@ import { APP } from '../../constants/routes';
 import * as userActions from '../../redux/actions/user.actions';
 
 class Profile extends Component {
+  componentDidMount() {
+    window.scrollTo(0, 0);
+  }
 
   async componentDidMount() {
     const { currentUser } = this.props;

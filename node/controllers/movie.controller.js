@@ -20,10 +20,36 @@ const getMovieDetails = async (req, res) => {
 };
 
 const getMostPopularMovies = async (req, res) => {
-  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE } = req.query;
+  const {
+    page = 1,
+    pageSize = defaultValues.DEFAULT_PAGE_SIZE,
+    fromDate = 'null',
+    toDate = 'null',
+    genres = '[]',
+  } = req.query;
 
-  const movies = await MovieService.getMoviesByPopularity(+page, +pageSize);
-  const totalPages = Math.ceil(await MovieService.getMoviesCount() / pageSize);
+  const fromDateParam = JSON.parse(decodeURIComponent(fromDate));
+  const toDateParam = JSON.parse(decodeURIComponent(toDate));
+  const genresParam = JSON.parse(decodeURIComponent(genres));
+
+  const filter = {
+    'tmdbPopularity': { '$nin': [null] },
+  };
+
+  if (!!fromDateParam && !!toDateParam) {
+    filter.releaseDate = { $gte: fromDateParam, $lte: toDateParam };
+  } else if (fromDateParam) {
+    filter.releaseDate = { $gte: fromDateParam };
+  } else if (toDateParam) {
+    filter.releaseDate = { $lte: toDateParam };
+  }
+
+  if (genresParam && genresParam.length > 0) {
+    filter.genres = { $in: genresParam };
+  }
+
+  const movies = await MovieService.getMoviesByPopularity(+page, +pageSize, filter);
+  const totalPages = Math.ceil(await MovieService.getMoviesCount(filter) / pageSize);
 
   const data = { page: +page, totalPages, totalResults: movies.length, results: movies };
 
@@ -31,11 +57,37 @@ const getMostPopularMovies = async (req, res) => {
 };
 
 const getMostRatedMovies = async (req, res) => {
-  const { page = 1, pageSize = defaultValues.DEFAULT_PAGE_SIZE } = req.query;
+  const {
+    page = 1,
+    pageSize = defaultValues.DEFAULT_PAGE_SIZE,
+    fromDate = 'null',
+    toDate = 'null',
+    genres = '[]',
+  } = req.query;
 
-  const movies = await MovieService.getMoviesByImdbRating(+page, +pageSize);
+  const fromDateParam = JSON.parse(decodeURIComponent(fromDate));
+  const toDateParam = JSON.parse(decodeURIComponent(toDate));
+  const genresParam = JSON.parse(decodeURIComponent(genres));
+
+  const filter = {
+    'imdbRating': { '$nin': [null, 'N/A'] },
+  };
+
+  if (!!fromDateParam && !!toDateParam) {
+    filter.releaseDate = { $gte: fromDateParam, $lte: toDateParam };
+  } else if (fromDateParam) {
+    filter.releaseDate = { $gte: fromDateParam };
+  } else if (toDateParam) {
+    filter.releaseDate = { $lte: toDateParam };
+  }
+
+  if (genresParam && genresParam.length > 0) {
+    filter.genres = { $in: genresParam };
+  }
+
+  const movies = await MovieService.getMoviesByImdbRating(+page, +pageSize, filter);
   const totalPages = Math.ceil(
-    await MovieService.getMoviesCount({ 'imdbRating': { '$nin': [null, 'N/A'] } }) / pageSize
+    await MovieService.getMoviesCount(filter) / pageSize
   );
 
   const data = { page: +page, totalPages, totalResults: movies.length, results: movies };

@@ -10,20 +10,35 @@ const getMovieWithImdbID = async imdbID => (await Movie.findOne({ imdbID }).exec
 
 const getMovieWithTmdbID = async tmdbID => (await Movie.findOne({ tmdbID }).exec());
 
-const getMoviesByPopularity = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => (await Movie.find()
-  .skip((page - 1) * pageSize)
-  .limit(pageSize)
-  .sort({ 'tmdbPopularity' : 'desc' })
-  .exec()
-);
+const getMoviesByPopularity = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, filter) => {
+  if (!filter) {
+    filter = {
+      'tmdbPopularity': { '$nin': [null] },
+    };
+  }
 
-const getMoviesByImdbRating = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) =>
-  (await Movie.find({ 'imdbRating': { '$nin': [null, 'N/A'] } })
+  return (await Movie.find(filter)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .sort({ 'tmdbPopularity' : 'desc' })
+    .exec()
+  );
+};
+
+const getMoviesByImdbRating = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE, filter) => {
+  if (!filter) {
+    filter = {
+      'imdbRating': { '$nin': [null, 'N/A'] },
+    };
+  }
+
+  return (await Movie.find(filter)
     .skip((page - 1) * pageSize)
     .limit(pageSize)
     .sort({ 'imdbRating' : 'desc' })
     .exec()
   );
+};
 
 const getMoviesByReleaseDate = async (page, pageSize = defaultValues.DEFAULT_PAGE_SIZE) => (await Movie.find()
   .skip((page - 1) * pageSize)
@@ -232,6 +247,7 @@ const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT
       { $text: { $search: text } },
     ],
   };
+
   if (!!fromDate && !!toDate) {
     filter.releaseDate = { $gte: fromDate, $lte: toDate };
   } else if (fromDate) {
@@ -239,6 +255,7 @@ const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT
   } else if (toDate) {
     filter.releaseDate = { $lte: toDate };
   }
+
   if (genres && genres.length > 0) {
     filter.genres = { $in: genres };
   }
@@ -253,7 +270,7 @@ const findMovies = async (parameters, page = 1, pageSize = defaultValues.DEFAULT
     .exec();
 
   return {
-    pagesCount: Math.ceil(count / pageSize),
+    pagesCount: Math.min(Math.ceil(count / pageSize), 10),
     movies,
   };
 };
