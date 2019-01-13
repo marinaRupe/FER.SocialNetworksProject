@@ -24,8 +24,6 @@ class NowPlayingMovies extends Component {
     this.state = {
       isLoading: false,
       userLocation: null,
-      fromDate: null,
-      toDate: null,
       selectedGenres: [],
     };
   }
@@ -47,10 +45,10 @@ class NowPlayingMovies extends Component {
         fetchCinemasByCenterLocation,
         currentUser,
       } = this.props;
-      const { fromDate, toDate, selectedGenres } = this.state;
+      const { selectedGenres } = this.state;
       const userLocation = await getLocation(currentUser);
 
-      await fetchNowPlayingMovies(page, 15, fromDate, toDate, selectedGenres);
+      await fetchNowPlayingMovies(page, 15, selectedGenres);
       await fetchCinemasByCenterLocation(userLocation);
 
       this.setState({
@@ -59,10 +57,6 @@ class NowPlayingMovies extends Component {
       });
     });
   }
-
-  onFromDateChange = (date) => this.setState({ fromDate: date });
-
-  onToDateChange = (date) => this.setState({ toDate: date });
 
   onGenreSelect = (e) => {
     const { selectedGenres } = this.state;
@@ -152,29 +146,13 @@ class NowPlayingMovies extends Component {
 
   render() {
     const { genres } = this.props;
-    const { fromDate, toDate, selectedGenres } = this.state;
+    const { selectedGenres } = this.state;
 
     return (
       <div className='page'>
         <div className='movie-list__title'>Now playing movies</div>
         <MDBContainer>
           <MDBRow className='search__row mb-40'>
-            <MDBCol sm='2'>
-              <div>From date:</div>
-              <DatePicker
-                selected={fromDate}
-                onChange={this.onFromDateChange}
-                dateFormat='dd.MM.yyyy.'
-              />
-            </MDBCol>
-            <MDBCol sm='2'>
-              <div>To date:</div>
-              <DatePicker
-                selected={toDate}
-                onChange={this.onToDateChange}
-                dateFormat='dd.MM.yyyy.'
-              />
-            </MDBCol>
             <MDBCol sm='2'>
               <div>Genres:</div>
               <FormControl

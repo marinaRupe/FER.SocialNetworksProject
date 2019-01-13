@@ -8,6 +8,8 @@ router.get('/most-popular', asyncWrap(MovieController.getMostPopularMovies));
 
 router.get('/most-rated', asyncWrap(MovieController.getMostRatedMovies));
 
+router.get('/most-recent', asyncWrap(MovieController.getMostRecentMovies));
+
 router.get('/recommended', asyncWrap(MovieController.getRecommendedMovies));
 
 router.get('/search', asyncWrap(MovieController.getMoviesForSearch));
