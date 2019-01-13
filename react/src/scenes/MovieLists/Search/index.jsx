@@ -31,7 +31,8 @@ class MovieSearch extends Component {
   }
 
   async componentDidMount() {
-    await this.props.getGenres();
+    const { getGenres, genres} = this.props;
+    if (!genres) await getGenres();
   }
 
   fetchMovies = page => {

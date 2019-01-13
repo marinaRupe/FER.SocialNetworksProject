@@ -24,9 +24,15 @@ export function fetchUserMovieStatus(userID, movieId) {
   return actionWrapper(action);
 }
 
-export function fetchMostPopularMovies(page = 1, pageSize = 30) {
+export function fetchMostPopularMovies(page = 1, pageSize = 30, fromDate, toDate, genres) {
+  const parameters = {
+    fromDate,
+    toDate,
+    genres,
+  };
+
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_MOST_POPULAR_MOVIES(page, pageSize));
+    const resp = await axios.get(API.MOVIE.FETCH_MOST_POPULAR_MOVIES(page, pageSize, parameters));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchMostPopularMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
@@ -34,9 +40,15 @@ export function fetchMostPopularMovies(page = 1, pageSize = 30) {
   return actionWrapper(action);
 }
 
-export function fetchMostRatedMovies(page = 1, pageSize = 30) {
+export function fetchMostRatedMovies(page = 1, pageSize = 30, fromDate, toDate, genres) {
+  const parameters = {
+    fromDate,
+    toDate,
+    genres,
+  };
+
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page, pageSize));
+    const resp = await axios.get(API.MOVIE.FETCH_MOST_RATED_MOVIES(page, pageSize, parameters));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchMostRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
@@ -44,9 +56,15 @@ export function fetchMostRatedMovies(page = 1, pageSize = 30) {
   return actionWrapper(action);
 }
 
-export function fetchNowPlayingMovies(page = 1, pageSize = 30) {
+export function fetchNowPlayingMovies(page = 1, pageSize = 30, fromDate, toDate, genres) {
+  const parameters = {
+    fromDate,
+    toDate,
+    genres,
+  };
+
   const action = async (dispatch) => {
-    const resp = await axios.get(API.MOVIE.FETCH_MOST_POPULAR_MOVIES(page, pageSize));
+    const resp = await axios.get(API.MOVIE.FETCH_MOST_POPULAR_MOVIES(page, pageSize, parameters));
     if (resp.status === 200) {
       await dispatch(actionCreators.fetchMostRatedMovies({ status: ACTION_STATUS.SUCCESS, data: resp.data }));
     }
